@@ -1,5 +1,6 @@
 package ct.game.main;
 
+import Player.AnimationController;
 import Player.EntityPlayer;
 import Player.InputController;
 import com.badlogic.gdx.Gdx;
@@ -9,9 +10,7 @@ import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.*;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.viewport.*;
 
@@ -32,16 +31,23 @@ public class GameScreen implements Screen {
 
     BitmapFont font;
 
-    //Ogarnąć fonty itd aby w innej klasie się pokazywały bo się już myle
-    // oraz ogarnąć full sterowanie czyli skok duck i ich spritey z animacjami. I to wszystko dzisiaj.
+    AnimationController standObjectAnimation;
+    Animation<TextureRegion> standAnimation;
+
+    float elapsedTime = 0f;
 
     public GameScreen(){
         camera = new OrthographicCamera();
         viewport = new StretchViewport(WIDTH, HEIGHT, camera);
 
-        Texture imagePlayerTest = new Texture("TEST_PLAYER_SpritePositions.png");
+        Texture standAnim = new Texture(Gdx.files.internal("pngFiles/anim_stand.png"));
+
+        standObjectAnimation = new AnimationController("jsonFiles/anim_stand.json", standAnim);
+        standAnimation = standObjectAnimation.createAnimation(0.025f);
+
+        Texture imagePlayerTest = new Texture("pngFiles/TEST_PLAYER_SpritePositions.png");
         playerSprite = new Sprite(imagePlayerTest);
-        entityPlayer = new EntityPlayer(100, 0, playerSprite, new Vector2(0, 0), 100f);
+        entityPlayer = new EntityPlayer(100, 0, playerSprite, new Vector2(0, 0));
 
         playerController = new InputController();
         InputMultiplexer multiplexer = new InputMultiplexer();
@@ -61,29 +67,33 @@ public class GameScreen implements Screen {
         font.draw(batchFont, "FPS: " + Gdx.graphics.getFramesPerSecond(), 10, 20);
     }
 
-    public void setPlayerControls(EntityPlayer player, float deltaTime){
+    private void updateMovementPlayer(EntityPlayer player, float deltaTime){
         if(playerController.isPressedA()){
            if(player.isPlayerRotatedRight()){
                player.setPlayerRotationIntoRight(false);
            }
-           player.setPlayerPosition(player.getPositionX() - player.getSpeed() * deltaTime, player.getPositionY());
+           player.setPlayerPosition(player.getPositionX() - player.speed * deltaTime, player.getPositionY());
         }
         if(playerController.isPressedD()){
             if(!player.isPlayerRotatedRight()){
                 player.setPlayerRotationIntoRight(true);
             }
-            player.setPlayerPosition(player.getPositionX() + player.getSpeed() * deltaTime, player.getPositionY());
+            player.setPlayerPosition(player.getPositionX() + player.speed * deltaTime, player.getPositionY());
         }
     }
 
     @Override
     public void render(float deltaTime) {
         refreshScreen();
+        elapsedTime += deltaTime;
 
         batch.begin();
 
-        setPlayerControls(entityPlayer, deltaTime);
+        updateMovementPlayer(entityPlayer, deltaTime);
         entityPlayer.drawSprite(batch);
+
+        TextureRegion animTEST = standAnimation.getKeyFrame(elapsedTime, true);
+        batch.draw(animTEST, 400, 100);
 
         showFPSCounter(batch);
 
