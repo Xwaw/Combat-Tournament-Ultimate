@@ -7,8 +7,8 @@ import com.badlogic.gdx.math.Vector2;
 import static Player.ActionSpritesAnimations.STAND;
 
 public class EntityPlayer {
-    private int playerHP;
-    private int playerSP;
+    private float playerHP;
+    private float playerSP;
     private final Sprite sprite;
     private Vector2 position;
 
@@ -20,20 +20,32 @@ public class EntityPlayer {
 
     private ActionSpritesAnimations currentState = STAND;
 
-    public EntityPlayer(int playerHP, int playerSP, Sprite sprite, Vector2 position){
+    public EntityPlayer(float playerHP, float playerSP, Sprite sprite, Vector2 position){
         this.playerHP = playerHP;
         this.playerSP = playerSP;
         this.sprite = sprite;
         this.position = position;
     }
 
-    public void takeDamage(int damage){playerHP -= damage; if(playerHP <= 0){playerHP = 0;}}
-    public int getPlayerHP() {return playerHP;}
-    public void addPlayerHP(int health){playerHP += health; if(playerHP >= 100){playerHP = 100;}}
+    public float getPlayerHP() {
+        return playerHP;
+    }
 
-    public int getPlayerSP() {return playerSP;}
-    public void addPlayerSP(int strange){
-        playerSP += strange; if(playerSP >= 100){playerSP = 100;}
+    public void setPlayerHP(int health) {
+        playerHP = health;
+        if(playerHP >= 100){
+            playerHP = 100;
+        }
+    }
+
+    public float getPlayerSP() {
+        return playerSP;
+    }
+    public void setPlayerSP(int specialPoints){ // xd
+        playerSP = specialPoints;
+        if(playerSP >= 100) {
+            playerSP = 100;
+        }
     }
 
     public void setPlayerPosition(float x, float y)

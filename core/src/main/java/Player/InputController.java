@@ -25,6 +25,23 @@ public class InputController implements InputProcessor {
         return isPressedS;
     }
 
+    /*
+    private void updateMovementPlayer(EntityPlayer player, float deltaTime){
+        if(playerController.isPressedA()){
+            if(player.isPlayerRotatedRight()){
+                player.setPlayerRotationIntoRight(false);
+            }
+            player.setPlayerPosition(player.getPositionX() - player.speed * deltaTime, player.getPositionY());
+        }
+        if(playerController.isPressedD()){
+            if(!player.isPlayerRotatedRight()){
+                player.setPlayerRotationIntoRight(true);
+            }
+            player.setPlayerPosition(player.getPositionX() + player.speed * deltaTime, player.getPositionY());
+        }
+    }
+    */
+
     @Override
     public boolean keyDown(int keycode) {
         switch (keycode) {
