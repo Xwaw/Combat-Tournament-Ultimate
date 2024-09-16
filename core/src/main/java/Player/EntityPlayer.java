@@ -1,7 +1,9 @@
 package Player;
 
+import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 
 import static Player.ActionSpritesAnimations.STAND;
@@ -9,7 +11,7 @@ import static Player.ActionSpritesAnimations.STAND;
 public class EntityPlayer {
     private float playerHP;
     private float playerSP;
-    private final Sprite sprite;
+    private final Animation<TextureRegion> sprite;
     private Vector2 position;
 
     public float speed = 200.0f;
@@ -18,9 +20,11 @@ public class EntityPlayer {
     private boolean rotationRight = true;
     private boolean ducking = false;
 
+    //private Characters character = HOMERUNBAT;
+
     private ActionSpritesAnimations currentState = STAND;
 
-    public EntityPlayer(float playerHP, float playerSP, Sprite sprite, Vector2 position){
+    public EntityPlayer(float playerHP, float playerSP, Animation<TextureRegion> sprite, Vector2 position){
         this.playerHP = playerHP;
         this.playerSP = playerSP;
         this.sprite = sprite;
@@ -51,19 +55,10 @@ public class EntityPlayer {
     public void setPlayerPosition(float x, float y)
     {
         position = new Vector2(x, y);
-        moveSprite();
     }
 
     public boolean isPlayerRotatedRight(){
         return rotationRight;
-    }
-
-    public void setPlayerRotationIntoRight(boolean rotation){
-        rotationRight = rotation;
-        sprite.setScale(-1, 1);
-        if(rotation) {
-            sprite.setScale(1, 1);
-        }
     }
 
     public boolean isPlayerDucking() {
@@ -88,8 +83,4 @@ public class EntityPlayer {
     public float getPositionY() {
         return position.y;
     }
-
-    public Sprite getSprite() {return sprite;}
-    public void drawSprite(SpriteBatch batch){sprite.draw(batch);}
-    private void moveSprite(){sprite.setPosition(position.x, position.y);}
 }

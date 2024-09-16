@@ -1,27 +1,26 @@
 package ct.game.main;
 
-import Player.GameHUD;
-import Player.InputController;
+import Player.HudManager;
+import Player.InputPlayerManager;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.graphics.GL20;
 
 /** {@link com.badlogic.gdx.ApplicationListener} implementation shared by all platforms. */
-public class GameMainScreen extends Game {
+public class GameMain extends Game {
     public final static int WIDTH = 712, HEIGHT = 400;
 
-    GameScreen gameMainScreen;
-    InputController keyBoardPlayer;
-    GameHUD gameHudScreen;
+    PlayerScreen gameMainScreen;
+    InputPlayerManager keyBoardPlayer;
+    HudManager gameHudScreen;
 
     @Override
     public void create() {
-        gameMainScreen = new GameScreen();
-        gameHudScreen = new GameHUD(gameMainScreen.getEntityPlayer());
+        gameMainScreen = new PlayerScreen();
+        gameHudScreen = new HudManager(gameMainScreen.getEntityPlayer());
 
-
-        keyBoardPlayer = new InputController();
+        keyBoardPlayer = new InputPlayerManager();
         InputMultiplexer multiplexer = new InputMultiplexer();
         multiplexer.addProcessor(keyBoardPlayer);
         Gdx.input.setInputProcessor(multiplexer);

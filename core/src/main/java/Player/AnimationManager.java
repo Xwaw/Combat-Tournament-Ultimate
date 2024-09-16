@@ -11,11 +11,11 @@ import com.badlogic.gdx.utils.JsonValue;
 
 import java.util.ArrayList;
 
-public class AnimationController {
+public class AnimationManager {
     String pathJSON;
     Texture spriteSheet;
 
-    public AnimationController(String pathJSON, Texture spriteSheet) {
+    public AnimationManager(String pathJSON, Texture spriteSheet) {
         this.pathJSON = pathJSON;
         this.spriteSheet = spriteSheet;
     }

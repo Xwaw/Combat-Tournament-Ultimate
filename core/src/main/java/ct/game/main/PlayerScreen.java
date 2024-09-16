@@ -9,48 +9,32 @@ import com.badlogic.gdx.graphics.g2d.*;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.viewport.*;
 
-import static ct.game.main.GameMainScreen.HEIGHT;
-import static ct.game.main.GameMainScreen.WIDTH;
+import static ct.game.main.GameMain.HEIGHT;
+import static ct.game.main.GameMain.WIDTH;
 
-public class GameScreen implements Screen {
+public class PlayerScreen implements Screen {
     // Camera
     private final Camera camera;
     private final Viewport viewport;
     // Graphics
     private final SpriteBatch batch;
-    // Test
-    private Sprite playerSprite;
 
     public EntityPlayer entityPlayer;
 
-    public GameScreen(){
+    public PlayerScreen(){
         camera = new OrthographicCamera();
         viewport = new StretchViewport(WIDTH, HEIGHT, camera);
 
-        Texture imagePlayerTest = new Texture("pngFiles/TEST_PLAYER_SpritePositions.png");
-        playerSprite = new Sprite(imagePlayerTest);
-        entityPlayer = new EntityPlayer(100, 25, playerSprite, new Vector2(0, 0));
+        entityPlayer = new EntityPlayer(100, 25, new Animation<>(0), new Vector2(0, 0));
 
         batch = new SpriteBatch();
     }
 
-    int TEST_specialPoint = 0; // checking if the bars are displayed correctly according to the player data
-
     @Override
     public void render(float deltaTime) {
         refreshScreen();
-
-        TEST_specialPoint++;
-        entityPlayer.setPlayerSP(TEST_specialPoint);
-        if(entityPlayer.getPlayerSP() >= 100){
-            entityPlayer.setPlayerSP(0);
-
-            TEST_specialPoint = 0;
-        }
-
+        
         batch.begin();
-
-        entityPlayer.drawSprite(batch);
 
         batch.end();
     }

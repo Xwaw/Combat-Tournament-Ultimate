@@ -11,10 +11,10 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
-import static ct.game.main.GameMainScreen.HEIGHT;
-import static ct.game.main.GameMainScreen.WIDTH;
+import static ct.game.main.GameMain.HEIGHT;
+import static ct.game.main.GameMain.WIDTH;
 
-public class GameHUD implements Screen {
+public class HudManager implements Screen {
     //Player HUD and other huds of Game
     private final Camera camera;
     private final Viewport viewport;
@@ -31,7 +31,7 @@ public class GameHUD implements Screen {
 
     private final int maxHP = 100, maxSP = 100;
 
-    public GameHUD(EntityPlayer Player) {
+    public HudManager(EntityPlayer Player) {
         this.playerHUD = Player;
 
         camera = new OrthographicCamera();
