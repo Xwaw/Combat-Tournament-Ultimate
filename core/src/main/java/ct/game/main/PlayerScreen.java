@@ -1,6 +1,8 @@
 package ct.game.main;
 
+import Player.ActionSpritesAnimations;
 import Player.EntityPlayer;
+import Player.HomerunBatAnimations;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -20,12 +22,15 @@ public class PlayerScreen implements Screen {
     private final SpriteBatch batch;
 
     public EntityPlayer entityPlayer;
+    private HomerunBatAnimations homerunBatAnimations = new HomerunBatAnimations(20);
+    Texture TEST_txt;
 
     public PlayerScreen(){
         camera = new OrthographicCamera();
         viewport = new StretchViewport(WIDTH, HEIGHT, camera);
 
-        entityPlayer = new EntityPlayer(100, 25, new Animation<>(0), new Vector2(0, 0));
+        TEST_txt = new Texture("pngFiles/TEST_PLAYER_SpritePositions.png");
+        entityPlayer = new EntityPlayer(100, 1, homerunBatAnimations.getCurrentAnimation(ActionSpritesAnimations.STAND), new Vector2(0, 0));
 
         batch = new SpriteBatch();
     }
@@ -33,8 +38,12 @@ public class PlayerScreen implements Screen {
     @Override
     public void render(float deltaTime) {
         refreshScreen();
-        
+
+
+
         batch.begin();
+
+        batch.draw(TEST_txt, entityPlayer.getPositionX(), entityPlayer.getPositionY(), 100, 100);
 
         batch.end();
     }

@@ -19,8 +19,8 @@ public class GameMain extends Game {
     public void create() {
         gameMainScreen = new PlayerScreen();
         gameHudScreen = new HudManager(gameMainScreen.getEntityPlayer());
+        keyBoardPlayer = new InputPlayerManager(gameMainScreen.getEntityPlayer());
 
-        keyBoardPlayer = new InputPlayerManager();
         InputMultiplexer multiplexer = new InputMultiplexer();
         multiplexer.addProcessor(keyBoardPlayer);
         Gdx.input.setInputProcessor(multiplexer);
@@ -31,6 +31,8 @@ public class GameMain extends Game {
         refreshScreenGame();
         gameMainScreen.render(Gdx.graphics.getDeltaTime());
         gameHudScreen.render(Gdx.graphics.getDeltaTime());
+
+        keyBoardPlayer.updateMovingPlayer();
     }
 
     @Override

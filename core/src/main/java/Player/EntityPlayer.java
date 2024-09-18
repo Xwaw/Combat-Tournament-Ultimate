@@ -11,7 +11,7 @@ import static Player.ActionSpritesAnimations.STAND;
 public class EntityPlayer {
     private float playerHP;
     private float playerSP;
-    private final Animation<TextureRegion> sprite;
+    private final Animation<TextureRegion> animationPlayer;
     private Vector2 position;
 
     public float speed = 200.0f;
@@ -24,10 +24,10 @@ public class EntityPlayer {
 
     private ActionSpritesAnimations currentState = STAND;
 
-    public EntityPlayer(float playerHP, float playerSP, Animation<TextureRegion> sprite, Vector2 position){
+    public EntityPlayer(float playerHP, float playerSP, Animation<TextureRegion> animationPlayer, Vector2 position){
         this.playerHP = playerHP;
         this.playerSP = playerSP;
-        this.sprite = sprite;
+        this.animationPlayer = animationPlayer;
         this.position = position;
     }
 

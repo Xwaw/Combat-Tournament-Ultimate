@@ -1,15 +1,53 @@
 package Player;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
 
 public class InputPlayerManager implements InputProcessor {
+    private EntityPlayer player;
+    private boolean isPlayerMovingLeft, isPlayerMovingRight;
+
+    public InputPlayerManager(EntityPlayer player){
+        this.player = player;
+    }
+
+    public void updateMovingPlayer(){
+        if (isPlayerMovingRight){
+            player.setPlayerPosition(player.getPositionX() + player.speed * Gdx.graphics.getDeltaTime(), player.getPositionY());
+        }
+        if (isPlayerMovingLeft){
+            player.setPlayerPosition(player.getPositionX() - player.speed * Gdx.graphics.getDeltaTime(), player.getPositionY());
+        }
+    }
+
     @Override
     public boolean keyDown(int keycode) {
+        updateMovingPlayer();
+
+        switch (keycode){
+            case Input.Keys.A:
+                isPlayerMovingLeft = true;
+                break;
+            case Input.Keys.D:
+                isPlayerMovingRight = true;
+                break;
+        }
+
         return true;
     }
 
     @Override
     public boolean keyUp(int keycode) {
+        switch (keycode){
+            case Input.Keys.A:
+                isPlayerMovingLeft = false;
+                break;
+            case Input.Keys.D:
+                isPlayerMovingRight = false;
+                break;
+        }
+
         return true;
     }
 
