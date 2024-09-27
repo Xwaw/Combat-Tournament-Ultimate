@@ -14,7 +14,7 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import static ct.game.main.GameMain.HEIGHT;
 import static ct.game.main.GameMain.WIDTH;
 
-public class HudManager implements Screen {
+public class  HudManager implements Screen {
     //Player HUD and other huds of Game
     private final Camera camera;
     private final Viewport viewport;

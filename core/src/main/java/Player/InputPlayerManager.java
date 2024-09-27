@@ -13,11 +13,14 @@ public class InputPlayerManager implements InputProcessor {
     }
 
     public void updateMovingPlayer(){
-        if (isPlayerMovingRight){
+        if (isPlayerMovingRight) {
             player.setPlayerPosition(player.getPositionX() + player.speed * Gdx.graphics.getDeltaTime(), player.getPositionY());
-        }
-        if (isPlayerMovingLeft){
+            player.setCurrentState(ActionSpritesAnimations.RUN);
+        } else if (isPlayerMovingLeft) {
             player.setPlayerPosition(player.getPositionX() - player.speed * Gdx.graphics.getDeltaTime(), player.getPositionY());
+            player.setCurrentState(ActionSpritesAnimations.RUN);
+        } else {
+            player.setCurrentState(ActionSpritesAnimations.STAND);
         }
     }
 
@@ -39,6 +42,8 @@ public class InputPlayerManager implements InputProcessor {
 
     @Override
     public boolean keyUp(int keycode) {
+        updateMovingPlayer();
+
         switch (keycode){
             case Input.Keys.A:
                 isPlayerMovingLeft = false;

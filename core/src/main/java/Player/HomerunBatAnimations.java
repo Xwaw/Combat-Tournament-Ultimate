@@ -12,10 +12,10 @@ public class HomerunBatAnimations {
         this.durationAllAnimations = durationAllAnimations;
 
         ANIM_stand = new AnimationManager("jsonFiles/anim_stand.json", new Texture("pngFiles/anim_stand.png"));
-        ANIM_run = new AnimationManager("jsonFiles/anim_stand.json", new Texture("pngFiles/anim_stand.png"));
-        ANIM_duck = new AnimationManager("jsonFiles/anim_stand.json", new Texture("pngFiles/anim_stand.png"));
-        ANIM_startJump = new AnimationManager("jsonFiles/anim_stand.json", new Texture("pngFiles/anim_stand.png"));
-        ANIM_jump = new AnimationManager("jsonFiles/anim_stand.json", new Texture("pngFiles/anim_stand.png"));
+        ANIM_run = new AnimationManager("jsonFiles/anim_run.json", new Texture("pngFiles/anim_run.png"));
+        ANIM_duck = new AnimationManager("jsonFiles/anim_duck.json", new Texture("pngFiles/anim_duck.png"));
+        ANIM_startJump = new AnimationManager("jsonFiles/anim_startJump.json", new Texture("pngFiles/anim_startJump.png"));
+        ANIM_jump = new AnimationManager("jsonFiles/anim_jump.json", new Texture("pngFiles/anim_jump.png"));
     }
 
     public Animation<TextureRegion> getCurrentAnimation(ActionSpritesAnimations nameOfAnimation){

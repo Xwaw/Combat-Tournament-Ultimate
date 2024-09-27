@@ -22,15 +22,14 @@ public class PlayerScreen implements Screen {
     private final SpriteBatch batch;
 
     public EntityPlayer entityPlayer;
-    private HomerunBatAnimations homerunBatAnimations = new HomerunBatAnimations(20);
-    Texture TEST_txt;
+    private HomerunBatAnimations homerunBatAnimations;
 
     public PlayerScreen(){
         camera = new OrthographicCamera();
         viewport = new StretchViewport(WIDTH, HEIGHT, camera);
 
-        TEST_txt = new Texture("pngFiles/TEST_PLAYER_SpritePositions.png");
-        entityPlayer = new EntityPlayer(100, 1, homerunBatAnimations.getCurrentAnimation(ActionSpritesAnimations.STAND), new Vector2(0, 0));
+        homerunBatAnimations = new HomerunBatAnimations(0.025f);
+        entityPlayer = new EntityPlayer(100, 1, homerunBatAnimations, new Vector2(250, 35));
 
         batch = new SpriteBatch();
     }
@@ -38,12 +37,11 @@ public class PlayerScreen implements Screen {
     @Override
     public void render(float deltaTime) {
         refreshScreen();
-
-
+        entityPlayer.updatePlayerElements(deltaTime);
 
         batch.begin();
 
-        batch.draw(TEST_txt, entityPlayer.getPositionX(), entityPlayer.getPositionY(), 100, 100);
+        batch.draw(entityPlayer.getCurrentFrame(), entityPlayer.getPositionX(), entityPlayer.getPositionY(), 100, 100);
 
         batch.end();
     }

@@ -1,8 +1,6 @@
 package Player;
 
 import com.badlogic.gdx.graphics.g2d.Animation;
-import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 
@@ -11,24 +9,41 @@ import static Player.ActionSpritesAnimations.STAND;
 public class EntityPlayer {
     private float playerHP;
     private float playerSP;
-    private final Animation<TextureRegion> animationPlayer;
     private Vector2 position;
 
-    public float speed = 200.0f;
+    public float speed = 400.0f;
+    private float stateTime;
 
     //actions
     private boolean rotationRight = true;
     private boolean ducking = false;
 
+    private HomerunBatAnimations homerunBatAnimations;
+
     //private Characters character = HOMERUNBAT;
 
     private ActionSpritesAnimations currentState = STAND;
+    private Animation<TextureRegion> currentAnimation;
 
-    public EntityPlayer(float playerHP, float playerSP, Animation<TextureRegion> animationPlayer, Vector2 position){
+    public EntityPlayer(float playerHP, float playerSP, HomerunBatAnimations homerunBatAnimations,Vector2 position){
         this.playerHP = playerHP;
         this.playerSP = playerSP;
-        this.animationPlayer = animationPlayer;
         this.position = position;
+        this.homerunBatAnimations = homerunBatAnimations;
+        this.currentAnimation = homerunBatAnimations.getCurrentAnimation(ActionSpritesAnimations.STAND);
+
+        this.stateTime = 0.0f;
+    }
+
+    public void setCurrentState(ActionSpritesAnimations currentState){
+        if (this.currentState != currentState) {
+            this.currentState = currentState;
+            currentAnimation = homerunBatAnimations.getCurrentAnimation(currentState);
+        }
+    }
+
+    public void updatePlayerElements(float deltaTime){
+        stateTime += deltaTime;
     }
 
     public float getPlayerHP() {
@@ -45,6 +60,11 @@ public class EntityPlayer {
     public float getPlayerSP() {
         return playerSP;
     }
+
+    public TextureRegion getCurrentFrame(){
+        return currentAnimation.getKeyFrame(stateTime, true);
+    }
+
     public void setPlayerSP(int specialPoints){ // xd
         playerSP = specialPoints;
         if(playerSP >= 100) {
