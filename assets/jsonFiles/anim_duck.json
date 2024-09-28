@@ -1,0 +1,75 @@
+{"frames": {
+
+"Symbol 0":
+{
+	"frame": {"x":0,"y":0,"w":195,"h":214},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":195,"h":214},
+	"sourceSize": {"w":195,"h":214}
+},
+"Symbol 1":
+{
+	"frame": {"x":195,"y":0,"w":195,"h":214},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":195,"h":214},
+	"sourceSize": {"w":195,"h":214}
+},
+"Symbol 2":
+{
+	"frame": {"x":0,"y":214,"w":195,"h":214},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":195,"h":214},
+	"sourceSize": {"w":195,"h":214}
+},
+"Symbol 3":
+{
+	"frame": {"x":195,"y":214,"w":195,"h":214},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":195,"h":214},
+	"sourceSize": {"w":195,"h":214}
+},
+"Symbol 4":
+{
+	"frame": {"x":0,"y":428,"w":195,"h":214},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":195,"h":214},
+	"sourceSize": {"w":195,"h":214}
+},
+"Symbol 5":
+{
+	"frame": {"x":195,"y":428,"w":195,"h":214},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":195,"h":214},
+	"sourceSize": {"w":195,"h":214}
+},
+"Symbol 6":
+{
+	"frame": {"x":0,"y":642,"w":195,"h":214},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":195,"h":214},
+	"sourceSize": {"w":195,"h":214}
+},
+"Symbol 7":
+{
+	"frame": {"x":0,"y":642,"w":195,"h":214},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":195,"h":214},
+	"sourceSize": {"w":195,"h":214}
+}},
+"meta": {
+	"app": "Adobe Flash CS6",
+	"version": "12.0.0.481",
+	"image": "ANIM_HOMERUNBAT_Duck.png",
+	"format": "RGBA8888",
+	"size": {"w":512,"h":1024},
+	"scale": "1"
+}
+}

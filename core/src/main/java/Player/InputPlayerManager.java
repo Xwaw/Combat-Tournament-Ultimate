@@ -6,7 +6,7 @@ import com.badlogic.gdx.InputProcessor;
 
 public class InputPlayerManager implements InputProcessor {
     private EntityPlayer player;
-    private boolean isPlayerMovingLeft, isPlayerMovingRight;
+    private boolean isPlayerMovingLeft, isPlayerMovingRight, isPlayerDucking;
 
     public InputPlayerManager(EntityPlayer player){
         this.player = player;
@@ -15,43 +15,60 @@ public class InputPlayerManager implements InputProcessor {
     public void updateMovingPlayer(){
         if (isPlayerMovingRight) {
             player.setPlayerPosition(player.getPositionX() + player.speed * Gdx.graphics.getDeltaTime(), player.getPositionY());
+            player.flipPlayerHorizontally(false);
+
             player.setCurrentState(ActionSpritesAnimations.RUN);
         } else if (isPlayerMovingLeft) {
             player.setPlayerPosition(player.getPositionX() - player.speed * Gdx.graphics.getDeltaTime(), player.getPositionY());
+            player.flipPlayerHorizontally(true);
+
             player.setCurrentState(ActionSpritesAnimations.RUN);
-        } else {
+        } else if (isPlayerDucking) {
+            player.setCurrentState(ActionSpritesAnimations.DUCK);
+        }
+        else {
             player.setCurrentState(ActionSpritesAnimations.STAND);
         }
     }
 
     @Override
     public boolean keyDown(int keycode) {
-        updateMovingPlayer();
-
         switch (keycode){
-            case Input.Keys.A:
+            case Input.Keys.LEFT:
                 isPlayerMovingLeft = true;
+
                 break;
-            case Input.Keys.D:
+            case Input.Keys.RIGHT:
                 isPlayerMovingRight = true;
+
+                break;
+            case Input.Keys.DOWN:
+                isPlayerDucking = true;
+                player.setPlayerDucking(true);
+
                 break;
         }
+
+        updateMovingPlayer();
 
         return true;
     }
 
     @Override
     public boolean keyUp(int keycode) {
-        updateMovingPlayer();
-
         switch (keycode){
-            case Input.Keys.A:
+            case Input.Keys.LEFT:
                 isPlayerMovingLeft = false;
                 break;
-            case Input.Keys.D:
+            case Input.Keys.RIGHT:
                 isPlayerMovingRight = false;
                 break;
+            case Input.Keys.DOWN:
+                isPlayerDucking = false;
+                player.setPlayerDucking(false);
         }
+
+        updateMovingPlayer();
 
         return true;
     }

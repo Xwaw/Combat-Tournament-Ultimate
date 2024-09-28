@@ -11,11 +11,11 @@ public class EntityPlayer {
     private float playerSP;
     private Vector2 position;
 
-    public float speed = 400.0f;
+    public float speed = 270.0f;
     private float stateTime;
 
     //actions
-    private boolean rotationRight = true;
+    private boolean isFlippedHorizontally = false;
     private boolean ducking = false;
 
     private HomerunBatAnimations homerunBatAnimations;
@@ -62,10 +62,10 @@ public class EntityPlayer {
     }
 
     public TextureRegion getCurrentFrame(){
-        return currentAnimation.getKeyFrame(stateTime, true);
+        return currentAnimation.getKeyFrame(stateTime);
     }
 
-    public void setPlayerSP(int specialPoints){ // xd
+    public void setPlayerSP(float specialPoints){ // xd
         playerSP = specialPoints;
         if(playerSP >= 100) {
             playerSP = 100;
@@ -77,19 +77,21 @@ public class EntityPlayer {
         position = new Vector2(x, y);
     }
 
-    public boolean isPlayerRotatedRight(){
-        return rotationRight;
+    public boolean isPlayerFlipped(){
+        return isFlippedHorizontally;
+    }
+
+    public void flipPlayerHorizontally(boolean flipX){
+        isFlippedHorizontally = flipX;
     }
 
     public boolean isPlayerDucking() {
         return ducking;
     }
     public void setPlayerDucking(boolean duck) {
-        ducking = duck;
-    }
+        stateTime = 0.0f;
 
-    public void getPlayerPosition() {
-        position = new Vector2(position.x, position.y);
+        ducking = duck;
     }
 
     public Vector2 getPosition() {

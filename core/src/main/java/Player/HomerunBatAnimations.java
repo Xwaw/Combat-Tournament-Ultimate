@@ -11,6 +11,7 @@ public class HomerunBatAnimations {
     public HomerunBatAnimations(float durationAllAnimations){
         this.durationAllAnimations = durationAllAnimations;
 
+        //movement
         ANIM_stand = new AnimationManager("jsonFiles/anim_stand.json", new Texture("pngFiles/anim_stand.png"));
         ANIM_run = new AnimationManager("jsonFiles/anim_run.json", new Texture("pngFiles/anim_run.png"));
         ANIM_duck = new AnimationManager("jsonFiles/anim_duck.json", new Texture("pngFiles/anim_duck.png"));
@@ -22,7 +23,11 @@ public class HomerunBatAnimations {
         return switch (nameOfAnimation) {
             case STAND -> ANIM_stand.createAnimation(durationAllAnimations);
             case RUN -> ANIM_run.createAnimation(durationAllAnimations);
-            case DUCK -> ANIM_duck.createAnimation(durationAllAnimations);
+            case DUCK -> {
+                Animation<TextureRegion> duckAnim = ANIM_duck.createAnimation(durationAllAnimations);
+                duckAnim.setPlayMode(Animation.PlayMode.NORMAL);
+                yield duckAnim;
+            }
             case STARTJUMP -> ANIM_startJump.createAnimation(durationAllAnimations);
             case JUMP -> ANIM_jump.createAnimation(durationAllAnimations);
         };

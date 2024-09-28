@@ -1,12 +1,10 @@
 package ct.game.main;
 
-import Player.ActionSpritesAnimations;
 import Player.EntityPlayer;
 import Player.HomerunBatAnimations;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.*;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.viewport.*;
@@ -23,13 +21,17 @@ public class PlayerScreen implements Screen {
 
     public EntityPlayer entityPlayer;
     private HomerunBatAnimations homerunBatAnimations;
+    private float durationOfAnimations = 0.025f;
+
+    private TextureRegion currentFrame;
 
     public PlayerScreen(){
         camera = new OrthographicCamera();
+        camera.position.set((float) WIDTH / 2, (float) (HEIGHT / 2 ) + 100, 0);
         viewport = new StretchViewport(WIDTH, HEIGHT, camera);
 
-        homerunBatAnimations = new HomerunBatAnimations(0.025f);
-        entityPlayer = new EntityPlayer(100, 1, homerunBatAnimations, new Vector2(250, 35));
+        homerunBatAnimations = new HomerunBatAnimations(durationOfAnimations);
+        entityPlayer = new EntityPlayer(100, 0, homerunBatAnimations, new Vector2(0, 0));
 
         batch = new SpriteBatch();
     }
@@ -38,12 +40,27 @@ public class PlayerScreen implements Screen {
     public void render(float deltaTime) {
         refreshScreen();
         entityPlayer.updatePlayerElements(deltaTime);
+        camera.position.set(entityPlayer.getPositionX() + 60, entityPlayer.getPositionY() + 150, 0);
+
+        currentFrame = entityPlayer.getCurrentFrame();
 
         batch.begin();
 
-        batch.draw(entityPlayer.getCurrentFrame(), entityPlayer.getPositionX(), entityPlayer.getPositionY(), 100, 100);
+        if(entityPlayer.isPlayerFlipped()){
+            if(!currentFrame.isFlipX()){
+                currentFrame.flip(true, false);
+            }
+        }else {
+            if(currentFrame.isFlipX()){
+                currentFrame.flip(true, false);
+            }
+        }
+
+        batch.draw(currentFrame, entityPlayer.getPositionX(), entityPlayer.getPositionY(), 100, 100);
 
         batch.end();
+
+        entityPlayer.setPlayerSP(entityPlayer.getPlayerSP() + 1 * deltaTime);
     }
 
     @Override
