@@ -1,6 +1,5 @@
 package ct.game.main;
 
-import MapGame.MAP_TestLevel;
 import Player.HudManager;
 import Player.InputPlayerManager;
 import com.badlogic.gdx.Game;
@@ -14,7 +13,6 @@ public class GameMain extends Game {
 
     PlayerScreen gameMainScreen;
     HudManager gameHudScreen;
-    MAP_TestLevel mapTestLevel;
 
     InputPlayerManager keyBoardPlayer;
 
@@ -22,7 +20,6 @@ public class GameMain extends Game {
     public void create() {
         gameMainScreen = new PlayerScreen();
         gameHudScreen = new HudManager(gameMainScreen.getEntityPlayer());
-        mapTestLevel = new MAP_TestLevel();
 
         keyBoardPlayer = new InputPlayerManager(gameMainScreen.getEntityPlayer());
 
@@ -35,7 +32,6 @@ public class GameMain extends Game {
     public void render() {
         refreshScreenGame();
 
-        mapTestLevel.render(Gdx.graphics.getDeltaTime());
         gameMainScreen.render(Gdx.graphics.getDeltaTime());
         gameHudScreen.render(Gdx.graphics.getDeltaTime());
 
@@ -46,16 +42,12 @@ public class GameMain extends Game {
     public void resize(int width, int height) {
         gameMainScreen.resize(width, height);
         gameHudScreen.resize(width, height);
-
-        mapTestLevel.resize(width, height);
     }
 
     @Override
     public void dispose() {
         gameMainScreen.dispose();
         gameHudScreen.dispose();
-
-        mapTestLevel.dispose();
     }
 
     private void refreshScreenGame(){

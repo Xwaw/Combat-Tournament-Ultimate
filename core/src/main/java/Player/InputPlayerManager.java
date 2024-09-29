@@ -29,6 +29,8 @@ public class InputPlayerManager implements InputProcessor {
         else {
             player.setCurrentState(ActionSpritesAnimations.STAND);
         }
+
+        player.getPlayerHitbox().setPosition(player.getPositionX(), player.getPositionY());
     }
 
     @Override

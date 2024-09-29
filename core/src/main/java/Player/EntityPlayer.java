@@ -2,6 +2,7 @@ package Player;
 
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 
 import static Player.ActionSpritesAnimations.STAND;
@@ -11,8 +12,10 @@ public class EntityPlayer {
     private float playerSP;
     private Vector2 position;
 
-    public float speed = 270.0f;
+    public float speed = 400.0f;
     private float stateTime;
+
+    private Rectangle hitBox;
 
     //actions
     private boolean isFlippedHorizontally = false;
@@ -31,8 +34,13 @@ public class EntityPlayer {
         this.position = position;
         this.homerunBatAnimations = homerunBatAnimations;
         this.currentAnimation = homerunBatAnimations.getCurrentAnimation(ActionSpritesAnimations.STAND);
+        this.hitBox = new Rectangle(position.x, position.y, 45, 126);
 
         this.stateTime = 0.0f;
+    }
+
+    public Rectangle getPlayerHitbox(){
+        return hitBox;
     }
 
     public void setCurrentState(ActionSpritesAnimations currentState){
@@ -44,6 +52,8 @@ public class EntityPlayer {
 
     public void updatePlayerComponents(float deltaTime){
         stateTime += deltaTime;
+
+        getPlayerHitbox().setPosition(position.x + 22, position.y);
     }
 
     public float getPlayerHP() {

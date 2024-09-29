@@ -1,14 +1,17 @@
 package ct.game.main;
 
+import MapGame.Maps.MAP_TestLevel;
 import Player.EntityPlayer;
 import Player.HomerunBatAnimations;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.*;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.viewport.*;
+import org.w3c.dom.css.Rect;
 
 import static ct.game.main.GameMain.HEIGHT;
 import static ct.game.main.GameMain.WIDTH;
@@ -19,12 +22,15 @@ public class PlayerScreen implements Screen {
     private final Viewport viewport;
     // Graphics
     private final SpriteBatch batch;
+    private final ShapeRenderer shapeRenderer;
 
     public EntityPlayer entityPlayer;
     private HomerunBatAnimations homerunBatAnimations;
     private float durationOfAnimations = 0.025f;
 
     private TextureRegion currentFrame;
+
+    private MAP_TestLevel mapTEST;
 
     public PlayerScreen(){
         camera = new OrthographicCamera();
@@ -35,6 +41,7 @@ public class PlayerScreen implements Screen {
         entityPlayer = new EntityPlayer(100, 0, homerunBatAnimations, new Vector2(0, 0));
 
         batch = new SpriteBatch();
+        shapeRenderer = new ShapeRenderer();
     }
 
     @Override
@@ -45,9 +52,15 @@ public class PlayerScreen implements Screen {
 
         currentFrame = entityPlayer.getCurrentFrame();
 
-        batch.begin();
+        shapeRenderer.setProjectionMatrix(camera.combined);
+        shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
+        Rectangle rectangle = entityPlayer.getPlayerHitbox();
+        shapeRenderer.setColor(155, 0, 0, 1);
+        shapeRenderer.rect(rectangle.x, rectangle.y, rectangle.width, rectangle.height);
+        shapeRenderer.end();
 
-        batch.draw(new Texture("blocks/Coll_BlockFloor1.png"), 0, 0);
+
+        batch.begin();
 
         if(entityPlayer.isPlayerFlipped()){
             if(!currentFrame.isFlipX()){
@@ -61,6 +74,8 @@ public class PlayerScreen implements Screen {
 
         batch.draw(currentFrame, entityPlayer.getPositionX(), entityPlayer.getPositionY(), 100, 100);
 
+        loadMap();
+
         batch.end();
 
         entityPlayer.setPlayerSP(entityPlayer.getPlayerSP() + 1 * deltaTime);
@@ -69,6 +84,7 @@ public class PlayerScreen implements Screen {
     @Override
     public void dispose() {
         batch.dispose();
+        mapTEST.dispose();
     }
 
     @Override
@@ -94,6 +110,11 @@ public class PlayerScreen implements Screen {
     @Override
     public void hide() {
 
+    }
+
+    private void loadMap(){
+        mapTEST = new MAP_TestLevel(batch);
+        mapTEST.render();
     }
 
     private void refreshScreen(){
