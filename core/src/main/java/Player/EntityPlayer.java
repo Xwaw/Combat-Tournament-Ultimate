@@ -42,7 +42,7 @@ public class EntityPlayer {
         }
     }
 
-    public void updatePlayerElements(float deltaTime){
+    public void updatePlayerComponents(float deltaTime){
         stateTime += deltaTime;
     }
 

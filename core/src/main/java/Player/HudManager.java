@@ -16,7 +16,7 @@ import static ct.game.main.GameMain.WIDTH;
 
 public class  HudManager implements Screen {
     //Player HUD and other huds of Game
-    private final Camera camera;
+    private final Camera cameraHUD;
     private final Viewport viewport;
 
     private EntityPlayer playerHUD;
@@ -24,6 +24,7 @@ public class  HudManager implements Screen {
     private SpriteBatch batch;
     // Images of player HUD
     private BitmapFont fpsText;
+    private BitmapFont positionsText;
 
     private TextureRegion MainTextureHud;
     private TextureRegion HealthPointsBar;
@@ -31,17 +32,19 @@ public class  HudManager implements Screen {
 
     private final int maxHP = 100, maxSP = 100;
 
-    public HudManager(EntityPlayer Player) {
-        this.playerHUD = Player;
+    public HudManager(EntityPlayer playerHUD) {
+        this.playerHUD = playerHUD;
 
-        camera = new OrthographicCamera();
-        viewport = new StretchViewport(WIDTH, HEIGHT, camera);
+        cameraHUD = new OrthographicCamera();
+        viewport = new StretchViewport(WIDTH, HEIGHT, cameraHUD);
 
         MainTextureHud = new TextureRegion(new Texture(Gdx.files.internal("pngFiles/HUD_ImagePlayerHud.png")), 3, 54, 314, 85);
         HealthPointsBar = new TextureRegion(new Texture(Gdx.files.internal("pngFiles/HUD_ImagePlayerHud.png")), 0, 211, 208, 13);
         SpecialPointsBar = new TextureRegion(new Texture(Gdx.files.internal("pngFiles/HUD_ImagePlayerHud.png")), 0, 224, 223, 8);
 
+        positionsText = new BitmapFont();
         fpsText = new BitmapFont();
+
         batch = new SpriteBatch();
     }
 
@@ -68,6 +71,7 @@ public class  HudManager implements Screen {
         showPlayerHud(batch);
 
         showFPSCounter(batch, fpsText);
+        showInfoAboutPlayer(batch, positionsText);
 
         batch.end();
     }
@@ -97,12 +101,16 @@ public class  HudManager implements Screen {
         batch.dispose();
     }
 
-    private void showFPSCounter(SpriteBatch batchFont, BitmapFont font){
-        font.draw(batchFont, "FPS: " + Gdx.graphics.getFramesPerSecond(), 10, 20);
+    private void showFPSCounter(SpriteBatch batchFont, BitmapFont text){
+        text.draw(batchFont, "FPS: " + Gdx.graphics.getFramesPerSecond(), 10, 20);
+    }
+
+    private void showInfoAboutPlayer(SpriteBatch batchFont, BitmapFont text){
+        text.draw(batchFont, "X: " + playerHUD.getPositionX() + " | Y: " + playerHUD.getPositionY(), 10, 40);
     }
 
     private void refreshScreen(){
-        camera.update();
-        batch.setProjectionMatrix(camera.combined);
+        cameraHUD.update();
+        batch.setProjectionMatrix(cameraHUD.combined);
     }
 }

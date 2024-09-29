@@ -13,12 +13,12 @@ public class InputPlayerManager implements InputProcessor {
     }
 
     public void updateMovingPlayer(){
-        if (isPlayerMovingRight) {
+        if (isPlayerMovingRight && !isPlayerDucking) {
             player.setPlayerPosition(player.getPositionX() + player.speed * Gdx.graphics.getDeltaTime(), player.getPositionY());
             player.flipPlayerHorizontally(false);
 
             player.setCurrentState(ActionSpritesAnimations.RUN);
-        } else if (isPlayerMovingLeft) {
+        } else if (isPlayerMovingLeft && !isPlayerDucking) {
             player.setPlayerPosition(player.getPositionX() - player.speed * Gdx.graphics.getDeltaTime(), player.getPositionY());
             player.flipPlayerHorizontally(true);
 
@@ -43,8 +43,10 @@ public class InputPlayerManager implements InputProcessor {
 
                 break;
             case Input.Keys.DOWN:
-                isPlayerDucking = true;
-                player.setPlayerDucking(true);
+                if(!isPlayerDucking) {
+                    player.setPlayerDucking(true);
+                    isPlayerDucking = true;
+                }
 
                 break;
         }
@@ -64,8 +66,10 @@ public class InputPlayerManager implements InputProcessor {
                 isPlayerMovingRight = false;
                 break;
             case Input.Keys.DOWN:
-                isPlayerDucking = false;
-                player.setPlayerDucking(false);
+                if(isPlayerDucking) {
+                    player.setPlayerDucking(false);
+                    isPlayerDucking = false;
+                }
         }
 
         updateMovingPlayer();

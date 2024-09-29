@@ -5,6 +5,7 @@ import Player.HomerunBatAnimations;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.*;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.viewport.*;
@@ -27,8 +28,8 @@ public class PlayerScreen implements Screen {
 
     public PlayerScreen(){
         camera = new OrthographicCamera();
-        camera.position.set((float) WIDTH / 2, (float) (HEIGHT / 2 ) + 100, 0);
         viewport = new StretchViewport(WIDTH, HEIGHT, camera);
+        camera.position.set((float) WIDTH / 2, (float) (HEIGHT / 2 ) + 100, 0);
 
         homerunBatAnimations = new HomerunBatAnimations(durationOfAnimations);
         entityPlayer = new EntityPlayer(100, 0, homerunBatAnimations, new Vector2(0, 0));
@@ -39,12 +40,14 @@ public class PlayerScreen implements Screen {
     @Override
     public void render(float deltaTime) {
         refreshScreen();
-        entityPlayer.updatePlayerElements(deltaTime);
+        entityPlayer.updatePlayerComponents(deltaTime);
         camera.position.set(entityPlayer.getPositionX() + 60, entityPlayer.getPositionY() + 150, 0);
 
         currentFrame = entityPlayer.getCurrentFrame();
 
         batch.begin();
+
+        batch.draw(new Texture("blocks/Coll_BlockFloor1.png"), 0, 0);
 
         if(entityPlayer.isPlayerFlipped()){
             if(!currentFrame.isFlipX()){
