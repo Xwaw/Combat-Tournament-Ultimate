@@ -1,84 +1,67 @@
 package ct.game.main;
 
 import MapGame.Maps.MAP_TestLevel;
+import MapGame.PhysicsManager;
 import Player.EntityPlayer;
-import Player.HomerunBatAnimations;
+import Player.AnimationManager;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.*;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.utils.viewport.*;
-import org.w3c.dom.css.Rect;
 
 import static ct.game.main.GameMain.HEIGHT;
 import static ct.game.main.GameMain.WIDTH;
 
-public class PlayerScreen implements Screen {
+public class PlayerCameraMain implements Screen {
+    private static int offSetX = -50, offSetY = -55;
     // Camera
-    private final Camera camera;
+    private final OrthographicCamera camera;
     private final Viewport viewport;
     // Graphics
     private final SpriteBatch batch;
-    private final ShapeRenderer shapeRenderer;
-
+    // Player
     public EntityPlayer entityPlayer;
-    private HomerunBatAnimations homerunBatAnimations;
-    private float durationOfAnimations = 0.025f;
-
     private TextureRegion currentFrame;
 
     private MAP_TestLevel mapTEST;
 
-    public PlayerScreen(){
+    public PlayerCameraMain(){
         camera = new OrthographicCamera();
         viewport = new StretchViewport(WIDTH, HEIGHT, camera);
         camera.position.set((float) WIDTH / 2, (float) (HEIGHT / 2 ) + 100, 0);
 
-        homerunBatAnimations = new HomerunBatAnimations(durationOfAnimations);
-        entityPlayer = new EntityPlayer(100, 0, homerunBatAnimations, new Vector2(0, 0));
+        float animationFramesSpeed = 0.025f;
+        entityPlayer = new EntityPlayer(100, 0, new AnimationManager(animationFramesSpeed), new Vector2(0, 0), new float[]{27, 54});
 
         batch = new SpriteBatch();
-        shapeRenderer = new ShapeRenderer();
+
+        mapTEST = new MAP_TestLevel(batch);
     }
 
     @Override
     public void render(float deltaTime) {
         refreshScreen();
         entityPlayer.updatePlayerComponents(deltaTime);
-        camera.position.set(entityPlayer.getPositionX() + 60, entityPlayer.getPositionY() + 150, 0);
+
+        camera.position.set(entityPlayer.getPositionX() , entityPlayer.getPositionY(), 0);
 
         currentFrame = entityPlayer.getCurrentFrame();
 
-        shapeRenderer.setProjectionMatrix(camera.combined);
-        shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
-        Rectangle rectangle = entityPlayer.getPlayerHitbox();
-        shapeRenderer.setColor(155, 0, 0, 1);
-        shapeRenderer.rect(rectangle.x, rectangle.y, rectangle.width, rectangle.height);
-        shapeRenderer.end();
-
-
         batch.begin();
 
-        if(entityPlayer.isPlayerFlipped()){
-            if(!currentFrame.isFlipX()){
-                currentFrame.flip(true, false);
-            }
-        }else {
-            if(currentFrame.isFlipX()){
-                currentFrame.flip(true, false);
-            }
-        }
+        renderPlayerFlipping();
 
-        batch.draw(currentFrame, entityPlayer.getPositionX(), entityPlayer.getPositionY(), 100, 100);
-
+        batch.draw(currentFrame, entityPlayer.getPositionX() + offSetX, entityPlayer.getPositionY() + offSetY, 100, 100);
         loadMap();
 
         batch.end();
 
-        entityPlayer.setPlayerSP(entityPlayer.getPlayerSP() + 1 * deltaTime);
+        GameMain.getPhysicsManager().renderHitboxObjects(camera);
     }
 
     @Override
@@ -113,8 +96,19 @@ public class PlayerScreen implements Screen {
     }
 
     private void loadMap(){
-        mapTEST = new MAP_TestLevel(batch);
         mapTEST.render();
+    }
+
+    private void renderPlayerFlipping(){
+        if(entityPlayer.isEntityFlipped()){
+            if(!currentFrame.isFlipX()){
+                currentFrame.flip(true, false);
+            }
+        }else {
+            if(currentFrame.isFlipX()){
+                currentFrame.flip(true, false);
+            }
+        }
     }
 
     private void refreshScreen(){
@@ -124,5 +118,9 @@ public class PlayerScreen implements Screen {
 
     public EntityPlayer getEntityPlayer() {
         return entityPlayer;
+    }
+
+    public Camera getCamera() {
+        return camera;
     }
 }

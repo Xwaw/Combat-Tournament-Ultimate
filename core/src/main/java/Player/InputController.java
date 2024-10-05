@@ -4,33 +4,31 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
 
-public class InputPlayerManager implements InputProcessor {
+public class InputController implements InputProcessor {
     private EntityPlayer player;
     private boolean isPlayerMovingLeft, isPlayerMovingRight, isPlayerDucking;
 
-    public InputPlayerManager(EntityPlayer player){
+    public InputController(EntityPlayer player){
         this.player = player;
     }
 
     public void updateMovingPlayer(){
         if (isPlayerMovingRight && !isPlayerDucking) {
-            player.setPlayerPosition(player.getPositionX() + player.speed * Gdx.graphics.getDeltaTime(), player.getPositionY());
-            player.flipPlayerHorizontally(false);
+            player.setEntityPosition(player.getPositionX() + player.speed * Gdx.graphics.getDeltaTime(), player.getPositionY());
+            player.flipEntityHorizontally(false);
 
             player.setCurrentState(ActionSpritesAnimations.RUN);
         } else if (isPlayerMovingLeft && !isPlayerDucking) {
-            player.setPlayerPosition(player.getPositionX() - player.speed * Gdx.graphics.getDeltaTime(), player.getPositionY());
-            player.flipPlayerHorizontally(true);
+            player.setEntityPosition(player.getPositionX() - player.speed * Gdx.graphics.getDeltaTime(), player.getPositionY());
+            player.flipEntityHorizontally(true);
 
             player.setCurrentState(ActionSpritesAnimations.RUN);
         } else if (isPlayerDucking) {
-            player.setCurrentState(ActionSpritesAnimations.DUCK);
+            player.setEntityDucking(true);
         }
-        else {
+        else{
             player.setCurrentState(ActionSpritesAnimations.STAND);
         }
-
-        player.getPlayerHitbox().setPosition(player.getPositionX(), player.getPositionY());
     }
 
     @Override
@@ -46,7 +44,6 @@ public class InputPlayerManager implements InputProcessor {
                 break;
             case Input.Keys.DOWN:
                 if(!isPlayerDucking) {
-                    player.setPlayerDucking(true);
                     isPlayerDucking = true;
                 }
 
@@ -69,7 +66,7 @@ public class InputPlayerManager implements InputProcessor {
                 break;
             case Input.Keys.DOWN:
                 if(isPlayerDucking) {
-                    player.setPlayerDucking(false);
+                    player.setEntityDucking(false);
                     isPlayerDucking = false;
                 }
         }

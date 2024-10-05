@@ -8,23 +8,20 @@ import com.badlogic.gdx.math.Vector2;
 
 public class MAP_TestLevel{
     private ObjectCreator objTestFloor;
-    private SpriteBatch batch;
 
-    private Texture TESTBLOCK;
+    private Texture texture;
 
     public MAP_TestLevel(SpriteBatch batch) {
-        this.batch = batch;
-
-        TESTBLOCK = new Texture(Gdx.files.internal("blocks/Coll_BlockFloor1.png"));
-        objTestFloor = new ObjectCreator(TESTBLOCK, batch, new Vector2(0, 0), 2,true);
+        texture = new Texture(Gdx.files.internal("blocks/Coll_BlockFloor1.png"));
+        objTestFloor = new ObjectCreator(texture, batch, new Vector2(0, -150), 1,true);
     }
 
 
     public void render() {
-        objTestFloor.drawAndCreateObject();
+        objTestFloor.renderObject();
     }
 
     public void dispose() {
-        TESTBLOCK.dispose();
+        texture.dispose();
     }
 }

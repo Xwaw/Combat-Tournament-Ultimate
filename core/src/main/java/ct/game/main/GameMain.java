@@ -1,27 +1,33 @@
 package ct.game.main;
 
+import MapGame.PhysicsManager;
 import Player.HudManager;
-import Player.InputPlayerManager;
+import Player.InputController;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.math.Vector2;
 
 /** {@link com.badlogic.gdx.ApplicationListener} implementation shared by all platforms. */
 public class GameMain extends Game {
     public final static int WIDTH = 712, HEIGHT = 400;
 
-    PlayerScreen gameMainScreen;
-    HudManager gameHudScreen;
+    private PlayerCameraMain gameMainScreen;
+    private HudManager gameHudScreen;
 
-    InputPlayerManager keyBoardPlayer;
+    private InputController keyBoardPlayer;
+
+    private static PhysicsManager worldPhysicsManager;
 
     @Override
     public void create() {
-        gameMainScreen = new PlayerScreen();
+        worldPhysicsManager = new PhysicsManager(new Vector2(0, -50f));
+
+        gameMainScreen = new PlayerCameraMain();
         gameHudScreen = new HudManager(gameMainScreen.getEntityPlayer());
 
-        keyBoardPlayer = new InputPlayerManager(gameMainScreen.getEntityPlayer());
+        keyBoardPlayer = new InputController(gameMainScreen.getEntityPlayer());
 
         InputMultiplexer multiplexer = new InputMultiplexer();
         multiplexer.addProcessor(keyBoardPlayer);
@@ -48,6 +54,10 @@ public class GameMain extends Game {
     public void dispose() {
         gameMainScreen.dispose();
         gameHudScreen.dispose();
+    }
+
+    public static PhysicsManager getPhysicsManager(){
+        return worldPhysicsManager;
     }
 
     private void refreshScreenGame(){

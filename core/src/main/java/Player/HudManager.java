@@ -54,8 +54,8 @@ public class  HudManager implements Screen {
     }
 
     private void showPlayerHud(SpriteBatch batch){
-        float barWidthByHP = Math.max((playerHUD.getPlayerHP()/maxHP) * HealthPointsBar.getRegionWidth(), 0);
-        float barWidthBySP = Math.max((playerHUD.getPlayerSP()/maxSP) * SpecialPointsBar.getRegionWidth(), 0);
+        float barWidthByHP = Math.max((playerHUD.getHealthPoints()/maxHP) * HealthPointsBar.getRegionWidth(), 0);
+        float barWidthBySP = Math.max((playerHUD.getSpecialPoints()/maxSP) * SpecialPointsBar.getRegionWidth(), 0);
 
         batch.draw(HealthPointsBar, 54, 352, barWidthByHP, 13);
         batch.draw(MainTextureHud, 3, 315);

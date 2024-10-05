@@ -1,63 +1,50 @@
 package Player;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.utils.Array;
-import com.badlogic.gdx.utils.JsonReader;
-import com.badlogic.gdx.utils.JsonValue;
 
-import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class AnimationManager {
-    String pathJSON;
-    Texture spriteSheet;
+    private Map<ActionSpritesAnimations, Animation<TextureRegion>> animationsMap = new HashMap<>();;
+    private float duration;
 
-    public AnimationManager(String pathJSON, Texture spriteSheet) {
-        this.pathJSON = pathJSON;
-        this.spriteSheet = spriteSheet;
+    public AnimationManager(float duration){
+        this.duration = duration;
+
+        loadAnimationsFromAssets();
     }
 
-    private ArrayList<int[]> parseFlashJSONIntoArrayList(String path){
-        ArrayList<int[]> framesPositions = new ArrayList<>();
+    private void loadAnimationsFromAssets() {
+        Object[][] animationData = {
+            {ActionSpritesAnimations.STAND, "jsonFiles/anim_stand.json", "pngFiles/animations/anim_stand.png"},
+            {ActionSpritesAnimations.RUN, "jsonFiles/anim_run.json", "pngFiles/animations/anim_run.png"},
+            {ActionSpritesAnimations.DUCK, "jsonFiles/anim_duck.json", "pngFiles/animations/anim_duck.png"},
+            {ActionSpritesAnimations.STARTJUMP, "jsonFiles/anim_startJump.json", "pngFiles/animations/anim_startJump.png"},
+            {ActionSpritesAnimations.JUMP, "jsonFiles/anim_jump.json", "pngFiles/animations/anim_jump.png"}
+        };
 
-        FileHandle file = Gdx.files.internal(path); //Json path
-        JsonReader jsonReader = new JsonReader();
-        JsonValue fileJSON = jsonReader.parse(file);
+        for (Object[] data : animationData) {
+            ActionSpritesAnimations animationType = (ActionSpritesAnimations) data[0];
+            String jsonPath = (String) data[1];
+            String texturePath = (String) data[2];
 
-        JsonValue framesJSON = fileJSON.get("frames");
+            animationsMap.put(
+                animationType,
+                AnimationLoader.createAnimation(jsonPath, duration, new Texture(Gdx.files.internal(texturePath)))
+            );
+        }
+    }
 
-        for(int i = 0; i <= framesJSON.size - 1; i++){
-            JsonValue symbolJSON = framesJSON.get("Symbol " + i);
-            JsonValue frameJSON = symbolJSON.get("frame");
-
-            int x = frameJSON.getInt("x");
-            int y = frameJSON.getInt("y");
-            int width = frameJSON.getInt("w");
-            int height = frameJSON.getInt("h");
-
-            framesPositions.add(new int[]{x, y, width, height});
+    public Animation<TextureRegion> getCurrentAnimation(ActionSpritesAnimations currentState){
+        Animation<TextureRegion> animation = animationsMap.get(currentState);
+        if(currentState == ActionSpritesAnimations.DUCK){
+            animation.setPlayMode(Animation.PlayMode.NORMAL);
         }
 
-        return framesPositions;
-    }
-
-    private Array<TextureRegion> createTextureRegionArray(ArrayList<int[]> framesPositions, Texture texture) {
-        Array<TextureRegion> frames = new Array<>();
-
-        for (int[] framePosition : framesPositions) {
-            TextureRegion frame = new TextureRegion(texture, framePosition[0], framePosition[1], framePosition[2], framePosition[3]);
-            frames.add(frame);
-        }
-
-        return frames;
-    }
-
-    public Animation<TextureRegion> createAnimation(float frameDuration) {
-        Array<TextureRegion> standFrames = createTextureRegionArray(parseFlashJSONIntoArrayList(pathJSON), spriteSheet);
-
-        return new Animation<>(frameDuration, standFrames, Animation.PlayMode.LOOP);
+        return animation;
     }
 }
