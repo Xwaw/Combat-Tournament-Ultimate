@@ -9,16 +9,19 @@ public class PhysicsManager {
     private Box2DDebugRenderer debugRenderer;
 
     public PhysicsManager(Vector2 gravity){
-        world = new World(gravity, false);
-
+        world = new World(gravity, true);
         debugRenderer = new Box2DDebugRenderer();
     }
 
-    public Body createBody(Vector2 position, float[] hitBoxSize ,boolean staticObject){
+    public World getWorld(){
+        return world;
+    }
+
+    public Body createBody(Vector2 position, float[] hitBoxSize ,boolean itsBlock){
         //Creating logic of Body
         BodyDef bodyDef = new BodyDef();
         bodyDef.position.set(position.x, position.y);
-        bodyDef.type = staticObject ? BodyDef.BodyType.StaticBody : BodyDef.BodyType.DynamicBody;
+        bodyDef.type = itsBlock ? BodyDef.BodyType.StaticBody : BodyDef.BodyType.DynamicBody;
         bodyDef.fixedRotation = true;
         Body body = world.createBody(bodyDef);
 
@@ -27,19 +30,17 @@ public class PhysicsManager {
         shape.setAsBox(hitBoxSize[0], hitBoxSize[1]);
 
         FixtureDef fixtureDef = new FixtureDef();
-        fixtureDef.density = staticObject ? 0 : 1;
-        fixtureDef.friction = 0.5f;
+        fixtureDef.shape = shape;
+        fixtureDef.density = itsBlock ? 0f : 1f;
+        fixtureDef.friction = itsBlock ? 0f : 1f;
+        fixtureDef.restitution = 0;
 
         //Setting body
-        body.createFixture(shape, 1.0f);
+        body.createFixture(fixtureDef);
 
         shape.dispose();
 
         return body;
-    }
-
-    public World getWorld(){
-        return world;
     }
 
     public void updateWorldComponents(){

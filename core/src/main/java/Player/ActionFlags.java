@@ -1,5 +1,5 @@
 package Player;
 
-public enum ActionSpritesAnimations {
+public enum ActionFlags {
     STAND, RUN, DUCK, STARTJUMP, JUMP
 }

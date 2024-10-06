@@ -1,15 +1,13 @@
 package Player;
 
 import MapGame.PhysicsManager;
-import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import ct.game.main.GameMain;
 
-import static Player.ActionSpritesAnimations.DUCK;
-import static Player.ActionSpritesAnimations.STAND;
+import java.util.Objects;
 
 public class EntityPlayer {
     private PhysicsManager physicsManager;
@@ -18,7 +16,7 @@ public class EntityPlayer {
     private float healthPoints;
     private float specialPoints;
 
-    public float speed = 400.0f;
+    public float speed = 100f;
     private float stateTime;
 
     //actions
@@ -27,9 +25,11 @@ public class EntityPlayer {
 
     private AnimationManager animationsForPlayer;
 
+    //settingControlsFor Player
+
     //private Characters character = HOMERUNBAT;
 
-    private ActionSpritesAnimations currentState = STAND;
+    private ActionFlags currentState = ActionFlags.STAND;
     private Animation<TextureRegion> currentStateAnimation;
 
     public EntityPlayer(float playerHP, float playerSP, AnimationManager animationsForPlayer, Vector2 position, float[] hitBoxSize){
@@ -41,10 +41,11 @@ public class EntityPlayer {
 
         this.animationsForPlayer = animationsForPlayer;
         this.currentStateAnimation = animationsForPlayer.getCurrentAnimation(currentState);
+
         this.stateTime = 0.0f;
     }
 
-    public void setCurrentState(ActionSpritesAnimations currentState){
+    public void setCurrentState(ActionFlags currentState){
         if (this.currentState != currentState) {
             this.currentState = currentState;
             currentStateAnimation = animationsForPlayer.getCurrentAnimation(currentState);
@@ -55,8 +56,6 @@ public class EntityPlayer {
 
     public void updatePlayerComponents(float deltaTime){
         stateTime += deltaTime;
-
-        physicsManager.updateWorldComponents();
     }
 
     public float getHealthPoints() {
@@ -98,26 +97,46 @@ public class EntityPlayer {
     }
     public void setEntityDucking(boolean duck) {
         if(duck) {
-            this.setCurrentState(DUCK);
+            this.setCurrentState(ActionFlags.DUCK);
             isDucking = true;
         }else{
             isDucking = false;
         }
     }
 
-    public Vector2 getPosition() {
-        return body.getPosition();
-    }
-
-    public float getPositionX() {
+    public float getPositionX(){
         return body.getPosition().x;
     }
-
-    public float getPositionY() {
+    public float getPositionY(){
         return body.getPosition().y;
     }
 
-    public void setEntityPosition(float x, float y) {
-        body.setTransform(x, y, 0);
+    public void updateMovementEntity(String direction){
+        Vector2 velocity = body.getLinearVelocity();
+
+        switch (direction) {
+            case "RIGHT" -> {
+                this.flipEntityHorizontally(false);
+                this.setCurrentState(ActionFlags.RUN);
+
+                body.setLinearVelocity(new Vector2(speed, velocity.y));
+            }
+            case "LEFT" -> {
+                this.flipEntityHorizontally(true);
+                this.setCurrentState(ActionFlags.RUN);
+
+                body.setLinearVelocity(new Vector2(-speed, velocity.y));
+            }
+            case "DOWN" -> {
+                this.setEntityDucking(true);
+
+                body.setLinearVelocity(new Vector2(0, velocity.y));
+            }
+            case null, default -> {
+                this.setCurrentState(ActionFlags.STAND);
+
+                body.setLinearVelocity(new Vector2(0, velocity.y));
+            }
+        }
     }
 }

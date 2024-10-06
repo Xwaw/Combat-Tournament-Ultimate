@@ -36,7 +36,7 @@ public class PlayerCameraMain implements Screen {
         camera.position.set((float) WIDTH / 2, (float) (HEIGHT / 2 ) + 100, 0);
 
         float animationFramesSpeed = 0.025f;
-        entityPlayer = new EntityPlayer(100, 0, new AnimationManager(animationFramesSpeed), new Vector2(0, 0), new float[]{27, 54});
+        entityPlayer = new EntityPlayer(100, 0, new AnimationManager(animationFramesSpeed), new Vector2(0, 0), new float[]{25, 54});
 
         batch = new SpriteBatch();
 

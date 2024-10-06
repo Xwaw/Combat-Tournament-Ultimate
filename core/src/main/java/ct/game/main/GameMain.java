@@ -22,7 +22,7 @@ public class GameMain extends Game {
 
     @Override
     public void create() {
-        worldPhysicsManager = new PhysicsManager(new Vector2(0, -50f));
+        worldPhysicsManager = new PhysicsManager(new Vector2(0, -10.0f));
 
         gameMainScreen = new PlayerCameraMain();
         gameHudScreen = new HudManager(gameMainScreen.getEntityPlayer());
@@ -36,12 +36,16 @@ public class GameMain extends Game {
 
     @Override
     public void render() {
+        float delta = Gdx.graphics.getDeltaTime();
+
+        worldPhysicsManager.updateWorldComponents();
+
+        keyBoardPlayer.updateMovingPlayer();
+
         refreshScreenGame();
 
         gameMainScreen.render(Gdx.graphics.getDeltaTime());
         gameHudScreen.render(Gdx.graphics.getDeltaTime());
-
-        keyBoardPlayer.updateMovingPlayer();
     }
 
     @Override
@@ -54,6 +58,8 @@ public class GameMain extends Game {
     public void dispose() {
         gameMainScreen.dispose();
         gameHudScreen.dispose();
+
+        worldPhysicsManager.dispose();
     }
 
     public static PhysicsManager getPhysicsManager(){

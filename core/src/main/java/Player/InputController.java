@@ -1,8 +1,8 @@
 package Player;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
+import com.badlogic.gdx.math.Vector2;
 
 public class InputController implements InputProcessor {
     private EntityPlayer player;
@@ -14,20 +14,14 @@ public class InputController implements InputProcessor {
 
     public void updateMovingPlayer(){
         if (isPlayerMovingRight && !isPlayerDucking) {
-            player.setEntityPosition(player.getPositionX() + player.speed * Gdx.graphics.getDeltaTime(), player.getPositionY());
-            player.flipEntityHorizontally(false);
-
-            player.setCurrentState(ActionSpritesAnimations.RUN);
+            player.updateMovementEntity("RIGHT");
         } else if (isPlayerMovingLeft && !isPlayerDucking) {
-            player.setEntityPosition(player.getPositionX() - player.speed * Gdx.graphics.getDeltaTime(), player.getPositionY());
-            player.flipEntityHorizontally(true);
-
-            player.setCurrentState(ActionSpritesAnimations.RUN);
+            player.updateMovementEntity("LEFT");
         } else if (isPlayerDucking) {
-            player.setEntityDucking(true);
+            player.updateMovementEntity("DOWN");
         }
         else{
-            player.setCurrentState(ActionSpritesAnimations.STAND);
+            player.updateMovementEntity(null);
         }
     }
 
