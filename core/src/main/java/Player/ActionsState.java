@@ -1,5 +1,5 @@
 package Player;
 
-public enum ActionFlags {
+public enum ActionsState {
     STAND, RUN, DUCK, STARTJUMP, JUMP
 }

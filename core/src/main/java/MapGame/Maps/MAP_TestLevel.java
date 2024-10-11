@@ -8,13 +8,13 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 
 public class MAP_TestLevel{
-    private ObjectCreator objTestFloor;
+    private final ObjectCreator objTestFloor;
 
-    private Texture texture;
+    private final Texture texture;
 
     public MAP_TestLevel(SpriteBatch batch) {
         texture = new Texture(Gdx.files.internal("blocks/Coll_BlockFloor1.png"));
-        objTestFloor = new ObjectCreator(texture, batch, new Vector2(0, -150), 1,true);
+        objTestFloor = new ObjectCreator(texture, batch, new Vector2(0,-150), 2, 5f, "Floor");
     }
 
 

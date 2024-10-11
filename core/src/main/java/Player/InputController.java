@@ -2,23 +2,27 @@ package Player;
 
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
-import com.badlogic.gdx.math.Vector2;
 
 public class InputController implements InputProcessor {
     private EntityPlayer player;
-    private boolean isPlayerMovingLeft, isPlayerMovingRight, isPlayerDucking;
+    private final boolean[] keys;
+    //[0] - left; [1] - right; [2] - down/duck; [3] - space/jump
 
     public InputController(EntityPlayer player){
         this.player = player;
+
+        keys = new boolean[256];
     }
 
     public void updateMovingPlayer(){
-        if (isPlayerMovingRight && !isPlayerDucking) {
+        if (keys[1] && !keys[2] && !keys[3]) {
             player.updateMovementEntity("RIGHT");
-        } else if (isPlayerMovingLeft && !isPlayerDucking) {
+        } else if (keys[0] && !keys[2] && !keys[3]) {
             player.updateMovementEntity("LEFT");
-        } else if (isPlayerDucking) {
+        } else if (keys[2]) {
             player.updateMovementEntity("DOWN");
+        } else if (keys[3]) {
+            player.updateMovementEntity("SPACE");
         }
         else{
             player.updateMovementEntity(null);
@@ -29,18 +33,18 @@ public class InputController implements InputProcessor {
     public boolean keyDown(int keycode) {
         switch (keycode){
             case Input.Keys.LEFT:
-                isPlayerMovingLeft = true;
-
+                keys[0] = true;
                 break;
             case Input.Keys.RIGHT:
-                isPlayerMovingRight = true;
-
+                keys[1] = true;
                 break;
             case Input.Keys.DOWN:
-                if(!isPlayerDucking) {
-                    isPlayerDucking = true;
+                if(!keys[2]) {
+                    keys[2] = true;
                 }
-
+                break;
+            case Input.Keys.SPACE:
+                keys[3] = true;
                 break;
         }
 
@@ -53,16 +57,20 @@ public class InputController implements InputProcessor {
     public boolean keyUp(int keycode) {
         switch (keycode){
             case Input.Keys.LEFT:
-                isPlayerMovingLeft = false;
+                keys[0] = false;
                 break;
             case Input.Keys.RIGHT:
-                isPlayerMovingRight = false;
+                keys[1] = false;
                 break;
             case Input.Keys.DOWN:
-                if(isPlayerDucking) {
+                if(keys[2]) {
                     player.setEntityDucking(false);
-                    isPlayerDucking = false;
+                    keys[2] = false;
                 }
+                break;
+            case Input.Keys.SPACE:
+                keys[3] = false;
+                break;
         }
 
         updateMovingPlayer();

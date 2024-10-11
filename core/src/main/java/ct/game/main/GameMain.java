@@ -12,6 +12,7 @@ import com.badlogic.gdx.math.Vector2;
 /** {@link com.badlogic.gdx.ApplicationListener} implementation shared by all platforms. */
 public class GameMain extends Game {
     public final static int WIDTH = 712, HEIGHT = 400;
+    public final static float PPM = 100f;
 
     private PlayerCameraMain gameMainScreen;
     private HudManager gameHudScreen;
@@ -22,7 +23,7 @@ public class GameMain extends Game {
 
     @Override
     public void create() {
-        worldPhysicsManager = new PhysicsManager(new Vector2(0, -10.0f));
+        worldPhysicsManager = new PhysicsManager(new Vector2(0, -9.8f));
 
         gameMainScreen = new PlayerCameraMain();
         gameHudScreen = new HudManager(gameMainScreen.getEntityPlayer());
@@ -36,8 +37,6 @@ public class GameMain extends Game {
 
     @Override
     public void render() {
-        float delta = Gdx.graphics.getDeltaTime();
-
         worldPhysicsManager.updateWorldComponents();
 
         keyBoardPlayer.updateMovingPlayer();

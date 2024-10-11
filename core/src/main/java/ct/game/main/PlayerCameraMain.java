@@ -2,8 +2,10 @@ package ct.game.main;
 
 import MapGame.Maps.MAP_TestLevel;
 import MapGame.PhysicsManager;
+import Player.ActionsState;
 import Player.EntityPlayer;
 import Player.AnimationManager;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -14,11 +16,10 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.utils.viewport.*;
 
-import static ct.game.main.GameMain.HEIGHT;
-import static ct.game.main.GameMain.WIDTH;
+import static ct.game.main.GameMain.*;
 
 public class PlayerCameraMain implements Screen {
-    private static int offSetX = -50, offSetY = -55;
+    private static int offSetX = -42, offSetY = -65;
     // Camera
     private final OrthographicCamera camera;
     private final Viewport viewport;
@@ -28,15 +29,20 @@ public class PlayerCameraMain implements Screen {
     public EntityPlayer entityPlayer;
     private TextureRegion currentFrame;
 
+    private float wFrame, hFrame;
+
     private MAP_TestLevel mapTEST;
 
     public PlayerCameraMain(){
         camera = new OrthographicCamera();
-        viewport = new StretchViewport(WIDTH, HEIGHT, camera);
-        camera.position.set((float) WIDTH / 2, (float) (HEIGHT / 2 ) + 100, 0);
+        camera.setToOrtho(false, WIDTH / PPM, HEIGHT / PPM);
+        viewport = new StretchViewport(WIDTH / PPM, HEIGHT / PPM, camera);
+
+        camera.position.set((float) WIDTH / 2 /PPM, (float) (HEIGHT / 2 ) + 100 / PPM, 0);
+        camera.zoom = 1.0f;
 
         float animationFramesSpeed = 0.025f;
-        entityPlayer = new EntityPlayer(100, 0, new AnimationManager(animationFramesSpeed), new Vector2(0, 0), new float[]{25, 54});
+        entityPlayer = new EntityPlayer(100, 0, new AnimationManager(animationFramesSpeed), new Vector2(0, 0), new float[]{44f, 130f});
 
         batch = new SpriteBatch();
 
@@ -46,22 +52,32 @@ public class PlayerCameraMain implements Screen {
     @Override
     public void render(float deltaTime) {
         refreshScreen();
+
         entityPlayer.updatePlayerComponents(deltaTime);
 
-        camera.position.set(entityPlayer.getPositionX() , entityPlayer.getPositionY(), 0);
+        setCameraForEntity(entityPlayer.getPositions());
 
         currentFrame = entityPlayer.getCurrentFrame();
+        wFrame = currentFrame.getRegionWidth(); hFrame = currentFrame.getRegionHeight();
 
         batch.begin();
 
+        if(!entityPlayer.isOnGround){
+            entityPlayer.setCurrentState(ActionsState.JUMP);
+        }
+
         renderPlayerFlipping();
 
-        batch.draw(currentFrame, entityPlayer.getPositionX() + offSetX, entityPlayer.getPositionY() + offSetY, 100, 100);
+        batch.draw(currentFrame, (entityPlayer.getPositionX() / PPM) + (offSetX / PPM), (entityPlayer.getPositionY() / PPM) + (offSetY / PPM), (wFrame/2) / PPM, (hFrame/2) / PPM);
         loadMap();
 
         batch.end();
 
         GameMain.getPhysicsManager().renderHitboxObjects(camera);
+    }
+
+    public void setCameraForEntity(Vector2 position){
+        camera.position.set(position.x / PPM, position.y / PPM, 0);
     }
 
     @Override
