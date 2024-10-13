@@ -1,5 +1,5 @@
 package Player;
 
-public enum ActionsState {
+public enum ActionState {
     STAND, RUN, DUCK, STARTJUMP, JUMP
 }

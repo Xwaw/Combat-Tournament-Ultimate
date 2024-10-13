@@ -57,9 +57,9 @@ public class  HudManager implements Screen {
         float barWidthByHP = Math.max((playerHUD.getHealthPoints()/maxHP) * HealthPointsBar.getRegionWidth(), 0);
         float barWidthBySP = Math.max((playerHUD.getSpecialPoints()/maxSP) * SpecialPointsBar.getRegionWidth(), 0);
 
-        batch.draw(HealthPointsBar, 54, 352, barWidthByHP, 13);
-        batch.draw(MainTextureHud, 3, 315);
-        batch.draw(SpecialPointsBar, 86, 339, barWidthBySP, 6);
+        batch.draw(HealthPointsBar, 80,  HEIGHT * 0.875f, barWidthByHP * 1.49f, 14 * 1.46f);
+        batch.draw(MainTextureHud, 3, HEIGHT * 0.8f, MainTextureHud.getRegionWidth() * 1.5f, MainTextureHud.getRegionHeight() * 1.5f);
+        batch.draw(SpecialPointsBar, 127, HEIGHT * 0.85f, barWidthBySP * 1.49f, 6 * 1.5f);
     }
 
     @Override

@@ -1,19 +1,14 @@
 package ct.game.main;
 
 import MapGame.Maps.MAP_TestLevel;
-import MapGame.PhysicsManager;
-import Player.ActionsState;
+import Player.ActionState;
 import Player.EntityPlayer;
 import Player.AnimationManager;
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.*;
-import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.utils.viewport.*;
 
 import static ct.game.main.GameMain.*;
@@ -42,7 +37,7 @@ public class PlayerCameraMain implements Screen {
         camera.zoom = 1.0f;
 
         float animationFramesSpeed = 0.025f;
-        entityPlayer = new EntityPlayer(100, 0, new AnimationManager(animationFramesSpeed), new Vector2(0, 0), new float[]{44f, 130f});
+        entityPlayer = new EntityPlayer(100, 100, new AnimationManager(animationFramesSpeed), new Vector2(0, 0), new float[]{44f, 130f});
 
         batch = new SpriteBatch();
 
@@ -52,7 +47,6 @@ public class PlayerCameraMain implements Screen {
     @Override
     public void render(float deltaTime) {
         refreshScreen();
-
         entityPlayer.updatePlayerComponents(deltaTime);
 
         setCameraForEntity(entityPlayer.getPositions());
@@ -61,10 +55,6 @@ public class PlayerCameraMain implements Screen {
         wFrame = currentFrame.getRegionWidth(); hFrame = currentFrame.getRegionHeight();
 
         batch.begin();
-
-        if(!entityPlayer.isOnGround){
-            entityPlayer.setCurrentState(ActionsState.JUMP);
-        }
 
         renderPlayerFlipping();
 
@@ -78,6 +68,18 @@ public class PlayerCameraMain implements Screen {
 
     public void setCameraForEntity(Vector2 position){
         camera.position.set(position.x / PPM, position.y / PPM, 0);
+    }
+
+    public void checkBars(EntityPlayer player){
+        player.setHealthPoints(player.getHealthPoints() - 1f);
+        if(player.getHealthPoints() <= -100){
+            player.setHealthPoints(100f);
+        }
+
+        player.setSpecialPoints(player.getSpecialPoints() - 1f);
+        if(player.getSpecialPoints() <= -100){
+            player.setSpecialPoints(100f);
+        }
     }
 
     @Override

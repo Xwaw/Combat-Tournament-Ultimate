@@ -1,6 +1,5 @@
 package Player;
 
-import MapGame.CollisionsManager;
 import MapGame.PhysicsManager;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -19,12 +18,13 @@ public class EntityPlayer {
     private float healthPoints;
     private float specialPoints;
 
-    private float moveX = 0;
-    private float speed = 5;
+    private float speed = 4.5f;
+    private final float maxSpeed = 4;
 
     private float stateTime;
 
-    private float jumpStrenght = 10;
+    private float jumpStrength = 0.015f;
+    private final float maxJumpStrength = 0.015f;
     private int jumps = 3;
 
     //actions
@@ -37,7 +37,7 @@ public class EntityPlayer {
 
     //private Characters character = HOMERUNBAT;
 
-    private ActionsState currentState = ActionsState.STAND;
+    private ActionState currentState = ActionState.STAND;
     private Animation<TextureRegion> currentStateAnimation;
 
     public EntityPlayer(float playerHP, float playerSP, AnimationManager animationsForPlayer, Vector2 position, float[] hitBoxSize){
@@ -53,7 +53,7 @@ public class EntityPlayer {
         this.stateTime = 0.0f;
     }
 
-    public void setCurrentState(ActionsState currentState){
+    public void setCurrentState(ActionState currentState){
         if (this.currentState != currentState) {
             this.currentState = currentState;
             currentStateAnimation = animationsForPlayer.getCurrentAnimation(currentState);
@@ -66,7 +66,7 @@ public class EntityPlayer {
         return healthPoints;
     }
 
-    public void setHealthPoints(int healthPoints) {
+    public void setHealthPoints(float healthPoints) {
         this.healthPoints = Math.min(healthPoints, 100);
     }
 
@@ -96,7 +96,7 @@ public class EntityPlayer {
     }
     public void setEntityDucking(boolean duck) {
         if(duck) {
-            this.setCurrentState(ActionsState.DUCK);
+            this.setCurrentState(ActionState.DUCK);
             isDucking = true;
         }else{
             isDucking = false;
@@ -115,22 +115,25 @@ public class EntityPlayer {
 
     public void updatePlayerComponents(float deltaTime){
         stateTime += deltaTime;
+
+        if(!isOnGround){
+            setCurrentState(ActionState.JUMP);
+        }
     }
 
     private void jump(){
-        if (isOnGround && currentStateAnimation.isAnimationFinished(stateTime)) {
-            float force = body.getMass() * jumpStrenght;
-            body.applyLinearImpulse(new Vector2(0, force * 20), body.getWorldCenter(), true);
+        if (currentStateAnimation.isAnimationFinished(stateTime) && isOnGround) {
+            body.applyLinearImpulse(new Vector2(0, jumpStrength), body.getWorldCenter(), true);
         }
     }
 
     public void updateMovementEntity(String direction){
-        moveX = 0;
+        float moveX = 0;
         switch (direction) {
             case "RIGHT" -> {
                 if(isOnGround) {
                     this.flipEntityHorizontally(false);
-                    this.setCurrentState(ActionsState.RUN);
+                    this.setCurrentState(ActionState.RUN);
                 }
 
                 moveX += 1;
@@ -138,7 +141,7 @@ public class EntityPlayer {
             case "LEFT" -> {
                 if(isOnGround) {
                     this.flipEntityHorizontally(true);
-                    this.setCurrentState(ActionsState.RUN);
+                    this.setCurrentState(ActionState.RUN);
                 }
 
                 moveX -= 1;
@@ -146,22 +149,31 @@ public class EntityPlayer {
             case "DOWN" -> {this.setEntityDucking(true);}
             case "SPACE" -> {
                 if(isOnGround){
-                    this.setCurrentState(ActionsState.STARTJUMP);
+                    this.setCurrentState(ActionState.STARTJUMP);
                 }
                 jump();
             }
             case null, default -> {
                 if(!isOnGround){
-                    this.setCurrentState(ActionsState.JUMP);
+                    this.setCurrentState(ActionState.JUMP);
                 }else {
-                    this.setCurrentState(ActionsState.STAND);
+                    this.setCurrentState(ActionState.STAND);
                 }
             }
         }
 
         if(moveX != 0) {
-            body.setLinearVelocity(new Vector2(moveX * speed, body.getLinearVelocity().y));
-            body.setLinearDamping(0);
+            if (!isOnGround) {
+                float maxHorizontalSpeed = 3.0f;
+                Vector2 velocity = body.getLinearVelocity();
+
+                if (Math.abs(velocity.x) < maxHorizontalSpeed) {
+                    body.setLinearVelocity(new Vector2(moveX * speed, velocity.y));
+                }
+            } else {
+                body.setLinearVelocity(new Vector2(moveX * speed, body.getLinearVelocity().y));
+                body.setLinearDamping(0);
+            }
         }
         else {
             if(!isOnGround){

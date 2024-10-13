@@ -11,7 +11,7 @@ public class InputController implements InputProcessor {
     public InputController(EntityPlayer player){
         this.player = player;
 
-        keys = new boolean[256];
+        keys = new boolean[16];
     }
 
     public void updateMovingPlayer(){
@@ -19,10 +19,8 @@ public class InputController implements InputProcessor {
             player.updateMovementEntity("RIGHT");
         } else if (keys[0] && !keys[2] && !keys[3]) {
             player.updateMovementEntity("LEFT");
-        } else if (keys[2]) {
+        } else if (keys[2] && EntityPlayer.isOnGround) {
             player.updateMovementEntity("DOWN");
-        } else if (keys[3]) {
-            player.updateMovementEntity("SPACE");
         }
         else{
             player.updateMovementEntity(null);
@@ -44,7 +42,7 @@ public class InputController implements InputProcessor {
                 }
                 break;
             case Input.Keys.SPACE:
-                keys[3] = true;
+                player.updateMovementEntity("SPACE");
                 break;
         }
 
@@ -70,6 +68,7 @@ public class InputController implements InputProcessor {
                 break;
             case Input.Keys.SPACE:
                 keys[3] = false;
+
                 break;
         }
 

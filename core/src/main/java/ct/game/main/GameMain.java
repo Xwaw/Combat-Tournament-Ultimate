@@ -11,8 +11,8 @@ import com.badlogic.gdx.math.Vector2;
 
 /** {@link com.badlogic.gdx.ApplicationListener} implementation shared by all platforms. */
 public class GameMain extends Game {
-    public final static int WIDTH = 712, HEIGHT = 400;
-    public final static float PPM = 100f;
+    public final static int WIDTH = 1280, HEIGHT = 720;
+    public final static float PPM = 50f;
 
     private PlayerCameraMain gameMainScreen;
     private HudManager gameHudScreen;
