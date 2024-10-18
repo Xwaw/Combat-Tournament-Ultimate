@@ -33,7 +33,7 @@ public class PlayerCameraMain implements Screen {
         camera.setToOrtho(false, WIDTH / PPM, HEIGHT / PPM);
         viewport = new StretchViewport(WIDTH / PPM, HEIGHT / PPM, camera);
 
-        camera.position.set((float) WIDTH / 2 /PPM, (float) (HEIGHT / 2 ) + 100 / PPM, 0);
+        camera.position.set((float) WIDTH /PPM, (float) (HEIGHT ) + 100 / PPM, 0);
         camera.zoom = 1.0f;
 
         float animationFramesSpeed = 0.025f;

@@ -56,7 +56,7 @@ public class PhysicsManager {
         fixtureDef.shape = shape;
         fixtureDef.restitution = 0;
         fixtureDef.friction = 0.1f;
-        fixtureDef.density = 0.001f;
+        fixtureDef.density = 1f;
 
         Fixture fixture = body.createFixture(fixtureDef);
         fixture.setUserData("Player");
@@ -66,8 +66,8 @@ public class PhysicsManager {
         return body;
     }
 
-    public void updateWorldComponents(){
-        world.step(1/60f, 6, 2);
+    public void updateWorldComponents(float deltaTime){
+        world.step(deltaTime, 6, 2);
     }
 
     public void renderHitboxObjects(Camera camera){

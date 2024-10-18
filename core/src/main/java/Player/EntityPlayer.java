@@ -1,6 +1,7 @@
 package Player;
 
 import MapGame.PhysicsManager;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
@@ -13,19 +14,19 @@ public class EntityPlayer {
     private PhysicsManager physicsManager;
     private Body body;
 
-    public static boolean isOnGround;
+    public static boolean isEntityOnGround;
 
     private float healthPoints;
     private float specialPoints;
 
-    private float speed = 4.5f;
+    private float speed = 8.0f;
     private final float maxSpeed = 4;
 
     private float stateTime;
 
-    private float jumpStrength = 0.015f;
-    private final float maxJumpStrength = 0.015f;
-    private int jumps = 3;
+    private boolean isJumpOnGround = false;
+
+    private int jumps = 2;
 
     //actions
     private boolean isFlippedHorizontally = false;
@@ -103,6 +104,14 @@ public class EntityPlayer {
         }
     }
 
+    public void setJumps(int jumps) {
+        this.jumps = jumps;
+    }
+
+    public int getJumps() {
+        return jumps;
+    }
+
     public float getPositionX(){
         return body.getPosition().x * PPM;
     }
@@ -113,73 +122,101 @@ public class EntityPlayer {
         return new Vector2(body.getPosition().x * PPM, body.getPosition().y * PPM);
     }
 
-    public void updatePlayerComponents(float deltaTime){
-        stateTime += deltaTime;
+    public void setJumpOnGround(boolean jumping){
+        isJumpOnGround = jumping;
+    }
 
-        if(!isOnGround){
-            setCurrentState(ActionState.JUMP);
+    public void jump(float jumpStrength){
+        if(!(jumps <= 0)) {
+            if (isEntityOnGround && currentState != ActionState.JUMP) {
+                body.setLinearDamping(0f);
+                body.applyLinearImpulse(new Vector2(0, jumpStrength), body.getWorldCenter(), true);
+                isJumpOnGround = false;
+            } else {
+                body.setLinearDamping(0f);
+                body.applyLinearImpulse(new Vector2(0, jumpStrength), body.getWorldCenter(), true);
+
+                setCurrentState(ActionState.STAND);
+            }
         }
     }
 
-    private void jump(){
-        if (currentStateAnimation.isAnimationFinished(stateTime) && isOnGround) {
-            body.applyLinearImpulse(new Vector2(0, jumpStrength), body.getWorldCenter(), true);
+    public void setUpToJump(float deltaTime){
+        if(currentState == ActionState.STARTJUMP){
+            int indexFrames = currentStateAnimation.getKeyFrameIndex(stateTime + deltaTime);
+
+            if(indexFrames == 3 && !isJumpOnGround){
+                jump(7);
+            }else if (indexFrames >= 4 && isJumpOnGround){
+                jump(28);
+            }
         }
+    }
+
+    public void updatePlayerComponents(float deltaTime){
+        stateTime += deltaTime;
+
+        if(!isEntityOnGround){
+            setCurrentState(ActionState.JUMP);
+            isJumpOnGround = false;
+        }else{
+            jumps = 3;
+        }
+
+        System.out.println(body.getMass());
+
+        setUpToJump(deltaTime);
     }
 
     public void updateMovementEntity(String direction){
         float moveX = 0;
         switch (direction) {
             case "RIGHT" -> {
-                if(isOnGround) {
-                    this.flipEntityHorizontally(false);
-                    this.setCurrentState(ActionState.RUN);
-                }
+                this.flipEntityHorizontally(false);
 
                 moveX += 1;
             }
             case "LEFT" -> {
-                if(isOnGround) {
-                    this.flipEntityHorizontally(true);
-                    this.setCurrentState(ActionState.RUN);
-                }
+                this.flipEntityHorizontally(true);
 
                 moveX -= 1;
             }
             case "DOWN" -> {this.setEntityDucking(true);}
             case "SPACE" -> {
-                if(isOnGround){
+                if(!isJumpOnGround && isEntityOnGround) {
+                    isJumpOnGround = true;
+                    body.setLinearVelocity(0, 0);
                     this.setCurrentState(ActionState.STARTJUMP);
                 }
-                jump();
             }
             case null, default -> {
-                if(!isOnGround){
-                    this.setCurrentState(ActionState.JUMP);
-                }else {
-                    this.setCurrentState(ActionState.STAND);
+                if (isEntityOnGround && currentState != ActionState.STARTJUMP) {
+                    setCurrentState(ActionState.STAND);
+                } else if (!isEntityOnGround && currentState != ActionState.STARTJUMP) {
+                    setCurrentState(ActionState.JUMP);
                 }
             }
         }
 
-        if(moveX != 0) {
-            if (!isOnGround) {
-                float maxHorizontalSpeed = 3.0f;
-                Vector2 velocity = body.getLinearVelocity();
-
-                if (Math.abs(velocity.x) < maxHorizontalSpeed) {
-                    body.setLinearVelocity(new Vector2(moveX * speed, velocity.y));
+        if(currentState != ActionState.STARTJUMP) {
+            if (moveX != 0) {
+                if (!isEntityOnGround) {
+                    float maxHorizontalSpeed = 3.0f;
+                    Vector2 velocity = body.getLinearVelocity();
+                    if (Math.abs(velocity.x) < maxHorizontalSpeed) {
+                        body.setLinearVelocity(new Vector2(moveX * speed, velocity.y));
+                    }
+                } else {
+                    body.setLinearVelocity(new Vector2(moveX * speed, body.getLinearVelocity().y));
+                    body.setLinearDamping(0);
+                    this.setCurrentState(ActionState.RUN);
                 }
             } else {
-                body.setLinearVelocity(new Vector2(moveX * speed, body.getLinearVelocity().y));
-                body.setLinearDamping(0);
+                if (!isEntityOnGround) {
+                    body.setLinearDamping(0);
+                }
+                body.setLinearDamping(1.5f);
             }
-        }
-        else {
-            if(!isOnGround){
-                body.setLinearDamping(0);
-            }
-            body.setLinearDamping(1.5f);
         }
     }
 }

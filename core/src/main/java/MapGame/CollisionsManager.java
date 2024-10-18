@@ -13,15 +13,15 @@ public class CollisionsManager implements ContactListener {
         String userDataB = (String) fixtureB.getUserData();
 
         if ("Player".equals(userDataA) && "Floor".equals(userDataB)) {
-            EntityPlayer.isOnGround = true;
+            EntityPlayer.isEntityOnGround = true;
         } else if ("Floor".equals(userDataA) && "Player".equals(userDataB)) {
-            EntityPlayer.isOnGround = true;
+            EntityPlayer.isEntityOnGround = true;
         }
     }
 
     @Override
     public void endContact(Contact contact) {
-        EntityPlayer.isOnGround = false;
+        EntityPlayer.isEntityOnGround = false;
     }
 
     @Override

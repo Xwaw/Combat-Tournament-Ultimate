@@ -9,6 +9,8 @@ import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.math.Vector2;
 
+import static com.badlogic.gdx.Gdx.graphics;
+
 /** {@link com.badlogic.gdx.ApplicationListener} implementation shared by all platforms. */
 public class GameMain extends Game {
     public final static int WIDTH = 1280, HEIGHT = 720;
@@ -23,7 +25,7 @@ public class GameMain extends Game {
 
     @Override
     public void create() {
-        worldPhysicsManager = new PhysicsManager(new Vector2(0, -9.8f));
+        worldPhysicsManager = new PhysicsManager(new Vector2(0, -9.0f));
 
         gameMainScreen = new PlayerCameraMain();
         gameHudScreen = new HudManager(gameMainScreen.getEntityPlayer());
@@ -37,14 +39,16 @@ public class GameMain extends Game {
 
     @Override
     public void render() {
-        worldPhysicsManager.updateWorldComponents();
+        float deltaTime = Gdx.graphics.getDeltaTime();
+
+        worldPhysicsManager.updateWorldComponents(deltaTime);
 
         keyBoardPlayer.updateMovingPlayer();
 
         refreshScreenGame();
 
-        gameMainScreen.render(Gdx.graphics.getDeltaTime());
-        gameHudScreen.render(Gdx.graphics.getDeltaTime());
+        gameMainScreen.render(deltaTime);
+        gameHudScreen.render(deltaTime);
     }
 
     @Override

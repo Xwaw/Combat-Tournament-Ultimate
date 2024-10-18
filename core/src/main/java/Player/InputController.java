@@ -6,7 +6,10 @@ import com.badlogic.gdx.InputProcessor;
 public class InputController implements InputProcessor {
     private EntityPlayer player;
     private final boolean[] keys;
-    //[0] - left; [1] - right; [2] - down/duck; [3] - space/jump
+    //[0] - left
+    //[1] - right
+    //[2] - down/duck
+    //[3] - space/jump
 
     public InputController(EntityPlayer player){
         this.player = player;
@@ -15,12 +18,14 @@ public class InputController implements InputProcessor {
     }
 
     public void updateMovingPlayer(){
-        if (keys[1] && !keys[2] && !keys[3]) {
+        if (keys[1] && !keys[2]) {
             player.updateMovementEntity("RIGHT");
-        } else if (keys[0] && !keys[2] && !keys[3]) {
+        } else if (keys[0] && !keys[2]) {
             player.updateMovementEntity("LEFT");
-        } else if (keys[2] && EntityPlayer.isOnGround) {
+        } else if (keys[2] && EntityPlayer.isEntityOnGround) {
             player.updateMovementEntity("DOWN");
+        } else if (keys[3]) {
+            player.updateMovementEntity("SPACE");
         }
         else{
             player.updateMovementEntity(null);
@@ -38,11 +43,19 @@ public class InputController implements InputProcessor {
                 break;
             case Input.Keys.DOWN:
                 if(!keys[2]) {
+                    player.setEntityDucking(false);
                     keys[2] = true;
                 }
                 break;
             case Input.Keys.SPACE:
-                player.updateMovementEntity("SPACE");
+                if(!keys[3] && EntityPlayer.isEntityOnGround) {
+                    keys[3] = true;
+                }
+                if(!EntityPlayer.isEntityOnGround){
+                    player.jump(28);
+                }
+                player.setJumps(player.getJumps() - 1);
+
                 break;
         }
 
@@ -50,6 +63,11 @@ public class InputController implements InputProcessor {
 
         return true;
     }
+
+    // Ogarnąć skok czyli:
+    // 1. Dodać triple jumpa
+    // 2.naprawić błąd który sprawia że jest większy skok gdy wciśnie się klawisz ruchu i skoku jednocześnie
+    // 3. Optymalizacja kodu logiki skoku i sterowania Inputa.
 
     @Override
     public boolean keyUp(int keycode) {
@@ -62,12 +80,14 @@ public class InputController implements InputProcessor {
                 break;
             case Input.Keys.DOWN:
                 if(keys[2]) {
-                    player.setEntityDucking(false);
                     keys[2] = false;
                 }
                 break;
             case Input.Keys.SPACE:
-                keys[3] = false;
+                if(keys[3]) {
+                    keys[3] = false;
+                    player.setJumpOnGround(false);
+                }
 
                 break;
         }
