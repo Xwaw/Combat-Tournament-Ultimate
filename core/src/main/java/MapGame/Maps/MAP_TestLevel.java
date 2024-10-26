@@ -17,7 +17,7 @@ public class MAP_TestLevel{
     public MAP_TestLevel(SpriteBatch batch) {
         texture = new Texture(Gdx.files.internal("blocks/Coll_Floor1.png"));
         texture2 = new Texture(Gdx.files.internal("blocks/Coll_Wall.png"));
-        objTestFloor = new ObjectCreator(texture, batch, new Vector2(0,-450), 2, 10f, "Floor");
+        objTestFloor = new ObjectCreator(texture, batch, new Vector2(100,-450), 2, 100f, "Floor");
         objTestWall = new ObjectCreator(texture2, batch, new Vector2(550,100), 1, 0f, "Wall");
     }
 

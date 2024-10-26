@@ -4,7 +4,7 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
 
 public class InputController implements InputProcessor {
-    private EntityPlayer player;
+    private final EntityPlayer player;
     private final boolean[] keys;
     //[0] - left
     //[1] - right
@@ -18,13 +18,13 @@ public class InputController implements InputProcessor {
     }
 
     public void updateMovingPlayer(){
-        if (keys[1] && !keys[2]) {
+        if (keys[1] && !keys[2] && !keys[3]) {
             player.updateMovementEntity("RIGHT");
         } else if (keys[0] && !keys[2]) {
             player.updateMovementEntity("LEFT");
-        } else if (keys[2] && EntityPlayer.isEntityOnGround) {
+        } else if (keys[2]) {
             player.updateMovementEntity("DOWN");
-        } else if (keys[3]) {
+        } else if (keys[3] && (!keys[1] || !keys[0])) {
             player.updateMovementEntity("SPACE");
         }
         else{
@@ -48,13 +48,14 @@ public class InputController implements InputProcessor {
                 }
                 break;
             case Input.Keys.SPACE:
-                if(!keys[3] && EntityPlayer.isEntityOnGround) {
+                if(!keys[3]) {
+                    if(!player.isOnGround()) {
+                        player.performAirJump();
+                    }else{
+                        player.jumpPreparing = true;
+                    }
                     keys[3] = true;
                 }
-                if(!EntityPlayer.isEntityOnGround){
-                    player.jump(28);
-                }
-                player.setJumps(player.getJumps() - 1);
 
                 break;
         }
@@ -63,11 +64,6 @@ public class InputController implements InputProcessor {
 
         return true;
     }
-
-    // Ogarnąć skok czyli:
-    // 1. Dodać triple jumpa
-    // 2.naprawić błąd który sprawia że jest większy skok gdy wciśnie się klawisz ruchu i skoku jednocześnie
-    // 3. Optymalizacja kodu logiki skoku i sterowania Inputa.
 
     @Override
     public boolean keyUp(int keycode) {
@@ -85,10 +81,11 @@ public class InputController implements InputProcessor {
                 break;
             case Input.Keys.SPACE:
                 if(keys[3]) {
+                    if(player.isOnGround()) {
+                        player.jumpPreparing = false;
+                    }
                     keys[3] = false;
-                    player.setJumpOnGround(false);
                 }
-
                 break;
         }
 

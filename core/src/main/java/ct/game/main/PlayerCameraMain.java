@@ -14,7 +14,8 @@ import com.badlogic.gdx.utils.viewport.*;
 import static ct.game.main.GameMain.*;
 
 public class PlayerCameraMain implements Screen {
-    private static int offSetX = -42, offSetY = -65;
+    public static int offSetX = -42, offSetY = -65;
+    //batch.draw(currentFrame, (entityPlayer.getPositionX() / PPM) + (offSetX / PPM), (entityPlayer.getPositionY() / PPM) + (offSetY / PPM), (wFrame/2) / PPM, (hFrame/2) / PPM);
     // Camera
     private final OrthographicCamera camera;
     private final Viewport viewport;
@@ -22,22 +23,18 @@ public class PlayerCameraMain implements Screen {
     private final SpriteBatch batch;
     // Player
     public EntityPlayer entityPlayer;
-    private TextureRegion currentFrame;
 
-    private float wFrame, hFrame;
-
-    private MAP_TestLevel mapTEST;
+    private final MAP_TestLevel mapTEST;
 
     public PlayerCameraMain(){
         camera = new OrthographicCamera();
         camera.setToOrtho(false, WIDTH / PPM, HEIGHT / PPM);
         viewport = new StretchViewport(WIDTH / PPM, HEIGHT / PPM, camera);
 
-        camera.position.set((float) WIDTH /PPM, (float) (HEIGHT ) + 100 / PPM, 0);
-        camera.zoom = 1.0f;
+        setZoomCamera(camera, 1.00f);
 
         float animationFramesSpeed = 0.025f;
-        entityPlayer = new EntityPlayer(100, 100, new AnimationManager(animationFramesSpeed), new Vector2(0, 0), new float[]{44f, 130f});
+        entityPlayer = new EntityPlayer(100, 100, new AnimationManager(animationFramesSpeed), new Vector2(0, 200));
 
         batch = new SpriteBatch();
 
@@ -47,27 +44,26 @@ public class PlayerCameraMain implements Screen {
     @Override
     public void render(float deltaTime) {
         refreshScreen();
-        entityPlayer.updatePlayerComponents(deltaTime);
-
         setCameraForEntity(entityPlayer.getPositions());
 
-        currentFrame = entityPlayer.getCurrentFrame();
-        wFrame = currentFrame.getRegionWidth(); hFrame = currentFrame.getRegionHeight();
+        entityPlayer.updatePlayerComponents(deltaTime);
+        GameMain.getPhysicsManager().renderHitboxObjects(camera);
 
         batch.begin();
 
-        renderPlayerFlipping();
+        entityPlayer.renderPlayerGraphics(batch);
 
-        batch.draw(currentFrame, (entityPlayer.getPositionX() / PPM) + (offSetX / PPM), (entityPlayer.getPositionY() / PPM) + (offSetY / PPM), (wFrame/2) / PPM, (hFrame/2) / PPM);
         loadMap();
 
         batch.end();
-
-        GameMain.getPhysicsManager().renderHitboxObjects(camera);
     }
 
     public void setCameraForEntity(Vector2 position){
-        camera.position.set(position.x / PPM, position.y / PPM, 0);
+        camera.position.set(position.x / PPM, (position.y) / PPM, 0);
+    }
+
+    public void setZoomCamera(OrthographicCamera camera, float zoom){
+        camera.zoom = zoom;
     }
 
     public void checkBars(EntityPlayer player){
@@ -115,18 +111,6 @@ public class PlayerCameraMain implements Screen {
 
     private void loadMap(){
         mapTEST.render();
-    }
-
-    private void renderPlayerFlipping(){
-        if(entityPlayer.isEntityFlipped()){
-            if(!currentFrame.isFlipX()){
-                currentFrame.flip(true, false);
-            }
-        }else {
-            if(currentFrame.isFlipX()){
-                currentFrame.flip(true, false);
-            }
-        }
     }
 
     private void refreshScreen(){

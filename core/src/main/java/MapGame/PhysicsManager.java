@@ -11,6 +11,10 @@ public class PhysicsManager {
     private World world;
     private Box2DDebugRenderer debugRenderer;
 
+    public World getWorld() {
+        return world;
+    }
+
     public PhysicsManager(Vector2 gravity){
         world = new World(gravity, true);
         debugRenderer = new Box2DDebugRenderer();
