@@ -1,0 +1,51 @@
+{"frames": {
+
+"Symbol 0":
+{
+	"frame": {"x":0,"y":0,"w":219,"h":202},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":219,"h":202},
+	"sourceSize": {"w":219,"h":202}
+},
+"Symbol 1":
+{
+	"frame": {"x":0,"y":202,"w":219,"h":202},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":219,"h":202},
+	"sourceSize": {"w":219,"h":202}
+},
+"Symbol 2":
+{
+	"frame": {"x":0,"y":404,"w":219,"h":202},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":219,"h":202},
+	"sourceSize": {"w":219,"h":202}
+},
+"Symbol 3":
+{
+	"frame": {"x":0,"y":606,"w":219,"h":202},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":219,"h":202},
+	"sourceSize": {"w":219,"h":202}
+},
+"Symbol 4":
+{
+	"frame": {"x":0,"y":808,"w":219,"h":202},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":219,"h":202},
+	"sourceSize": {"w":219,"h":202}
+}},
+"meta": {
+	"app": "Adobe Flash CS6",
+	"version": "12.0.0.481",
+	"image": "ANIM_HOMERUNBAT_LandH.png",
+	"format": "RGBA8888",
+	"size": {"w":256,"h":1024},
+	"scale": "1"
+}
+}

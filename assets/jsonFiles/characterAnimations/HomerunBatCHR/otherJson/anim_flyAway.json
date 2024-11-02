@@ -1,0 +1,115 @@
+{"frames": {
+
+"Symbol 0":
+{
+	"frame": {"x":0,"y":0,"w":185,"h":210},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":185,"h":210},
+	"sourceSize": {"w":185,"h":210}
+},
+"Symbol 1":
+{
+	"frame": {"x":185,"y":0,"w":185,"h":210},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":185,"h":210},
+	"sourceSize": {"w":185,"h":210}
+},
+"Symbol 2":
+{
+	"frame": {"x":370,"y":0,"w":185,"h":210},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":185,"h":210},
+	"sourceSize": {"w":185,"h":210}
+},
+"Symbol 3":
+{
+	"frame": {"x":555,"y":0,"w":185,"h":210},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":185,"h":210},
+	"sourceSize": {"w":185,"h":210}
+},
+"Symbol 4":
+{
+	"frame": {"x":740,"y":0,"w":185,"h":210},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":185,"h":210},
+	"sourceSize": {"w":185,"h":210}
+},
+"Symbol 5":
+{
+	"frame": {"x":0,"y":210,"w":185,"h":210},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":185,"h":210},
+	"sourceSize": {"w":185,"h":210}
+},
+"Symbol 6":
+{
+	"frame": {"x":185,"y":210,"w":185,"h":210},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":185,"h":210},
+	"sourceSize": {"w":185,"h":210}
+},
+"Symbol 7":
+{
+	"frame": {"x":370,"y":210,"w":185,"h":210},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":185,"h":210},
+	"sourceSize": {"w":185,"h":210}
+},
+"Symbol 8":
+{
+	"frame": {"x":555,"y":210,"w":185,"h":210},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":185,"h":210},
+	"sourceSize": {"w":185,"h":210}
+},
+"Symbol 9":
+{
+	"frame": {"x":740,"y":210,"w":185,"h":210},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":185,"h":210},
+	"sourceSize": {"w":185,"h":210}
+},
+"Symbol 10":
+{
+	"frame": {"x":0,"y":420,"w":185,"h":210},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":185,"h":210},
+	"sourceSize": {"w":185,"h":210}
+},
+"Symbol 11":
+{
+	"frame": {"x":185,"y":420,"w":185,"h":210},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":185,"h":210},
+	"sourceSize": {"w":185,"h":210}
+},
+"Symbol 12":
+{
+	"frame": {"x":370,"y":420,"w":185,"h":210},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":185,"h":210},
+	"sourceSize": {"w":185,"h":210}
+}},
+"meta": {
+	"app": "Adobe Flash CS6",
+	"version": "12.0.0.481",
+	"image": "ANIM_HOMERUNBAT_FlyAway.png",
+	"format": "RGBA8888",
+	"size": {"w":1024,"h":1024},
+	"scale": "1"
+}
+}

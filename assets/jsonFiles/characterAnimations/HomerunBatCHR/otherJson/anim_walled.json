@@ -1,0 +1,91 @@
+{"frames": {
+
+"Symbol 0":
+{
+	"frame": {"x":0,"y":0,"w":154,"h":253},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":154,"h":253},
+	"sourceSize": {"w":154,"h":253}
+},
+"Symbol 1":
+{
+	"frame": {"x":154,"y":0,"w":154,"h":253},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":154,"h":253},
+	"sourceSize": {"w":154,"h":253}
+},
+"Symbol 2":
+{
+	"frame": {"x":308,"y":0,"w":154,"h":253},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":154,"h":253},
+	"sourceSize": {"w":154,"h":253}
+},
+"Symbol 3":
+{
+	"frame": {"x":0,"y":253,"w":154,"h":253},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":154,"h":253},
+	"sourceSize": {"w":154,"h":253}
+},
+"Symbol 4":
+{
+	"frame": {"x":154,"y":253,"w":154,"h":253},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":154,"h":253},
+	"sourceSize": {"w":154,"h":253}
+},
+"Symbol 5":
+{
+	"frame": {"x":308,"y":253,"w":154,"h":253},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":154,"h":253},
+	"sourceSize": {"w":154,"h":253}
+},
+"Symbol 6":
+{
+	"frame": {"x":0,"y":506,"w":154,"h":253},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":154,"h":253},
+	"sourceSize": {"w":154,"h":253}
+},
+"Symbol 7":
+{
+	"frame": {"x":154,"y":506,"w":154,"h":253},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":154,"h":253},
+	"sourceSize": {"w":154,"h":253}
+},
+"Symbol 8":
+{
+	"frame": {"x":308,"y":506,"w":154,"h":253},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":154,"h":253},
+	"sourceSize": {"w":154,"h":253}
+},
+"Symbol 9":
+{
+	"frame": {"x":0,"y":759,"w":154,"h":253},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":154,"h":253},
+	"sourceSize": {"w":154,"h":253}
+}},
+"meta": {
+	"app": "Adobe Flash CS6",
+	"version": "12.0.0.481",
+	"image": "ANIM_HOMERUNBAT_Walled.png",
+	"format": "RGBA8888",
+	"size": {"w":512,"h":1024},
+	"scale": "1"
+}
+}

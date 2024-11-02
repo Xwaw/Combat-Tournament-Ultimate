@@ -1,0 +1,147 @@
+{"frames": {
+
+"Symbol 0":
+{
+	"frame": {"x":0,"y":0,"w":246,"h":57},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":246,"h":57},
+	"sourceSize": {"w":246,"h":57}
+},
+"Symbol 1":
+{
+	"frame": {"x":0,"y":57,"w":246,"h":57},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":246,"h":57},
+	"sourceSize": {"w":246,"h":57}
+},
+"Symbol 2":
+{
+	"frame": {"x":0,"y":114,"w":246,"h":57},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":246,"h":57},
+	"sourceSize": {"w":246,"h":57}
+},
+"Symbol 3":
+{
+	"frame": {"x":0,"y":171,"w":246,"h":57},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":246,"h":57},
+	"sourceSize": {"w":246,"h":57}
+},
+"Symbol 4":
+{
+	"frame": {"x":0,"y":228,"w":246,"h":57},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":246,"h":57},
+	"sourceSize": {"w":246,"h":57}
+},
+"Symbol 5":
+{
+	"frame": {"x":0,"y":285,"w":246,"h":57},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":246,"h":57},
+	"sourceSize": {"w":246,"h":57}
+},
+"Symbol 6":
+{
+	"frame": {"x":0,"y":342,"w":246,"h":57},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":246,"h":57},
+	"sourceSize": {"w":246,"h":57}
+},
+"Symbol 7":
+{
+	"frame": {"x":0,"y":399,"w":246,"h":57},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":246,"h":57},
+	"sourceSize": {"w":246,"h":57}
+},
+"Symbol 8":
+{
+	"frame": {"x":0,"y":456,"w":246,"h":57},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":246,"h":57},
+	"sourceSize": {"w":246,"h":57}
+},
+"Symbol 9":
+{
+	"frame": {"x":0,"y":513,"w":246,"h":57},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":246,"h":57},
+	"sourceSize": {"w":246,"h":57}
+},
+"Symbol 10":
+{
+	"frame": {"x":0,"y":570,"w":246,"h":57},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":246,"h":57},
+	"sourceSize": {"w":246,"h":57}
+},
+"Symbol 11":
+{
+	"frame": {"x":0,"y":627,"w":246,"h":57},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":246,"h":57},
+	"sourceSize": {"w":246,"h":57}
+},
+"Symbol 12":
+{
+	"frame": {"x":0,"y":684,"w":246,"h":57},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":246,"h":57},
+	"sourceSize": {"w":246,"h":57}
+},
+"Symbol 13":
+{
+	"frame": {"x":0,"y":741,"w":246,"h":57},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":246,"h":57},
+	"sourceSize": {"w":246,"h":57}
+},
+"Symbol 14":
+{
+	"frame": {"x":0,"y":798,"w":246,"h":57},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":246,"h":57},
+	"sourceSize": {"w":246,"h":57}
+},
+"Symbol 15":
+{
+	"frame": {"x":0,"y":855,"w":246,"h":57},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":246,"h":57},
+	"sourceSize": {"w":246,"h":57}
+},
+"Symbol 16":
+{
+	"frame": {"x":0,"y":912,"w":246,"h":57},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":246,"h":57},
+	"sourceSize": {"w":246,"h":57}
+}},
+"meta": {
+	"app": "Adobe Flash CS6",
+	"version": "12.0.0.481",
+	"image": "ANIM_HOMERUNBAT_Dead.png",
+	"format": "RGBA8888",
+	"size": {"w":256,"h":1024},
+	"scale": "1"
+}
+}

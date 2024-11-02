@@ -38,9 +38,9 @@ public class  HudManager implements Screen {
         cameraHUD = new OrthographicCamera();
         viewport = new StretchViewport(WIDTH, HEIGHT, cameraHUD);
 
-        MainTextureHud = new TextureRegion(new Texture(Gdx.files.internal("pngFiles/HUD_ImagePlayerHud.png")), 3, 54, 314, 85);
-        HealthPointsBar = new TextureRegion(new Texture(Gdx.files.internal("pngFiles/HUD_ImagePlayerHud.png")), 0, 211, 208, 13);
-        SpecialPointsBar = new TextureRegion(new Texture(Gdx.files.internal("pngFiles/HUD_ImagePlayerHud.png")), 0, 224, 223, 8);
+        MainTextureHud = new TextureRegion(new Texture(Gdx.files.internal("pngFiles/Hud/imagePlayerHud.png")), 3, 54, 314, 85);
+        HealthPointsBar = new TextureRegion(new Texture(Gdx.files.internal("pngFiles/Hud/imagePlayerHud.png")), 0, 211, 208, 13);
+        SpecialPointsBar = new TextureRegion(new Texture(Gdx.files.internal("pngFiles/Hud/imagePlayerHud.png")), 0, 224, 223, 8);
 
         positionsText = new BitmapFont();
         fpsText = new BitmapFont();

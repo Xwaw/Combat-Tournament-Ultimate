@@ -1,0 +1,83 @@
+{"frames": {
+
+"Symbol 0":
+{
+	"frame": {"x":0,"y":0,"w":2330,"h":261},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":2330,"h":261},
+	"sourceSize": {"w":2330,"h":261}
+},
+"Symbol 1":
+{
+	"frame": {"x":0,"y":261,"w":2330,"h":261},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":2330,"h":261},
+	"sourceSize": {"w":2330,"h":261}
+},
+"Symbol 2":
+{
+	"frame": {"x":0,"y":522,"w":2330,"h":261},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":2330,"h":261},
+	"sourceSize": {"w":2330,"h":261}
+},
+"Symbol 3":
+{
+	"frame": {"x":0,"y":783,"w":2330,"h":261},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":2330,"h":261},
+	"sourceSize": {"w":2330,"h":261}
+},
+"Symbol 4":
+{
+	"frame": {"x":0,"y":1044,"w":2330,"h":261},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":2330,"h":261},
+	"sourceSize": {"w":2330,"h":261}
+},
+"Symbol 5":
+{
+	"frame": {"x":0,"y":1305,"w":2330,"h":261},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":2330,"h":261},
+	"sourceSize": {"w":2330,"h":261}
+},
+"Symbol 6":
+{
+	"frame": {"x":0,"y":1566,"w":2330,"h":261},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":2330,"h":261},
+	"sourceSize": {"w":2330,"h":261}
+},
+"Symbol 7":
+{
+	"frame": {"x":0,"y":1827,"w":2330,"h":261},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":2330,"h":261},
+	"sourceSize": {"w":2330,"h":261}
+},
+"Symbol 8":
+{
+	"frame": {"x":0,"y":2088,"w":2330,"h":261},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":2330,"h":261},
+	"sourceSize": {"w":2330,"h":261}
+}},
+"meta": {
+	"app": "Adobe Flash CS6",
+	"version": "12.0.0.481",
+	"image": "specialLaser.png",
+	"format": "RGBA8888",
+	"size": {"w":4096,"h":4096},
+	"scale": "1"
+}
+}

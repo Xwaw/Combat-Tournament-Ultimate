@@ -26,6 +26,10 @@ public class InputController implements InputProcessor {
             player.updateMovementEntity("DOWN");
         } else if (keys[3] && (!keys[1] || !keys[0])) {
             player.updateMovementEntity("SPACE");
+        } else if (keys[4]){
+            player.updateMovementEntity("A");
+        } else if (keys[5]){
+            player.updateMovementEntity("S");
         }
         else{
             player.updateMovementEntity(null);
@@ -56,7 +60,16 @@ public class InputController implements InputProcessor {
                     }
                     keys[3] = true;
                 }
-
+                break;
+            case Input.Keys.A:
+                if(!keys[4]){
+                    keys[4] = true;
+                }
+                break;
+            case Input.Keys.S:
+                if(!keys[5]){
+                    keys[5] = true;
+                }
                 break;
         }
 
@@ -85,6 +98,16 @@ public class InputController implements InputProcessor {
                         player.jumpPreparing = false;
                     }
                     keys[3] = false;
+                }
+                break;
+            case Input.Keys.A:
+                if(keys[4]){
+                    keys[4] = false;
+                }
+                break;
+            case Input.Keys.S:
+                if(keys[5]){
+                    keys[5] = false;
                 }
                 break;
         }

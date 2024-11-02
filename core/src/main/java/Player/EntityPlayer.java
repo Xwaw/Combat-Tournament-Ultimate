@@ -10,8 +10,6 @@ import com.badlogic.gdx.physics.box2d.Body;
 import ct.game.main.GameMain;
 
 import static ct.game.main.GameMain.PPM;
-import static ct.game.main.PlayerCameraMain.offSetX;
-import static ct.game.main.PlayerCameraMain.offSetY;
 
 public class EntityPlayer {
     //Hitbox and collision logic
@@ -24,6 +22,7 @@ public class EntityPlayer {
     //stats
     private float healthPoints;
     private float specialPoints;
+    private boolean isSpecialReady;
 
     //speed logic
     private float speed = 8.0f;
@@ -121,7 +120,7 @@ public class EntityPlayer {
         return collisionChecker.isGrounded(physicsManager.getWorld(), body);
     }
 
-    private void flipPlayerOnControl(){
+    private void flipSpriteOnCurrentSide(){
         TextureRegion currentFrame = currentStateAnimation.getKeyFrame(stateTime);
         if(this.isEntityFlipped()){
             if(!currentFrame.isFlipX()){
@@ -138,40 +137,41 @@ public class EntityPlayer {
         if(isOnGround() && currentState == ActionState.STARTJUMP){
             Vector2 velocity = body.getLinearVelocity();
 
-            if(currentStateAnimation.getKeyFrameIndex(stateTime) <= 3 && !jumpPreparing){
+            if(currentStateAnimation.getKeyFrameIndex(stateTime) <= 4 && !jumpPreparing){
                 body.applyLinearImpulse(new Vector2(velocity.x, jumpStrength / 18), body.getWorldCenter(), true);
-            } else if (currentStateAnimation.getKeyFrameIndex(stateTime) > 3){
+
+                stateTime = 0;
+            } else if (currentStateAnimation.getKeyFrameIndex(stateTime) > 4){
                 body.applyLinearImpulse(new Vector2(velocity.x, jumpStrength), body.getWorldCenter(), true);
+
+                stateTime = 0;
             }
         }
     }
 
     public void performAirJump(){
         if(airJumps > 0) {
+            jumpPreparing = false;
             Vector2 velocity = body.getLinearVelocity();
             this.setCurrentState(ActionState.JUMP);
             stateTime = 0;
 
-            if (!isOnGround()) {
-                body.setLinearVelocity(new Vector2(velocity.x, 0));
-                body.applyLinearImpulse(new Vector2(velocity.x, jumpStrength), body.getWorldCenter(), true);
-
-                airJumps -= 1;
-            }
+            body.setLinearVelocity(new Vector2(velocity.x, 0));
+            body.applyLinearImpulse(new Vector2(velocity.x, jumpStrength), body.getWorldCenter(), true);
+            airJumps -= 1;
         }
     }
 
     public void renderPlayerGraphics(SpriteBatch batch){
         TextureRegion currentFrame = currentStateAnimation.getKeyFrame(stateTime);
-        float wFrame = currentFrame.getRegionWidth();
-        float hFrame = currentFrame.getRegionHeight();
 
-        batch.draw(currentFrame, (this.getPositionX() / PPM) + (offSetX / PPM), (this.getPositionY() / PPM) + (offSetY / PPM), (wFrame/2) / PPM, (hFrame/2) / PPM);
+        float drawX = (this.getPositionX() - ((float) currentFrame.getRegionWidth() / 2) * 0.5f) / PPM;
+        float drawY = (this.getPositionY() - (hitboxSize[1]/2)) / PPM;
+
+        batch.draw(currentFrame, drawX, drawY, (currentFrame.getRegionWidth() * 0.5f) / PPM, (currentFrame.getRegionHeight() * 0.5f) / PPM);
     }
 
-    public void updatePlayerComponents(float deltaTime){
-        stateTime += deltaTime;
-
+    private void setFlyingStatusAndUpdateJump(){
         if(!isOnGround()){
             body.setLinearDamping(damping);
             this.setCurrentState(ActionState.JUMP);
@@ -179,8 +179,24 @@ public class EntityPlayer {
             body.setLinearDamping(0.0f);
             airJumps = 2;
         }
+    }
 
-        flipPlayerOnControl();
+    private void regenerateSpecialBar(float progressRegen){
+        if(specialPoints < 100.0f && !isSpecialReady){
+            specialPoints += progressRegen;
+        }else{
+            isSpecialReady = true;
+        }
+    }
+
+    public void updatePlayerComponents(float deltaTime){
+        stateTime += deltaTime;
+
+        regenerateSpecialBar(0.05f);
+
+        setFlyingStatusAndUpdateJump();
+
+        flipSpriteOnCurrentSide();
 
         performGroundJump();
     }
@@ -209,6 +225,12 @@ public class EntityPlayer {
                 if(isOnGround()) {
                     this.setCurrentState(ActionState.STARTJUMP);
                 }
+            }
+            case "A" -> {
+                this.setCurrentState(ActionState.UPP);
+            }
+            case "S" -> {
+                this.setCurrentState(ActionState.WALLED);
             }
             case null, default -> {
                 if(isOnGround() && currentState != ActionState.STARTJUMP) {

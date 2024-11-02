@@ -34,7 +34,7 @@ public class PlayerCameraMain implements Screen {
         setZoomCamera(camera, 1.00f);
 
         float animationFramesSpeed = 0.025f;
-        entityPlayer = new EntityPlayer(100, 100, new AnimationManager(animationFramesSpeed), new Vector2(0, 200));
+        entityPlayer = new EntityPlayer(100, 0, new AnimationManager(animationFramesSpeed), new Vector2(0, 200));
 
         batch = new SpriteBatch();
 
