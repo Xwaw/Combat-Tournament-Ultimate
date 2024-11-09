@@ -1,4 +1,4 @@
-package Player;
+package Animations;
 
 public enum ActionState {
     STAND, RUN, DUCK, STARTJUMP, JUMP,
@@ -8,5 +8,7 @@ public enum ActionState {
 
     DEAD, DEAD01, FLYAWAY, HURT1, HURT2, JUMPOFF, LAND01, LANDH, ROLLBACK, ROLLBACK2, ROLLFRONT, ROLLFRONT2, UPP, WALLED,
 
-    CHARGING, BLAST
+    CHARGING, BLAST,
+
+    TEST1, TEST2
 }

@@ -2,14 +2,11 @@ package ct.game.main;
 
 import MapGame.PhysicsManager;
 import Player.HudManager;
-import Player.InputController;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.math.Vector2;
-
-import static com.badlogic.gdx.Gdx.graphics;
 
 /** {@link com.badlogic.gdx.ApplicationListener} implementation shared by all platforms. */
 public class GameMain extends Game {

@@ -1,4 +1,4 @@
-package Player;
+package Animations;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;

@@ -1,9 +1,7 @@
 package ct.game.main;
 
 import MapGame.Maps.MAP_TestLevel;
-import Player.ActionState;
 import Player.EntityPlayer;
-import Player.AnimationManager;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -22,7 +20,7 @@ public class PlayerCameraMain implements Screen {
     // Graphics
     private final SpriteBatch batch;
     // Player
-    public EntityPlayer entityPlayer;
+    public static EntityPlayer entityPlayer;
 
     private final MAP_TestLevel mapTEST;
 
@@ -32,9 +30,7 @@ public class PlayerCameraMain implements Screen {
         viewport = new StretchViewport(WIDTH / PPM, HEIGHT / PPM, camera);
 
         setZoomCamera(camera, 1.00f);
-
-        float animationFramesSpeed = 0.025f;
-        entityPlayer = new EntityPlayer(100, 0, new AnimationManager(animationFramesSpeed), new Vector2(0, 200));
+        entityPlayer = new EntityPlayer(100, 0, new Vector2(0, -240));
 
         batch = new SpriteBatch();
 
@@ -44,21 +40,20 @@ public class PlayerCameraMain implements Screen {
     @Override
     public void render(float deltaTime) {
         refreshScreen();
-        setCameraForEntity(entityPlayer.getPositions());
+        setCameraPositions(entityPlayer.getPositions());
 
         entityPlayer.updatePlayerComponents(deltaTime);
         GameMain.getPhysicsManager().renderHitboxObjects(camera);
 
         batch.begin();
 
-        entityPlayer.renderPlayerGraphics(batch);
-
         loadMap();
+        entityPlayer.renderPlayerGraphics(batch);
 
         batch.end();
     }
 
-    public void setCameraForEntity(Vector2 position){
+    public void setCameraPositions(Vector2 position){
         camera.position.set(position.x / PPM, (position.y) / PPM, 0);
     }
 
