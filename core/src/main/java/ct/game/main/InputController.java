@@ -23,7 +23,7 @@ public class InputController implements InputProcessor {
         }
     }
 
-    public Boolean getActionKey(ActionInputs input){
+    private Boolean getActionKey(ActionInputs input){
         return actions.get(input);
     }
     private void setActionKey(ActionInputs input, boolean key){
@@ -31,84 +31,89 @@ public class InputController implements InputProcessor {
     }
 
     public void updateMovingPlayer(){ // function updates everything whenever player hold a key
-        if (getActionKey(ActionInputs.KEY_RIGHT)) {
-            inputPlayer.setPlayerRun();
-        } else if(getActionKey(ActionInputs.KEY_LEFT)) {
-            inputPlayer.setPlayerRun();
-        }
+        inputPlayer.isJumping = player.isPlayerJumping();
+        inputPlayer.isMoving = false;
+        inputPlayer.isDucking = false;
 
-        if (getActionKey(ActionInputs.KEY_DOWN)) {
-            inputPlayer.setPlayerDuck();
-        } else if (getActionKey(ActionInputs.KEY_JUMP) && (!getActionKey(ActionInputs.KEY_LEFT) || !getActionKey(ActionInputs.KEY_RIGHT))) {
-            if(player.isOnGround()) {
-                player.setCurrentState(ActionState.STARTJUMP);
+        if (getActionKey(ActionInputs.KEY_DOWN) && !inputPlayer.isJumping && !inputPlayer.isMoving) {
+            inputPlayer.doPlayerDuck();
+            inputPlayer.isDucking = true;
+        }
+        if (getActionKey(ActionInputs.KEY_RIGHT) && !inputPlayer.isJumping && !inputPlayer.isDucking) {
+            inputPlayer.doPlayerMoveRight();
+            inputPlayer.isMoving = true;
+        }
+        if(getActionKey(ActionInputs.KEY_LEFT) && !inputPlayer.isJumping && !inputPlayer.isDucking) {
+            inputPlayer.doPlayerMoveLeft();
+            inputPlayer.isMoving = true;
+        }
+        if (getActionKey(ActionInputs.KEY_UP)) {
+
+        }
+        if (getActionKey(ActionInputs.KEY_JUMP)) {
+            if(player.isOnGround()){
+                inputPlayer.stopPlayer();
+                inputPlayer.setGroundJump();
             }
-        } else if (getActionKey(ActionInputs.KEY_ATTACK)){
-
-        } else if (getActionKey(ActionInputs.KEY_SPECIAL)){
-
-        } else if (getActionKey(ActionInputs.KEY_DODGE)){
+        }
+        if (getActionKey(ActionInputs.KEY_ATTACK)){
 
         }
-        else{
-            if(player.isOnGround() && player.getCurrentState() != ActionState.STARTJUMP && player.getBody().getLinearVelocity().x == 0) {
-                player.setCurrentState(ActionState.STAND);
-            }
+        if (getActionKey(ActionInputs.KEY_SPECIAL)){
+
         }
+        if (getActionKey(ActionInputs.KEY_DODGE) && inputPlayer.isMoving){
+            player.setCurrentState(ActionState.ROLLFRONT2);
+        }
+
+        inputPlayer.standPlayer();
+
+        inputPlayer.checkAndDoDodgeFront();
+        inputPlayer.checkAndSetSmallJump();
     }
 
     @Override
     public boolean keyDown(int keycode) { // function works whenever player press key (just once works)
         switch (keycode){
             case Input.Keys.LEFT:
-                if(player.isOnGround()){
-                    player.flipEntityHorizontally(true);
-                    player.setCurrentState(ActionState.RUN);
-                }
 
                 setActionKey(ActionInputs.KEY_LEFT, true);
                 break;
             case Input.Keys.RIGHT:
-                if(player.isOnGround()){
-                    player.flipEntityHorizontally(false);
-                    player.setCurrentState(ActionState.RUN);
-                }
 
                 setActionKey(ActionInputs.KEY_RIGHT, true);
                 break;
             case Input.Keys.DOWN:
-                player.setCurrentState(ActionState.DUCK);
 
                 setActionKey(ActionInputs.KEY_DOWN, true);
                 break;
+            case Input.Keys.UP:
+
+                setActionKey(ActionInputs.KEY_UP, true);
+                break;
             case Input.Keys.SPACE:
-                if(!getActionKey(ActionInputs.KEY_JUMP)) {
-                    if(!player.isOnGround()){
-                        player.performAirJump();
-                    }else{
-                        player.jumpPreparing = true;
-                    }
-                    setActionKey(ActionInputs.KEY_JUMP, true);
+                if(player.isOnGround()) {
+                    inputPlayer.isStartJump = true;
+                }else{
+                    inputPlayer.doAirJump();
+                    player.setAirJumps(player.getAirJumps() - 1);
                 }
+                player.setJumpStyleForCurrentCollision();
+
+                setActionKey(ActionInputs.KEY_JUMP, true);
                 break;
             case Input.Keys.A:
-                if(!getActionKey(ActionInputs.KEY_ATTACK)){
-                    setActionKey(ActionInputs.KEY_ATTACK, true);
-                }
+
+                setActionKey(ActionInputs.KEY_ATTACK, true);
                 break;
             case Input.Keys.S:
-                if(!getActionKey(ActionInputs.KEY_SPECIAL)){
-                    setActionKey(ActionInputs.KEY_SPECIAL, true);
-                }
+
+                setActionKey(ActionInputs.KEY_SPECIAL, true);
                 break;
             case Input.Keys.D:
-                if(!getActionKey(ActionInputs.KEY_DODGE)){
-                    if(getActionKey(ActionInputs.KEY_DODGE)){
-                        System.out.println("hello");
-                    }
+                inputPlayer.isDoge = true;
 
-                    setActionKey(ActionInputs.KEY_DODGE, true);
-                }
+                setActionKey(ActionInputs.KEY_DODGE, true);
                 break;
         }
 
@@ -121,42 +126,38 @@ public class InputController implements InputProcessor {
     public boolean keyUp(int keycode) {
         switch (keycode){
             case Input.Keys.LEFT:
-                inputPlayer.stopPlayer();
 
                 setActionKey(ActionInputs.KEY_LEFT, false);
                 break;
             case Input.Keys.RIGHT:
-                inputPlayer.stopPlayer();
 
                 setActionKey(ActionInputs.KEY_RIGHT, false);
                 break;
             case Input.Keys.DOWN:
-                if(getActionKey(ActionInputs.KEY_DOWN)) {
-                    setActionKey(ActionInputs.KEY_DOWN, false);
-                }
+
+                setActionKey(ActionInputs.KEY_DOWN, false);
                 break;
             case Input.Keys.SPACE:
-                if(getActionKey(ActionInputs.KEY_JUMP)) {
-                    if(player.isOnGround()) {
-                        player.jumpPreparing = false;
-                    }
-                    setActionKey(ActionInputs.KEY_JUMP, false);
-                }
+                inputPlayer.isStartJump = false;
+
+                setActionKey(ActionInputs.KEY_JUMP, false);
+
+                break;
+            case Input.Keys.UP:
+
+                setActionKey(ActionInputs.KEY_UP, false);
                 break;
             case Input.Keys.A:
-                if(getActionKey(ActionInputs.KEY_ATTACK)){
-                    setActionKey(ActionInputs.KEY_ATTACK, false);
-                }
+
+                setActionKey(ActionInputs.KEY_ATTACK, false);
                 break;
             case Input.Keys.S:
-                if(getActionKey(ActionInputs.KEY_SPECIAL)){
-                    setActionKey(ActionInputs.KEY_SPECIAL, false);
-                }
+
+                setActionKey(ActionInputs.KEY_SPECIAL, false);
                 break;
             case Input.Keys.D:
-                if(!getActionKey(ActionInputs.KEY_DODGE)){
-                    setActionKey(ActionInputs.KEY_DODGE, false);
-                }
+
+                setActionKey(ActionInputs.KEY_DODGE, false);
                 break;
         }
 

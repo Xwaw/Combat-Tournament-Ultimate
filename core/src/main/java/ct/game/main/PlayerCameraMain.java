@@ -61,18 +61,6 @@ public class PlayerCameraMain implements Screen {
         camera.zoom = zoom;
     }
 
-    public void checkBars(EntityPlayer player){
-        player.setHealthPoints(player.getHealthPoints() - 1f);
-        if(player.getHealthPoints() <= -100){
-            player.setHealthPoints(100f);
-        }
-
-        player.setSpecialPoints(player.getSpecialPoints() - 1f);
-        if(player.getSpecialPoints() <= -100){
-            player.setSpecialPoints(100f);
-        }
-    }
-
     @Override
     public void dispose() {
         batch.dispose();

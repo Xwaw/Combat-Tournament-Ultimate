@@ -19,21 +19,24 @@ public class  HudManager implements Screen {
     private final Camera cameraHUD;
     private final Viewport viewport;
 
-    private EntityPlayer playerHUD;
+    private final EntityPlayer playerHUD;
+    private final PlayerController inputHUD;
 
-    private SpriteBatch batch;
+    private final SpriteBatch batch;
     // Images of player HUD
-    private BitmapFont fpsText;
-    private BitmapFont positionsText;
+    private final BitmapFont fpsText;
+    private final BitmapFont positionsText;
+    private final BitmapFont eventFlagsText;
 
-    private TextureRegion MainTextureHud;
-    private TextureRegion HealthPointsBar;
-    private TextureRegion SpecialPointsBar;
+    private final TextureRegion MainTextureHud;
+    private final TextureRegion HealthPointsBar;
+    private final TextureRegion SpecialPointsBar;
 
     private final int maxHP = 100, maxSP = 100;
 
     public HudManager(EntityPlayer playerHUD) {
         this.playerHUD = playerHUD;
+        this.inputHUD = new PlayerController(playerHUD);
 
         cameraHUD = new OrthographicCamera();
         viewport = new StretchViewport(WIDTH, HEIGHT, cameraHUD);
@@ -44,6 +47,7 @@ public class  HudManager implements Screen {
 
         positionsText = new BitmapFont();
         fpsText = new BitmapFont();
+        eventFlagsText = new BitmapFont();
 
         batch = new SpriteBatch();
     }
@@ -72,6 +76,7 @@ public class  HudManager implements Screen {
 
         showFPSCounter(batch, fpsText);
         showInfoAboutPlayer(batch, positionsText);
+        showEventFlagsPlayer(batch, eventFlagsText);
 
         batch.end();
     }
@@ -107,6 +112,17 @@ public class  HudManager implements Screen {
 
     private void showInfoAboutPlayer(SpriteBatch batchFont, BitmapFont text){
         text.draw(batchFont, "X: " + playerHUD.getPositionX() + " | Y: " + playerHUD.getPositionY(), 10, 40);
+    }
+
+    private void showEventFlagsPlayer(SpriteBatch batchFont, BitmapFont text){
+        text.draw(batchFont,
+                "ActionState: " + playerHUD.getCurrentState() + "\n" +
+                "isMoving: " + inputHUD.isMoving + "\n" +
+                "isDucking: " + inputHUD.isDucking + "\n" +
+                "isJumping: " + inputHUD.isJumping + "\n" +
+                "isStartJumping: " + inputHUD.isStartJump + "\n" +
+                "isDodge: " + inputHUD.isDoge, 10, 150
+            );
     }
 
     private void refreshScreen(){

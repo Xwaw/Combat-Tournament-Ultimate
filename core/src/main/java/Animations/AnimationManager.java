@@ -44,58 +44,58 @@ public class AnimationManager {
 
         loadAnimationsForPlayer();
 
-        setOffSetsForAnimation(ActionState.STAND, 0, 0);
-        setOffSetsForAnimation(ActionState.RUN, 1.7f, 3f);
-        setOffSetsForAnimation(ActionState.DUCK, 0, 0);
-        setOffSetsForAnimation(ActionState.JUMP, 0.3f, 0.2f);
-        setOffSetsForAnimation(ActionState.STARTJUMP, -3.5f, -1.5f);
+        setOffsetsForAnimation(ActionState.STAND, 0, 0);
+        setOffsetsForAnimation(ActionState.RUN, 1.7f, 3f);
+        setOffsetsForAnimation(ActionState.DUCK, 0, 0);
+        setOffsetsForAnimation(ActionState.JUMP, 0.3f, 0.2f);
+        setOffsetsForAnimation(ActionState.STARTJUMP, -3.5f, -1.5f);
 
-        setOffSetsForAnimation(ActionState.ATTACK1, 7.8f, -7);
-        setOffSetsForAnimation(ActionState.ATTACK2, 13.8f, -0.5f);
-        setOffSetsForAnimation(ActionState.ATTACK3, -5.5f, -0.5f);
-        setOffSetsForAnimation(ActionState.ATTACK4, 13.8f, -0.5f);
-        setOffSetsForAnimation(ActionState.ATTACK5, 0.5f, -1.0f);
-        setOffSetsForAnimation(ActionState.ATTACK6, -12.2f, 1f);
-        setOffSetsForAnimation(ActionState.ATTACK7, -8.8f, 1.5f);
-        setOffSetsForAnimation(ActionState.ATTACK8, 40.5f, -1.0f);
-        setOffSetsForAnimation(ActionState.ATTACK9, -22.5f, 1.5f);
-        setOffSetsForAnimation(ActionState.ATTACK10, 4.3f, -59f);
-        setOffSetsForAnimation(ActionState.ATTACK11, 16f, -0.5f);
-        setOffSetsForAnimation(ActionState.ATTACK12, 21.5f, 1.1f);
-        setOffSetsForAnimation(ActionState.ATTACK13, 21.5f, -4.5f);
-        setOffSetsForAnimation(ActionState.ATTACK14, -13.5f, 3);
-        setOffSetsForAnimation(ActionState.ATTACK15, 0.5f, -1.0f);
-        setOffSetsForAnimation(ActionState.ATTACK16, -76.8f, 59.5f);
-        setOffSetsForAnimation(ActionState.ATTACK17, -59.3f, 40f);
-        setOffSetsForAnimation(ActionState.ATTACK18, 21.1f, 7.3f);
-        setOffSetsForAnimation(ActionState.ATTACK19, 40, 8);
-        setOffSetsForAnimation(ActionState.ATTACK20, 16.5f, 5f);
-        setOffSetsForAnimation(ActionState.ATTACK21, -3.8f, 0f);
-        setOffSetsForAnimation(ActionState.FLASHCOMBO, 16.2f, 3.5f);
+        setOffsetsForAnimation(ActionState.ATTACK1, 7.8f, -7);
+        setOffsetsForAnimation(ActionState.ATTACK2, 13.8f, -0.5f);
+        setOffsetsForAnimation(ActionState.ATTACK3, -5.5f, -0.5f);
+        setOffsetsForAnimation(ActionState.ATTACK4, 13.8f, -0.5f);
+        setOffsetsForAnimation(ActionState.ATTACK5, 0.5f, -1.0f);
+        setOffsetsForAnimation(ActionState.ATTACK6, -12.2f, 1f);
+        setOffsetsForAnimation(ActionState.ATTACK7, -8.8f, 1.5f);
+        setOffsetsForAnimation(ActionState.ATTACK8, 40.5f, -1.0f);
+        setOffsetsForAnimation(ActionState.ATTACK9, -22.5f, 1.5f);
+        setOffsetsForAnimation(ActionState.ATTACK10, 4.3f, -59f);
+        setOffsetsForAnimation(ActionState.ATTACK11, 16f, -0.5f);
+        setOffsetsForAnimation(ActionState.ATTACK12, 21.5f, 1.1f);
+        setOffsetsForAnimation(ActionState.ATTACK13, 21.5f, -4.5f);
+        setOffsetsForAnimation(ActionState.ATTACK14, -13.5f, 3);
+        setOffsetsForAnimation(ActionState.ATTACK15, 0.5f, -1.0f);
+        setOffsetsForAnimation(ActionState.ATTACK16, -76.8f, 59.5f);
+        setOffsetsForAnimation(ActionState.ATTACK17, -59.3f, 40f);
+        setOffsetsForAnimation(ActionState.ATTACK18, 21.1f, 7.3f);
+        setOffsetsForAnimation(ActionState.ATTACK19, 40, 8);
+        setOffsetsForAnimation(ActionState.ATTACK20, 16.5f, 5f);
+        setOffsetsForAnimation(ActionState.ATTACK21, -3.8f, 0f);
+        setOffsetsForAnimation(ActionState.FLASHCOMBO, 16.2f, 3.5f);
 
-        setOffSetsForAnimation(ActionState.HURT1, -14, 0);
-        setOffSetsForAnimation(ActionState.HURT2, -2.8f, -1f);
-        setOffSetsForAnimation(ActionState.FLYAWAY, 11, -1f);
-        setOffSetsForAnimation(ActionState.LANDH, 5.5f, -2f);
-        setOffSetsForAnimation(ActionState.LAND01, 14.2f, -2f);
-        setOffSetsForAnimation(ActionState.DEAD, 14.2f, -2f);
-        setOffSetsForAnimation(ActionState.DEAD01, 12.8f, -2f);
-        setOffSetsForAnimation(ActionState.WALLED, -21.3f, 14.5f);
-        setOffSetsForAnimation(ActionState.ROLLFRONT, -1.5f, -21.5f);
-        setOffSetsForAnimation(ActionState.ROLLFRONT2, -1.5f, -21.5f);
-        setOffSetsForAnimation(ActionState.JUMPOFF, 28f, 29.5f);
-        setOffSetsForAnimation(ActionState.UPP, 14.3f, -17.4f);
-        setOffSetsForAnimation(ActionState.ROLLBACK, -15f, -35.5f);
-        setOffSetsForAnimation(ActionState.ROLLBACK2, -15f, -33.5f);
+        setOffsetsForAnimation(ActionState.HURT1, -14, 0);
+        setOffsetsForAnimation(ActionState.HURT2, -2.8f, -1f);
+        setOffsetsForAnimation(ActionState.FLYAWAY, 11, -1f);
+        setOffsetsForAnimation(ActionState.LANDH, 5.5f, -2f);
+        setOffsetsForAnimation(ActionState.LAND01, 14.2f, -2f);
+        setOffsetsForAnimation(ActionState.DEAD, 14.2f, -2f);
+        setOffsetsForAnimation(ActionState.DEAD01, 12.8f, -2f);
+        setOffsetsForAnimation(ActionState.WALLED, -21.3f, 14.5f);
+        setOffsetsForAnimation(ActionState.ROLLFRONT, -1.5f, -21.5f);
+        setOffsetsForAnimation(ActionState.ROLLFRONT2, -1.5f, -21.5f);
+        setOffsetsForAnimation(ActionState.JUMPOFF, 28f, 29.5f);
+        setOffsetsForAnimation(ActionState.UPP, 14.3f, -17.4f);
+        setOffsetsForAnimation(ActionState.ROLLBACK, -15f, -35.5f);
+        setOffsetsForAnimation(ActionState.ROLLBACK2, -15f, -33.5f);
 
-        setOffSetsForAnimation(ActionState.CHARGING, 5.8f, -3.5f);
-        setOffSetsForAnimation(ActionState.BLAST, 23.4f, -3.5f);
+        setOffsetsForAnimation(ActionState.CHARGING, 5.8f, -3.5f);
+        setOffsetsForAnimation(ActionState.BLAST, 23.4f, -3.5f);
 
-        setOffSetsForAnimation(ActionState.TEST1, -16.3f, -41.5f);
-        setOffSetsForAnimation(ActionState.TEST2, 12.2f, -21.5f);
+        setOffsetsForAnimation(ActionState.TEST1, -16.3f, -41.5f);
+        setOffsetsForAnimation(ActionState.TEST2, 12.2f, -21.5f);
     }
 
-    private void setOffSetsForAnimation(ActionState state, float offSetX, float offSetY){
+    private void setOffsetsForAnimation(ActionState state, float offSetX, float offSetY){
         animationsOffSets.put(state, new float[]{offSetX, offSetY});
     }
 
@@ -199,6 +199,10 @@ public class AnimationManager {
             case FLASHCOMBO:
             case CHARGING:
             case BLAST:
+            case ROLLFRONT:
+            case ROLLFRONT2:
+            case ROLLBACK:
+            case ROLLBACK2:
                 animation.setPlayMode(Animation.PlayMode.NORMAL);
                 break;
         }

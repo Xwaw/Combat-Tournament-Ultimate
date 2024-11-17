@@ -1,6 +1,7 @@
 package ct.game.main;
 
 import MapGame.PhysicsManager;
+import Player.EntityPlayer;
 import Player.HudManager;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
@@ -25,8 +26,8 @@ public class GameMain extends Game {
         worldPhysicsManager = new PhysicsManager(new Vector2(0, -9.0f));
 
         gameMainScreen = new PlayerCameraMain();
-        gameHudScreen = new HudManager(gameMainScreen.getEntityPlayer());
 
+        gameHudScreen = new HudManager(gameMainScreen.getEntityPlayer());
         keyBoardPlayer = new InputController(gameMainScreen.getEntityPlayer());
 
         InputMultiplexer multiplexer = new InputMultiplexer();
