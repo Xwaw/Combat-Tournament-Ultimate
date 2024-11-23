@@ -12,13 +12,13 @@ public class PlayerController {
     public boolean isMoving = false;
     public boolean isDucking = false;
     public boolean isJumping = false;
-    public boolean isDoge = false;
+    public boolean isDodge = false;
 
     public PlayerController(EntityPlayer player) {
         this.player = player;
     }
     public void standPlayer(){
-        if(player.isOnGround() && !isJumping && !isMoving && !isDucking && !isDoge){
+        if(player.isOnGround() && !isJumping && !isMoving && !isDucking && !isDodge){
             player.setCurrentState(ActionState.STAND);
         }
     }
@@ -34,7 +34,7 @@ public class PlayerController {
     }
     public void doPlayerMoveLeft(){
         movePlayerX(player.speed * -1);
-        if (player.isOnGround() && !isJumping && !isDoge) {
+        if (player.isOnGround() && !isJumping && !isDodge) {
             player.flipEntityHorizontally(true);
             if(player.isOnGround()){
                 player.setCurrentState(ActionState.RUN);
@@ -43,7 +43,7 @@ public class PlayerController {
     }
     public void doPlayerMoveRight(){
         movePlayerX(player.speed);
-        if (player.isOnGround() && !isJumping && !isDoge) {
+        if (player.isOnGround() && !isJumping && !isDodge) {
             player.flipEntityHorizontally(false);
             if(player.isOnGround()){
                 player.setCurrentState(ActionState.RUN);
@@ -68,7 +68,7 @@ public class PlayerController {
     }
 
     public void checkAndSetSmallJump(){
-        if(player.getCurrentState() == ActionState.STARTJUMP && player.getIndexOfCurrentAnimation() == 4 && !isStartJump){
+        if(player.getCurrentState() == ActionState.STARTJUMP && player.getIndexOfCurrentAnimation() >= 4 && !isStartJump){
             jumpPlayer(player.getJumpStrength() / 3);
         }
     }
@@ -88,34 +88,31 @@ public class PlayerController {
         }
     }
 
-    public void checkAndDoDodgeFront(){
-        if(player.isOnGround() && isDoge){
-            movePlayerX(player.speed + 7);
-            if(player.isFlipped()) {
-                movePlayerX(player.speed + 7 * -1);
-            }
-            if(player.getIndexOfCurrentAnimation() >= 18){
-                stopPlayer();
-            }
-            if(player.isAnimationFinished()){
-                isDoge = false;
-            }
+    public void updateStateOnDodge(){
+        if(player.isAnimationFinished() && player.isCurrentAnimDodge()){
+            player.setCurrentState(ActionState.STAND);
+        }
+        if(player.getIndexOfCurrentAnimation() >= 18 && (player.getCurrentState() == ActionState.ROLLBACK2 || player.getCurrentState() == ActionState.ROLLFRONT2)){
+            stopPlayer();
+        }else{
+            moveEntityOnDodge();
         }
     }
-
-    /*
-    public void doAttack(ActionState attack, int indexNextAnim){
-        this.setCurrentState(attack);
-        isPlayerAttacking = true;
-
-        if(currentStateAnimation.getKeyFrameIndex(stateTime) >= indexNextAnim && !isPlayerAttacking){
-            stateTime = 0;
-            this.setCurrentState(ActionState.STAND);
-        } else if (currentStateAnimation.isAnimationFinished(stateTime)){
-            stateTime = 0;
-            this.setCurrentState(ActionState.STAND);
-            isPlayerAttacking = false;
+    public void moveEntityOnDodge(){
+        if((!player.isFlipped() && player.getCurrentState() == ActionState.ROLLFRONT2) || (player.isFlipped() && player.getCurrentState() == ActionState.ROLLBACK2)){
+            movePlayerX(player.speed * 1);
+        }else if((player.isFlipped() && player.getCurrentState() == ActionState.ROLLFRONT2) || (!player.isFlipped() && player.getCurrentState() == ActionState.ROLLBACK2)){
+            movePlayerX(player.speed * -1);
         }
     }
-     */
+    public void doPlayerDodgeRight(){
+        if(isDodge) {
+            player.setRollDodgeRight();
+        }
+    }
+    public void doPlayerDodgeLeft(){
+        if(isDodge) {
+            player.setRollDodgeLeft();
+        }
+    }
 }

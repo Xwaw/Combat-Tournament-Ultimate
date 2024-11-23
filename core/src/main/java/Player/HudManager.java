@@ -36,7 +36,7 @@ public class  HudManager implements Screen {
 
     public HudManager(EntityPlayer playerHUD) {
         this.playerHUD = playerHUD;
-        this.inputHUD = new PlayerController(playerHUD);
+        this.inputHUD = playerHUD.getPlayerController();
 
         cameraHUD = new OrthographicCamera();
         viewport = new StretchViewport(WIDTH, HEIGHT, cameraHUD);
@@ -121,7 +121,7 @@ public class  HudManager implements Screen {
                 "isDucking: " + inputHUD.isDucking + "\n" +
                 "isJumping: " + inputHUD.isJumping + "\n" +
                 "isStartJumping: " + inputHUD.isStartJump + "\n" +
-                "isDodge: " + inputHUD.isDoge, 10, 150
+                "isDodge: " + inputHUD.isDodge, 10, 150
             );
     }
 

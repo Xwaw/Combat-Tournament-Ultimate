@@ -20,6 +20,7 @@ public class EntityPlayer {
     private Body body;
     private final CollisionChecker collisionChecker;
     private Rectangle hitBox;
+    private PlayerController playerController;
 
     //stats
     private float healthPoints; //standard = 100
@@ -33,6 +34,7 @@ public class EntityPlayer {
 
     //jump logic
     private final float jumpStrength = 25;
+    private int maxAirJumps = 2;
     private int airJumps = 2;
 
     // refreshFrames
@@ -53,6 +55,8 @@ public class EntityPlayer {
         this.healthPoints = playerHP;
         this.specialPoints = playerSP;
 
+        playerController = new PlayerController(this);
+
         this.physicsManager = GameMain.getPhysicsManager();
         this.body = physicsManager.createBoxBodyForEntity(position, hitboxSize);
         this.collisionChecker = new CollisionChecker();
@@ -61,6 +65,10 @@ public class EntityPlayer {
         this.currentStateAnimation = animationsForPlayer.getCurrentAnimation(currentState);
 
         this.stateTime = 0.0f;
+    }
+
+    public PlayerController getPlayerController() {
+        return playerController;
     }
 
     public Body getBody() {
@@ -112,8 +120,29 @@ public class EntityPlayer {
         }
     }
 
-    public boolean isPlayerJumping(){
+    public boolean isCurrentAnimStartJump(){
         return this.getCurrentState() == ActionState.STARTJUMP;
+    }
+    public boolean isCurrentAnimDodge() {
+        return this.getCurrentState() == ActionState.ROLLBACK ||
+            this.getCurrentState() == ActionState.ROLLBACK2 ||
+            this.getCurrentState() == ActionState.ROLLFRONT ||
+            this.getCurrentState() == ActionState.ROLLFRONT2;
+    }
+
+    public void setRollDodgeRight(){
+        if(!this.isFlipped()){
+            this.setCurrentState(ActionState.ROLLFRONT2);
+        } else{
+            this.setCurrentState(ActionState.ROLLBACK2);
+        }
+    }
+    public void setRollDodgeLeft(){
+        if(this.isFlipped()){
+            this.setCurrentState(ActionState.ROLLFRONT2);
+        } else{
+            this.setCurrentState(ActionState.ROLLBACK2);
+        }
     }
 
     public float getHealthPoints() {
@@ -162,10 +191,10 @@ public class EntityPlayer {
     }
 
     public void updateIsPlayerOnAir(){
-        if(!isOnGround()){
+        if(!isOnGround() && !playerController.isDodge){
             this.setCurrentState(ActionState.JUMP);
         }else{
-            setAirJumps(2);
+            setAirJumps(maxAirJumps);
         }
     }
 

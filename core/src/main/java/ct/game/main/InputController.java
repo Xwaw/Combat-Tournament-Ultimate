@@ -15,7 +15,7 @@ public class InputController implements InputProcessor {
 
     public InputController(EntityPlayer player){
         this.player = player;
-        this.inputPlayer = new PlayerController(player);
+        this.inputPlayer = player.getPlayerController();
 
         actions = new HashMap<>();
         for(ActionInputs state : ActionInputs.values()){
@@ -30,27 +30,40 @@ public class InputController implements InputProcessor {
         actions.put(input, key);
     }
 
-    public void updateMovingPlayer(){ // function updates everything whenever player hold a key
-        inputPlayer.isJumping = player.isPlayerJumping();
+    public void updateMovingPlayer(){ // function updates everything whenever player hold a key or not
+        inputPlayer.isJumping = player.isCurrentAnimStartJump();
         inputPlayer.isMoving = false;
         inputPlayer.isDucking = false;
+        inputPlayer.isDodge = player.isCurrentAnimDodge();
 
-        if (getActionKey(ActionInputs.KEY_DOWN) && !inputPlayer.isJumping && !inputPlayer.isMoving) {
+        if (getActionKey(ActionInputs.KEY_DOWN) && !inputPlayer.isJumping && !inputPlayer.isMoving && !inputPlayer.isDodge) {
             inputPlayer.doPlayerDuck();
-            inputPlayer.isDucking = true;
+            if(player.isOnGround()) {
+                inputPlayer.isDucking = true;
+            }
         }
-        if (getActionKey(ActionInputs.KEY_RIGHT) && !inputPlayer.isJumping && !inputPlayer.isDucking) {
+        if (getActionKey(ActionInputs.KEY_DODGE) && !inputPlayer.isDodge && !inputPlayer.isJumping && !inputPlayer.isStartJump && !inputPlayer.isDucking) {
+            if(getActionKey(ActionInputs.KEY_RIGHT)){
+                inputPlayer.isDodge = true;
+                inputPlayer.doPlayerDodgeRight();
+            } else if(getActionKey(ActionInputs.KEY_LEFT)){
+                inputPlayer.isDodge = true;
+                inputPlayer.doPlayerDodgeLeft();
+            }
+        }
+        if (getActionKey(ActionInputs.KEY_RIGHT) && !inputPlayer.isJumping && !inputPlayer.isDucking && !inputPlayer.isDodge) {
             inputPlayer.doPlayerMoveRight();
             inputPlayer.isMoving = true;
+
         }
-        if(getActionKey(ActionInputs.KEY_LEFT) && !inputPlayer.isJumping && !inputPlayer.isDucking) {
+        if(getActionKey(ActionInputs.KEY_LEFT) && !inputPlayer.isJumping && !inputPlayer.isDucking && !inputPlayer.isDodge) {
             inputPlayer.doPlayerMoveLeft();
             inputPlayer.isMoving = true;
         }
         if (getActionKey(ActionInputs.KEY_UP)) {
 
         }
-        if (getActionKey(ActionInputs.KEY_JUMP)) {
+        if (getActionKey(ActionInputs.KEY_JUMP) && !inputPlayer.isDodge && !inputPlayer.isDucking ) {
             if(player.isOnGround()){
                 inputPlayer.stopPlayer();
                 inputPlayer.setGroundJump();
@@ -62,13 +75,10 @@ public class InputController implements InputProcessor {
         if (getActionKey(ActionInputs.KEY_SPECIAL)){
 
         }
-        if (getActionKey(ActionInputs.KEY_DODGE) && inputPlayer.isMoving){
-            player.setCurrentState(ActionState.ROLLFRONT2);
-        }
-
         inputPlayer.standPlayer();
 
-        inputPlayer.checkAndDoDodgeFront();
+        inputPlayer.updateStateOnDodge();
+
         inputPlayer.checkAndSetSmallJump();
     }
 
@@ -92,13 +102,15 @@ public class InputController implements InputProcessor {
                 setActionKey(ActionInputs.KEY_UP, true);
                 break;
             case Input.Keys.SPACE:
-                if(player.isOnGround()) {
-                    inputPlayer.isStartJump = true;
-                }else{
-                    inputPlayer.doAirJump();
-                    player.setAirJumps(player.getAirJumps() - 1);
+                if(!inputPlayer.isDodge) {
+                    if (player.isOnGround()) {
+                        inputPlayer.isStartJump = true;
+                    } else {
+                        inputPlayer.doAirJump();
+                        player.setAirJumps(player.getAirJumps() - 1);
+                    }
+                    player.setJumpStyleForCurrentCollision();
                 }
-                player.setJumpStyleForCurrentCollision();
 
                 setActionKey(ActionInputs.KEY_JUMP, true);
                 break;
@@ -111,7 +123,6 @@ public class InputController implements InputProcessor {
                 setActionKey(ActionInputs.KEY_SPECIAL, true);
                 break;
             case Input.Keys.D:
-                inputPlayer.isDoge = true;
 
                 setActionKey(ActionInputs.KEY_DODGE, true);
                 break;
@@ -141,7 +152,6 @@ public class InputController implements InputProcessor {
                 inputPlayer.isStartJump = false;
 
                 setActionKey(ActionInputs.KEY_JUMP, false);
-
                 break;
             case Input.Keys.UP:
 
