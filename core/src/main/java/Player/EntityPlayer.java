@@ -3,6 +3,7 @@ package Player;
 import Animations.ActionState;
 import Animations.AnimationManager;
 import MapGame.PhysicsManager;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -18,9 +19,11 @@ public class EntityPlayer {
     private final float[] hitboxSize = {44f, 129f};
     private final PhysicsManager physicsManager;
     private Body body;
-    private final CollisionChecker collisionChecker;
     private Rectangle hitBox;
+    private final CollisionChecker collisionChecker;
     private PlayerController playerController;
+
+    private PlayerAttacksManager playerAttacks;
 
     //stats
     private float healthPoints; //standard = 100
@@ -54,8 +57,10 @@ public class EntityPlayer {
     public EntityPlayer(float playerHP, float playerSP, Vector2 position){
         this.healthPoints = playerHP;
         this.specialPoints = playerSP;
+        this.hitBox = new Rectangle(250, 250, 100, 100);
 
-        playerController = new PlayerController(this);
+        this.playerAttacks = new PlayerAttacksManager(this, hitBox);
+        this.playerController = new PlayerController(this);
 
         this.physicsManager = GameMain.getPhysicsManager();
         this.body = physicsManager.createBoxBodyForEntity(position, hitboxSize);
@@ -67,8 +72,15 @@ public class EntityPlayer {
         this.stateTime = 0.0f;
     }
 
+    public PlayerAttacksManager getPlayerAttacks() {
+        return playerAttacks;
+    }
     public PlayerController getPlayerController() {
         return playerController;
+    }
+
+    public Rectangle getHitbox(){
+        return hitBox;
     }
 
     public Body getBody() {
@@ -124,10 +136,14 @@ public class EntityPlayer {
         return this.getCurrentState() == ActionState.STARTJUMP;
     }
     public boolean isCurrentAnimDodge() {
-        return this.getCurrentState() == ActionState.ROLLBACK ||
-            this.getCurrentState() == ActionState.ROLLBACK2 ||
-            this.getCurrentState() == ActionState.ROLLFRONT ||
-            this.getCurrentState() == ActionState.ROLLFRONT2;
+        return currentState == ActionState.ROLLBACK ||
+            currentState == ActionState.ROLLBACK2 ||
+            currentState == ActionState.ROLLFRONT ||
+            currentState == ActionState.ROLLFRONT2;
+    }
+    public boolean isPlayerAttackingMove(){
+        String nameAttack = currentState.name();
+        return nameAttack.startsWith("Attack");
     }
 
     public void setRollDodgeRight(){
@@ -176,13 +192,13 @@ public class EntityPlayer {
         airJumps = jumps;
     }
 
-    public float getPositionX(){
+    public float getBodyPositionX(){
         return body.getPosition().x * PPM;
     }
-    public float getPositionY(){
+    public float getBodyPositionY(){
         return body.getPosition().y * PPM;
     }
-    public Vector2 getPositions(){
+    public Vector2 getBodyPositions(){
         return new Vector2(body.getPosition().x * PPM, body.getPosition().y * PPM);
     }
 
@@ -191,18 +207,24 @@ public class EntityPlayer {
     }
 
     public void updateIsPlayerOnAir(){
-        if(!isOnGround() && !playerController.isDodge){
+        if(!isOnGround() && !playerController.isDodge && !playerController.isComboMove()){
             this.setCurrentState(ActionState.JUMP);
         }else{
             setAirJumps(maxAirJumps);
         }
     }
 
+    public void renderPlayerHitBox(SpriteBatch batch){
+        Texture hitBoxImage = new Texture("pngFiles/testUse/testPngs/HitBox.png");
+
+        batch.draw(hitBoxImage, hitBox.x / PPM, hitBox.y / PPM, hitBox.width / PPM, hitBox.height / PPM);
+    }
+
     public void renderPlayerGraphics(SpriteBatch batch){
         TextureRegion currentFrame = currentStateAnimation.getKeyFrame(stateTime);
 
-        float drawX = (this.getPositionX() - ((float) currentFrame.getRegionWidth() / 2) * 0.5f) / PPM;
-        float drawY = (this.getPositionY() - (hitboxSize[1]/2)) / PPM;
+        float drawX = (this.getBodyPositionX() - ((float) currentFrame.getRegionWidth() / 2) * 0.5f) / PPM;
+        float drawY = (this.getBodyPositionY() - (hitboxSize[1]/2)) / PPM;
 
         float offSetFrameX = this.animationsForPlayer.getOffSetsAnimations(currentState)[0] / PPM;
         float offSetFrameY = this.animationsForPlayer.getOffSetsAnimations(currentState)[1] / PPM;

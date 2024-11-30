@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
@@ -71,13 +72,11 @@ public class  HudManager implements Screen {
         refreshScreen();
 
         batch.begin();
+            showPlayerHud(batch);
 
-        showPlayerHud(batch);
-
-        showFPSCounter(batch, fpsText);
-        showInfoAboutPlayer(batch, positionsText);
-        showEventFlagsPlayer(batch, eventFlagsText);
-
+            showFPSCounter(batch, fpsText);
+            showInfoAboutPlayer(batch, positionsText);
+            showEventFlagsPlayer(batch, eventFlagsText);
         batch.end();
     }
 
@@ -111,7 +110,7 @@ public class  HudManager implements Screen {
     }
 
     private void showInfoAboutPlayer(SpriteBatch batchFont, BitmapFont text){
-        text.draw(batchFont, "X: " + playerHUD.getPositionX() + " | Y: " + playerHUD.getPositionY(), 10, 40);
+        text.draw(batchFont, "X: " + playerHUD.getBodyPositionX() + " | Y: " + playerHUD.getBodyPositionY(), 10, 40);
     }
 
     private void showEventFlagsPlayer(SpriteBatch batchFont, BitmapFont text){
@@ -121,7 +120,11 @@ public class  HudManager implements Screen {
                 "isDucking: " + inputHUD.isDucking + "\n" +
                 "isJumping: " + inputHUD.isJumping + "\n" +
                 "isStartJumping: " + inputHUD.isStartJump + "\n" +
-                "isDodge: " + inputHUD.isDodge, 10, 150
+                "isDodge: " + inputHUD.isDodge + "\n" +
+                "isComboMove: " + inputHUD.isComboMove() + "\n" +
+                "isSpecialUsed: " + "\n" +
+                "isSpecial: "
+            , 1120, 165
             );
     }
 

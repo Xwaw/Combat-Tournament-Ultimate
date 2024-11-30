@@ -5,10 +5,9 @@ import com.badlogic.gdx.math.Vector2;
 
 public class PlayerController {
     private EntityPlayer player;
-    private PlayerAttacks playerAttacks; //10, 16
+    private PlayerAttacksManager playerAttacks;
 
     public boolean isStartJump = false;
-
     public boolean isMoving = false;
     public boolean isDucking = false;
     public boolean isJumping = false;
@@ -16,9 +15,10 @@ public class PlayerController {
 
     public PlayerController(EntityPlayer player) {
         this.player = player;
+        this.playerAttacks = player.getPlayerAttacks();
     }
     public void standPlayer(){
-        if(player.isOnGround() && !isJumping && !isMoving && !isDucking && !isDodge){
+        if(player.isOnGround() && !isJumping && !isMoving && !isDucking && !isDodge && !playerAttacks.isComboMove){
             player.setCurrentState(ActionState.STAND);
         }
     }
@@ -100,9 +100,9 @@ public class PlayerController {
     }
     public void moveEntityOnDodge(){
         if((!player.isFlipped() && player.getCurrentState() == ActionState.ROLLFRONT2) || (player.isFlipped() && player.getCurrentState() == ActionState.ROLLBACK2)){
-            movePlayerX(player.speed * 1);
+            movePlayerX(player.speed);
         }else if((player.isFlipped() && player.getCurrentState() == ActionState.ROLLFRONT2) || (!player.isFlipped() && player.getCurrentState() == ActionState.ROLLBACK2)){
-            movePlayerX(player.speed * -1);
+            movePlayerX(-player.speed);
         }
     }
     public void doPlayerDodgeRight(){
@@ -114,5 +114,19 @@ public class PlayerController {
         if(isDodge) {
             player.setRollDodgeLeft();
         }
+    }
+
+    public void doPlayerAttack(){
+        playerAttacks.doAttack1();
+    }
+
+    public boolean isComboMove(){
+        return playerAttacks.isComboMove;
+    }
+    public void setComboMove(boolean comboMove){
+        playerAttacks.isComboMove = comboMove;
+    }
+    public void updatePlayerControl(){
+        playerAttacks.updateHitBoxes();
     }
 }

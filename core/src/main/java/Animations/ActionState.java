@@ -10,5 +10,5 @@ public enum ActionState {
 
     CHARGING, BLAST,
 
-    TEST1, TEST2
+    TEST1, Attack1, TEST2
 }
