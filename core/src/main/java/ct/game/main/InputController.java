@@ -33,18 +33,20 @@ public class InputController implements InputProcessor {
         inputPlayer.isJumping = player.isCurrentAnimStartJump();
         inputPlayer.isMoving = false;
         inputPlayer.isDucking = false;
+        inputPlayer.isComboMove = false;
         inputPlayer.isDodge = player.isCurrentAnimDodge();
 
         if (getActionKey(ActionInputs.KEY_ATTACK) && !inputPlayer.isJumping && !inputPlayer.isStartJump && !inputPlayer.isDodge){
-
+            inputPlayer.isComboMove = true;
+            inputPlayer.doPlayerAttacking();
         }
-        if (getActionKey(ActionInputs.KEY_DOWN) && !inputPlayer.isJumping && !inputPlayer.isMoving && !inputPlayer.isDodge && !inputPlayer.isComboMove()) {
+        if (getActionKey(ActionInputs.KEY_DOWN) && !inputPlayer.isJumping && !inputPlayer.isMoving && !inputPlayer.isDodge && !inputPlayer.isComboMove) {
             inputPlayer.doPlayerDuck();
             if(player.isOnGround()) {
                 inputPlayer.isDucking = true;
             }
         }
-        if (getActionKey(ActionInputs.KEY_DODGE) && !inputPlayer.isDodge && !inputPlayer.isJumping && !inputPlayer.isStartJump && !inputPlayer.isDucking && !inputPlayer.isComboMove()) {
+        if (getActionKey(ActionInputs.KEY_DODGE) && !inputPlayer.isDodge && !inputPlayer.isJumping && !inputPlayer.isStartJump && !inputPlayer.isDucking && !inputPlayer.isComboMove) {
             if(getActionKey(ActionInputs.KEY_RIGHT)){
                 inputPlayer.isDodge = true;
                 inputPlayer.doPlayerDodgeRight();
@@ -53,19 +55,19 @@ public class InputController implements InputProcessor {
                 inputPlayer.doPlayerDodgeLeft();
             }
         }
-        if (getActionKey(ActionInputs.KEY_RIGHT) && !inputPlayer.isJumping && !inputPlayer.isDucking && !inputPlayer.isDodge && !inputPlayer.isComboMove()) {
+        if (getActionKey(ActionInputs.KEY_RIGHT) && !inputPlayer.isJumping && !inputPlayer.isDucking && !inputPlayer.isDodge && !inputPlayer.isComboMove) {
             inputPlayer.doPlayerMoveRight();
             inputPlayer.isMoving = true;
 
         }
-        if(getActionKey(ActionInputs.KEY_LEFT) && !inputPlayer.isJumping && !inputPlayer.isDucking && !inputPlayer.isDodge && !inputPlayer.isComboMove()) {
+        if(getActionKey(ActionInputs.KEY_LEFT) && !inputPlayer.isJumping && !inputPlayer.isDucking && !inputPlayer.isDodge && !inputPlayer.isComboMove) {
             inputPlayer.doPlayerMoveLeft();
             inputPlayer.isMoving = true;
         }
         if (getActionKey(ActionInputs.KEY_UP)) {
 
         }
-        if (getActionKey(ActionInputs.KEY_JUMP) && !inputPlayer.isDodge && !inputPlayer.isDucking && !inputPlayer.isComboMove()) {
+        if (getActionKey(ActionInputs.KEY_JUMP) && !inputPlayer.isDodge && !inputPlayer.isDucking && !inputPlayer.isComboMove) {
             if(player.isOnGround()){
                 inputPlayer.stopPlayer();
                 inputPlayer.setGroundJump();
@@ -79,8 +81,6 @@ public class InputController implements InputProcessor {
         inputPlayer.updateStateOnDodge();
 
         inputPlayer.checkAndSetSmallJump();
-
-        inputPlayer.updatePlayerControl();
     }
 
     @Override
@@ -103,7 +103,7 @@ public class InputController implements InputProcessor {
                 setActionKey(ActionInputs.KEY_UP, true);
                 break;
             case Input.Keys.SPACE:
-                if(!inputPlayer.isDodge && !inputPlayer.isComboMove()) {
+                if(!inputPlayer.isDodge && !inputPlayer.isComboMove) {
                     if (player.isOnGround()) {
                         inputPlayer.isStartJump = true;
                     } else {
@@ -116,10 +116,6 @@ public class InputController implements InputProcessor {
                 setActionKey(ActionInputs.KEY_JUMP, true);
                 break;
             case Input.Keys.A:
-                if(!inputPlayer.isStartJump && !inputPlayer.isDodge && !inputPlayer.isJumping) {
-                    inputPlayer.setComboMove(true);
-                    inputPlayer.doPlayerAttack();
-                }
 
                 setActionKey(ActionInputs.KEY_ATTACK, true);
                 break;

@@ -23,8 +23,6 @@ public class EntityPlayer {
     private final CollisionChecker collisionChecker;
     private PlayerController playerController;
 
-    private PlayerAttacksManager playerAttacks;
-
     //stats
     private float healthPoints; //standard = 100
     private float specialPoints; //standard = 100
@@ -59,9 +57,6 @@ public class EntityPlayer {
         this.specialPoints = playerSP;
         this.hitBox = new Rectangle(250, 250, 100, 100);
 
-        this.playerAttacks = new PlayerAttacksManager(this, hitBox);
-        this.playerController = new PlayerController(this);
-
         this.physicsManager = GameMain.getPhysicsManager();
         this.body = physicsManager.createBoxBodyForEntity(position, hitboxSize);
         this.collisionChecker = new CollisionChecker();
@@ -69,14 +64,9 @@ public class EntityPlayer {
         this.animationsForPlayer = new AnimationManager(durationAnimations);
         this.currentStateAnimation = animationsForPlayer.getCurrentAnimation(currentState);
 
-        this.stateTime = 0.0f;
-    }
+        this.playerController = new PlayerController(this);
 
-    public PlayerAttacksManager getPlayerAttacks() {
-        return playerAttacks;
-    }
-    public PlayerController getPlayerController() {
-        return playerController;
+        this.stateTime = 0.0f;
     }
 
     public Rectangle getHitbox(){
@@ -86,7 +76,7 @@ public class EntityPlayer {
     public Body getBody() {
         return body;
     }
-    public void setCurrentState(ActionState currentState){
+    public void changeState(ActionState currentState){
         if (this.currentState != currentState) {
             this.currentState = currentState;
             currentStateAnimation = animationsForPlayer.getCurrentAnimation(currentState);
@@ -126,9 +116,9 @@ public class EntityPlayer {
     }
     public void setJumpStyleForCurrentCollision(){
         if(isOnGround()){
-            this.setCurrentState(ActionState.STARTJUMP);
+            this.changeState(ActionState.STARTJUMP);
         }else{
-            this.setCurrentState(ActionState.JUMP);
+            this.changeState(ActionState.JUMP);
         }
     }
 
@@ -148,16 +138,16 @@ public class EntityPlayer {
 
     public void setRollDodgeRight(){
         if(!this.isFlipped()){
-            this.setCurrentState(ActionState.ROLLFRONT2);
+            this.changeState(ActionState.ROLLFRONT2);
         } else{
-            this.setCurrentState(ActionState.ROLLBACK2);
+            this.changeState(ActionState.ROLLBACK2);
         }
     }
     public void setRollDodgeLeft(){
         if(this.isFlipped()){
-            this.setCurrentState(ActionState.ROLLFRONT2);
+            this.changeState(ActionState.ROLLFRONT2);
         } else{
-            this.setCurrentState(ActionState.ROLLBACK2);
+            this.changeState(ActionState.ROLLBACK2);
         }
     }
 
@@ -207,8 +197,8 @@ public class EntityPlayer {
     }
 
     public void updateIsPlayerOnAir(){
-        if(!isOnGround() && !playerController.isDodge && !playerController.isComboMove()){
-            this.setCurrentState(ActionState.JUMP);
+        if(!isOnGround() && !playerController.isDodge && !playerController.isComboMove){
+            this.changeState(ActionState.JUMP);
         }else{
             setAirJumps(maxAirJumps);
         }
@@ -245,5 +235,9 @@ public class EntityPlayer {
         flipSpriteOnCurrentSide();
 
         regenerateSpecialBar(0.005f);
+    }
+
+    public PlayerController getPlayerController() {
+        return playerController;
     }
 }

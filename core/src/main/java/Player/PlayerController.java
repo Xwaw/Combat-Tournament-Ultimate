@@ -4,8 +4,8 @@ import Animations.ActionState;
 import com.badlogic.gdx.math.Vector2;
 
 public class PlayerController {
-    private EntityPlayer player;
-    private PlayerAttacksManager playerAttacks;
+    private final EntityPlayer player;
+    private final PlayerAttacksManager playerAttacks;
 
     public boolean isStartJump = false;
     public boolean isMoving = false;
@@ -13,13 +13,17 @@ public class PlayerController {
     public boolean isJumping = false;
     public boolean isDodge = false;
 
+    public boolean isComboMove = false;
+    public boolean isSpecialUsed = false;
+    public boolean isSpecial = false;
+
     public PlayerController(EntityPlayer player) {
         this.player = player;
-        this.playerAttacks = player.getPlayerAttacks();
+        this.playerAttacks = new PlayerAttacksManager(player, this,player.getHitbox());
     }
     public void standPlayer(){
-        if(player.isOnGround() && !isJumping && !isMoving && !isDucking && !isDodge && !playerAttacks.isComboMove){
-            player.setCurrentState(ActionState.STAND);
+        if(player.isOnGround() && !isJumping && !isMoving && !isDucking && !isDodge && !isComboMove){
+            player.changeState(ActionState.STAND);
         }
     }
     public void movePlayerX(float moveX){
@@ -37,7 +41,7 @@ public class PlayerController {
         if (player.isOnGround() && !isJumping && !isDodge) {
             player.flipEntityHorizontally(true);
             if(player.isOnGround()){
-                player.setCurrentState(ActionState.RUN);
+                player.changeState(ActionState.RUN);
             }
         }
     }
@@ -46,7 +50,7 @@ public class PlayerController {
         if (player.isOnGround() && !isJumping && !isDodge) {
             player.flipEntityHorizontally(false);
             if(player.isOnGround()){
-                player.setCurrentState(ActionState.RUN);
+                player.changeState(ActionState.RUN);
             }
         }
     }
@@ -75,7 +79,7 @@ public class PlayerController {
 
     public void doPlayerDuck(){
         if(player.isOnGround()){
-            player.setCurrentState(ActionState.DUCK);
+            player.changeState(ActionState.DUCK);
         }
         // in future there will be resize of hitbox
     }
@@ -90,7 +94,7 @@ public class PlayerController {
 
     public void updateStateOnDodge(){
         if(player.isAnimationFinished() && player.isCurrentAnimDodge()){
-            player.setCurrentState(ActionState.STAND);
+            player.changeState(ActionState.STAND);
         }
         if(player.getIndexOfCurrentAnimation() >= 18 && (player.getCurrentState() == ActionState.ROLLBACK2 || player.getCurrentState() == ActionState.ROLLFRONT2)){
             stopPlayer();
@@ -115,18 +119,7 @@ public class PlayerController {
             player.setRollDodgeLeft();
         }
     }
-
-    public void doPlayerAttack(){
-        playerAttacks.doAttack1();
-    }
-
-    public boolean isComboMove(){
-        return playerAttacks.isComboMove;
-    }
-    public void setComboMove(boolean comboMove){
-        playerAttacks.isComboMove = comboMove;
-    }
-    public void updatePlayerControl(){
-        playerAttacks.updateHitBoxes();
+    public void doPlayerAttacking(){
+        playerAttacks.setStateCombo();
     }
 }

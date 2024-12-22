@@ -28,16 +28,16 @@ public class AnimationManager {
     // attack9 - [13 - nextAnim]
     // attack10 - [finish - nextAnim], [moveAnim *50 speed*/*0 wall to speed*]
     // attack11 - [36 - nextAnim if(jump is pressed)]
-    // attack12
-    // attack13 - 7
-    // attack14 - 7
-    // attack15 - 7
-    // attack16 - 7
-    // attack17 - 7
-    // attack18 - 7
-    // attack19 - 7
-    // attack20 - 7
-    // attack21 - 7
+    // attack12 - [finish - nextAnim]
+    // attack13 - [finish - nextAnim], [everyFrame - speed + 20], [38 - stopMoving], [43 - speed + 40], [51 - nextAnim if moves are connect]
+    // attack14 - [9 - nextAnim]
+    // attack15 - [finish - nextAnim]
+    // attack16 - [7 - nextAnim], [8 frames - speed + 20]
+    // attack17 - [finish - nextAnim]
+    // attack18 - [10 - nextAnim]
+    // attack19 - [4 - speed + 10], [11 - nextAnim]
+    // attack20 - [finish - nextAnim], [41 - stopAnim]
+    // attack21 - [15 - nextAnim]
 
     public AnimationManager(float duration){
         this.duration = duration;
