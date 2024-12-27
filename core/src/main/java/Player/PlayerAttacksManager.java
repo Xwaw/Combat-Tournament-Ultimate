@@ -28,7 +28,6 @@ public class PlayerAttacksManager {
             }
             animPlayer.changeState(comboMoves[currentComboIndex]);
         }
-
         else if (!playerController.isComboMove && comboInProgress) {
             comboInProgress = false;
         }
