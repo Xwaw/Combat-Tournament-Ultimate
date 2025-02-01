@@ -5,10 +5,12 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
-public class AnimationManager {
+public class AnimationManager{
     private Map<ActionState, Animation<TextureRegion>> animationsMap = new HashMap<>();
     private final Map<ActionState, float[]> animationsOffSets = new HashMap<>();
     private float duration;
@@ -16,6 +18,8 @@ public class AnimationManager {
     private String animPathPng = "pngFiles/animations/HomerunBatCHR";
 
     private String testPaths = "pngFiles/testUse/animations/";
+
+    private List<AnimationData> animationsList = new ArrayList<>();
 
     // attack1 - [7 - nextAnim]
     // attack2 - [7 - nextAnim]
@@ -43,124 +47,160 @@ public class AnimationManager {
         this.duration = duration;
 
         loadAnimationsForPlayer();
-
-        setOffsetsForAnimation(ActionState.STAND, 0, 0);
-        setOffsetsForAnimation(ActionState.RUN, 1.7f, 3f);
-        setOffsetsForAnimation(ActionState.DUCK, 0, 0);
-        setOffsetsForAnimation(ActionState.JUMP, 0.3f, 0.2f);
-        setOffsetsForAnimation(ActionState.STARTJUMP, -3.5f, -1.5f);
-
-        setOffsetsForAnimation(ActionState.ATTACK1, 7.8f, -7);
-        setOffsetsForAnimation(ActionState.ATTACK2, 13.8f, -0.5f);
-        setOffsetsForAnimation(ActionState.ATTACK3, -5.5f, -0.5f);
-        setOffsetsForAnimation(ActionState.ATTACK4, 13.8f, -0.5f);
-        setOffsetsForAnimation(ActionState.ATTACK5, 0.5f, -1.0f);
-        setOffsetsForAnimation(ActionState.ATTACK6, -12.2f, 1f);
-        setOffsetsForAnimation(ActionState.ATTACK7, -8.8f, 1.5f);
-        setOffsetsForAnimation(ActionState.ATTACK8, 40.5f, -1.0f);
-        setOffsetsForAnimation(ActionState.ATTACK9, -22.5f, 1.5f);
-        setOffsetsForAnimation(ActionState.ATTACK10, 4.3f, -59f);
-        setOffsetsForAnimation(ActionState.ATTACK11, 16f, -0.5f);
-        setOffsetsForAnimation(ActionState.ATTACK12, 21.5f, 1.1f);
-        setOffsetsForAnimation(ActionState.ATTACK13, 21.5f, -4.5f);
-        setOffsetsForAnimation(ActionState.ATTACK14, -13.5f, 3);
-        setOffsetsForAnimation(ActionState.ATTACK15, 0.5f, -1.0f);
-        setOffsetsForAnimation(ActionState.ATTACK16, -76.8f, 59.5f);
-        setOffsetsForAnimation(ActionState.ATTACK17, -59.3f, 40f);
-        setOffsetsForAnimation(ActionState.ATTACK18, 21.1f, 7.3f);
-        setOffsetsForAnimation(ActionState.ATTACK19, 40, 8);
-        setOffsetsForAnimation(ActionState.ATTACK20, 16.5f, 5f);
-        setOffsetsForAnimation(ActionState.ATTACK21, -3.8f, 0f);
-        setOffsetsForAnimation(ActionState.FLASHCOMBO, 16.2f, 3.5f);
-
-        setOffsetsForAnimation(ActionState.HURT1, -14, 0);
-        setOffsetsForAnimation(ActionState.HURT2, -2.8f, -1f);
-        setOffsetsForAnimation(ActionState.FLYAWAY, 11, -1f);
-        setOffsetsForAnimation(ActionState.LANDH, 5.5f, -2f);
-        setOffsetsForAnimation(ActionState.LAND01, 14.2f, -2f);
-        setOffsetsForAnimation(ActionState.DEAD, 14.2f, -2f);
-        setOffsetsForAnimation(ActionState.DEAD01, 12.8f, -2f);
-        setOffsetsForAnimation(ActionState.WALLED, -21.3f, 14.5f);
-        setOffsetsForAnimation(ActionState.ROLLFRONT, -1.5f, -21.5f);
-        setOffsetsForAnimation(ActionState.ROLLFRONT2, -1.5f, -21.5f);
-        setOffsetsForAnimation(ActionState.JUMPOFF, 28f, 29.5f);
-        setOffsetsForAnimation(ActionState.UPP, 14.3f, -17.4f);
-        setOffsetsForAnimation(ActionState.ROLLBACK, -15f, -35.5f);
-        setOffsetsForAnimation(ActionState.ROLLBACK2, -15f, -33.5f);
-
-        setOffsetsForAnimation(ActionState.CHARGING, 5.8f, -3.5f);
-        setOffsetsForAnimation(ActionState.BLAST, 23.4f, -3.5f);
-
-        setOffsetsForAnimation(ActionState.TEST1, -16.3f, -41.5f);
-        setOffsetsForAnimation(ActionState.TEST2, 12.2f, -21.5f);
-    }
-
-    private void setOffsetsForAnimation(ActionState state, float offSetX, float offSetY){
-        animationsOffSets.put(state, new float[]{offSetX, offSetY});
     }
 
     private void loadAnimationsForPlayer() {
-        Object[][] animationData = {
-            {ActionState.STAND, animPathJson + "/movementJson/anim_stand.json", animPathPng + "/movement/stand.png"},
-            {ActionState.RUN, animPathJson + "/movementJson/anim_run.json", animPathPng + "/movement/run.png"},
-            {ActionState.DUCK, animPathJson + "/movementJson/anim_duck.json", animPathPng + "/movement/duck.png"},
-            {ActionState.STARTJUMP, animPathJson + "/movementJson/anim_startJump.json", animPathPng + "/movement/startJump.png"},
-            {ActionState.JUMP, animPathJson + "/movementJson/anim_jump.json", animPathPng + "/movement/jump.png"},
+        // test anims
 
-            {ActionState.ATTACK1, animPathJson + "/attackJson/anim_attack1.json", animPathPng + "/attacks/attack1.png"},
-            {ActionState.ATTACK2, animPathJson + "/attackJson/anim_attack2.json", animPathPng + "/attacks/attack2.png"},
-            {ActionState.ATTACK3, animPathJson + "/attackJson/anim_attack3.json", animPathPng + "/attacks/attack3.png"},
-            {ActionState.ATTACK4, animPathJson + "/attackJson/anim_attack4.json", animPathPng + "/attacks/attack4.png"},
-            {ActionState.ATTACK5, animPathJson + "/attackJson/anim_attack5.json", animPathPng + "/attacks/attack5.png"},
-            {ActionState.ATTACK6, animPathJson + "/attackJson/anim_attack6.json", animPathPng + "/attacks/attack6.png"},
-            {ActionState.ATTACK7, animPathJson + "/attackJson/anim_attack7.json", animPathPng + "/attacks/attack7.png"},
-            {ActionState.ATTACK8, animPathJson + "/attackJson/anim_attack8.json", animPathPng + "/attacks/attack8.png"},
-            {ActionState.ATTACK9, animPathJson + "/attackJson/anim_attack9.json", animPathPng + "/attacks/attack9.png"},
-            {ActionState.ATTACK10, animPathJson + "/attackJson/anim_attack10.json", animPathPng + "/attacks/attack10.png"},
-            {ActionState.ATTACK11, animPathJson + "/attackJson/anim_attack11.json", animPathPng + "/attacks/attack11.png"},
-            {ActionState.ATTACK12, animPathJson + "/attackJson/anim_attack12.json", animPathPng + "/attacks/attack12.png"},
-            {ActionState.ATTACK13, animPathJson + "/attackJson/anim_attack13.json", animPathPng + "/attacks/attack13.png"},
-            {ActionState.ATTACK14, animPathJson + "/attackJson/anim_attack14.json", animPathPng + "/attacks/attack14.png"},
-            {ActionState.ATTACK15, animPathJson + "/attackJson/anim_attack15.json", animPathPng + "/attacks/attack15.png"},
-            {ActionState.ATTACK16, animPathJson + "/attackJson/anim_attack16.json", animPathPng + "/attacks/attack16.png"},
-            {ActionState.ATTACK17, animPathJson + "/attackJson/anim_attack17.json", animPathPng + "/attacks/attack17.png"},
-            {ActionState.ATTACK18, animPathJson + "/attackJson/anim_attack18.json", animPathPng + "/attacks/attack18.png"},
-            {ActionState.ATTACK19, animPathJson + "/attackJson/anim_attack19.json", animPathPng + "/attacks/attack19.png"},
-            {ActionState.ATTACK20, animPathJson + "/attackJson/anim_attack20.json", animPathPng + "/attacks/attack20.png"},
-            {ActionState.ATTACK21, animPathJson + "/attackJson/anim_attack21.json", animPathPng + "/attacks/attack21.png"},
-            {ActionState.FLASHCOMBO, animPathJson + "/attackJson/anim_flashCombo.json", animPathPng + "/attacks/flashCombo.png"},
+        animationsList.add(new AnimationData("pngFiles/testUse/animations/TestOffSetsAttacks.json", "pngFiles/testUse/animations/TestOffSetsAttacks.png",
+            ActionState.TEST1, 0, new float[]{-16.3f, -41.5f}));
 
-            {ActionState.DEAD, animPathJson + "/otherJson/anim_dead.json", animPathPng + "/other/dead.png"},
-            {ActionState.DEAD01, animPathJson + "/otherJson/anim_dead01.json", animPathPng + "/other/dead01.png"}, //
-            {ActionState.FLYAWAY, animPathJson + "/otherJson/anim_flyAway.json", animPathPng + "/other/flyAway.png"},
-            {ActionState.HURT1, animPathJson + "/otherJson/anim_hurt1.json", animPathPng + "/other/hurt1.png"}, //
-            {ActionState.HURT2, animPathJson + "/otherJson/anim_hurt2.json", animPathPng + "/other/hurt2.png"}, //
-            {ActionState.JUMPOFF, animPathJson + "/otherJson/anim_jumpOff.json", animPathPng + "/other/jumpOff.png"},
-            {ActionState.LAND01, animPathJson + "/otherJson/anim_land01.json", animPathPng + "/other/land01.png"},
-            {ActionState.LANDH, animPathJson + "/otherJson/anim_landH.json", animPathPng + "/other/landH.png"},
-            {ActionState.WALLED, animPathJson + "/otherJson/anim_walled.json", animPathPng + "/other/walled.png"},
-            {ActionState.ROLLBACK, animPathJson + "/otherJson/anim_rollBack.json", animPathPng + "/other/rollBack.png"},
-            {ActionState.ROLLBACK2, animPathJson + "/otherJson/anim_rollBack2.json", animPathPng + "/other/rollBack2.png"},
-            {ActionState.ROLLFRONT, animPathJson + "/otherJson/anim_rollFront.json", animPathPng + "/other/rollFront.png"},
-            {ActionState.ROLLFRONT2, animPathJson + "/otherJson/anim_rollFront2.json", animPathPng + "/other/rollFront2.png"},
-            {ActionState.UPP, animPathJson + "/otherJson/anim_upp.json", animPathPng + "/other/upp.png"},
+        animationsList.add(new AnimationData("pngFiles/testUse/animations/test2animations.json", "pngFiles/testUse/animations/test2animations.png",
+            ActionState.TEST2, 0, new float[]{12.2f, -21.5f}));
 
-            {ActionState.CHARGING, animPathJson + "/attackJson/anim_charging.json", animPathPng + "/attacks/charging.png"},
-            {ActionState.BLAST, animPathJson + "/attackJson/anim_blast.json", animPathPng + "/attacks/blast.png"},
+        // movement
 
-            {ActionState.TEST1, testPaths + "TestOffSetsAttacks.json", testPaths + "TestOffSetsAttacks.png"},
-            {ActionState.TEST2, testPaths + "test2animations.json", testPaths + "test2animations.png"}
-        };
+        animationsList.add(new AnimationData(animPathJson + "/movementJson/anim_stand.json", animPathPng + "/movement/stand.png",
+            ActionState.STAND, 0, new float[]{0, 0}));
 
-        for (Object[] data : animationData) {
-            ActionState animationType = (ActionState) data[0];
-            String jsonPath = (String) data[1];
-            String texturePath = (String) data[2];
+        animationsList.add(new AnimationData(animPathJson + "/movementJson/anim_run.json", animPathPng + "/movement/run.png",
+            ActionState.RUN, 0, new float[]{1.7f, 3f}));
 
-            animationsMap.put(
-                animationType,
-                AnimationLoader.createAnimation(jsonPath, duration, new Texture(Gdx.files.internal(texturePath)))
+        animationsList.add(new AnimationData(animPathJson + "/movementJson/anim_duck.json", animPathPng + "/movement/duck.png",
+            ActionState.DUCK, 0, new float[]{0, 0}));
+
+        animationsList.add(new AnimationData(animPathJson + "/movementJson/anim_jump.json", animPathPng + "/movement/jump.png",
+            ActionState.JUMP, 0, new float[]{0.3f, 0.2f}));
+
+        animationsList.add(new AnimationData(animPathJson + "/movementJson/anim_startJump.json", animPathPng + "/movement/startJump.png",
+            ActionState.STARTJUMP, 0, new float[]{-3.5f, -1.5f}));
+
+        // Other anims
+
+        animationsList.add(new AnimationData(animPathJson + "/otherJson/anim_hurt1.json", animPathPng + "/other/hurt1.png",
+            ActionState.HURT1, 0, new float[]{-14, 0}));
+
+        animationsList.add(new AnimationData(animPathJson + "/otherJson/anim_hurt2.json", animPathPng + "/other/hurt2.png",
+            ActionState.HURT2, 0, new float[]{-2.8f, -1f}));
+
+        animationsList.add(new AnimationData(animPathJson + "/otherJson/anim_flyAway.json", animPathPng + "/other/flyAway.png",
+            ActionState.FLYAWAY, 0, new float[]{11, -1f}));
+
+        animationsList.add(new AnimationData(animPathJson + "/otherJson/anim_landH.json", animPathPng + "/other/landH.png",
+            ActionState.LANDH, 0, new float[]{5.5f, -2f}));
+
+        animationsList.add(new AnimationData(animPathJson + "/otherJson/anim_land01.json", animPathPng + "/other/land01.png",
+            ActionState.LAND01, 0, new float[]{14.2f, -2f}));
+
+        animationsList.add(new AnimationData(animPathJson + "/otherJson/anim_dead.json", animPathPng + "/other/dead.png",
+            ActionState.DEAD, 0, new float[]{14.2f, -2f}));
+
+        animationsList.add(new AnimationData(animPathJson + "/otherJson/anim_dead01.json", animPathPng + "/other/dead01.png",
+            ActionState.DEAD01, 0, new float[]{12.8f, -2f}));
+
+        animationsList.add(new AnimationData(animPathJson + "/otherJson/anim_walled.json", animPathPng + "/other/walled.png",
+            ActionState.WALLED, 0, new float[]{-21.3f, 14.5f}));
+
+        animationsList.add(new AnimationData(animPathJson + "/otherJson/anim_rollFront.json", animPathPng + "/other/rollFront.png",
+            ActionState.ROLLFRONT, 0, new float[]{-1.5f, -21.5f}));
+
+        animationsList.add(new AnimationData(animPathJson + "/otherJson/anim_rollFront2.json", animPathPng + "/other/rollFront2.png",
+            ActionState.ROLLFRONT2, 0, new float[]{-1.5f, -21.5f}));
+
+        animationsList.add(new AnimationData(animPathJson + "/otherJson/anim_jumpOff.json", animPathPng + "/other/jumpOff.png",
+            ActionState.JUMPOFF, 0, new float[]{28f, 29.5f}));
+
+        animationsList.add(new AnimationData(animPathJson + "/otherJson/anim_upp.json", animPathPng + "/other/upp.png",
+            ActionState.UPP, 0, new float[]{14.3f, -17.4f}));
+
+        animationsList.add(new AnimationData(animPathJson + "/otherJson/anim_rollBack.json", animPathPng + "/other/rollBack.png",
+            ActionState.ROLLBACK, 0, new float[]{-15f, -35.5f}));
+
+        animationsList.add(new AnimationData(animPathJson + "/otherJson/anim_rollBack2.json", animPathPng + "/other/rollBack2.png",
+            ActionState.ROLLBACK2, 0, new float[]{-15f, -33.5f}));
+
+        // Attacks
+
+        animationsList.add(new AnimationData(animPathJson + "/attackJson/anim_attack1.json", animPathPng + "/attacks/attack1.png",
+            ActionState.ATTACK1, 0, new float[]{7.8f, -7}));
+
+        animationsList.add(new AnimationData(animPathJson + "/attackJson/anim_attack2.json", animPathPng + "/attacks/attack2.png",
+            ActionState.ATTACK2, 0, new float[]{13.8f, -0.5f}));
+
+        animationsList.add(new AnimationData(animPathJson + "/attackJson/anim_attack3.json", animPathPng + "/attacks/attack3.png",
+            ActionState.ATTACK3, 0, new float[]{-5.5f, -0.5f}));
+
+        animationsList.add(new AnimationData(animPathJson + "/attackJson/anim_attack4.json", animPathPng + "/attacks/attack4.png",
+            ActionState.ATTACK4, 0, new float[]{13.8f, -0.5f}));
+
+        animationsList.add(new AnimationData(animPathJson + "/attackJson/anim_attack5.json", animPathPng + "/attacks/attack5.png",
+            ActionState.ATTACK5, 0, new float[]{0.5f, -1.0f}));
+
+        animationsList.add(new AnimationData(animPathJson + "/attackJson/anim_attack6.json", animPathPng + "/attacks/attack6.png",
+            ActionState.ATTACK6, 0, new float[]{-12.2f, 1f}));
+
+        animationsList.add(new AnimationData(animPathJson + "/attackJson/anim_attack7.json", animPathPng + "/attacks/attack7.png",
+            ActionState.ATTACK7, 0, new float[]{-8.8f, 1.5f}));
+
+        animationsList.add(new AnimationData(animPathJson + "/attackJson/anim_attack8.json", animPathPng + "/attacks/attack8.png",
+            ActionState.ATTACK8, 0, new float[]{40.5f, -1.0f}));
+
+        animationsList.add(new AnimationData(animPathJson + "/attackJson/anim_attack9.json", animPathPng + "/attacks/attack9.png",
+            ActionState.ATTACK9, 0, new float[]{-22.5f, 1.5f}));
+
+        animationsList.add(new AnimationData(animPathJson + "/attackJson/anim_attack10.json", animPathPng + "/attacks/attack10.png",
+            ActionState.ATTACK10, 0, new float[]{4.3f, -59f}));
+
+        animationsList.add(new AnimationData(animPathJson + "/attackJson/anim_attack11.json", animPathPng + "/attacks/attack11.png",
+            ActionState.ATTACK11, 0, new float[]{16f, -0.5f}));
+
+        animationsList.add(new AnimationData(animPathJson + "/attackJson/anim_attack12.json", animPathPng + "/attacks/attack12.png",
+            ActionState.ATTACK12, 0, new float[]{21.5f, 1.1f}));
+
+        animationsList.add(new AnimationData(animPathJson + "/attackJson/anim_attack13.json", animPathPng + "/attacks/attack13.png",
+            ActionState.ATTACK13, 0, new float[]{21.5f, -4.5f}));
+
+        animationsList.add(new AnimationData(animPathJson + "/attackJson/anim_attack14.json", animPathPng + "/attacks/attack14.png",
+            ActionState.ATTACK14, 0, new float[]{-13.5f, 3}));
+
+        animationsList.add(new AnimationData(animPathJson + "/attackJson/anim_attack15.json", animPathPng + "/attacks/attack15.png",
+            ActionState.ATTACK15, 0, new float[]{0.5f, -1.0f}));
+
+        animationsList.add(new AnimationData(animPathJson + "/attackJson/anim_attack16.json", animPathPng + "/attacks/attack16.png",
+            ActionState.ATTACK16, 0, new float[]{-76.8f, 59.5f}));
+
+        animationsList.add(new AnimationData(animPathJson + "/attackJson/anim_attack17.json", animPathPng + "/attacks/attack17.png",
+            ActionState.ATTACK17, 0, new float[]{-59.3f, 40f}));
+
+        animationsList.add(new AnimationData(animPathJson + "/attackJson/anim_attack18.json", animPathPng + "/attacks/attack18.png",
+            ActionState.ATTACK18, 0, new float[]{21.1f, 7.3f}));
+
+        animationsList.add(new AnimationData(animPathJson + "/attackJson/anim_attack19.json", animPathPng + "/attacks/attack19.png",
+            ActionState.ATTACK19, 0, new float[]{40, 8}));
+
+        animationsList.add(new AnimationData(animPathJson + "/attackJson/anim_attack20.json", animPathPng + "/attacks/attack20.png",
+            ActionState.ATTACK20, 0, new float[]{16.5f, 5f}));
+
+        animationsList.add(new AnimationData(animPathJson + "/attackJson/anim_attack21.json", animPathPng + "/attacks/attack21.png",
+            ActionState.ATTACK21, 0, new float[]{-3.8f, 0f}));
+
+        animationsList.add(new AnimationData(animPathJson + "/attackJson/anim_flashCombo.json", animPathPng + "/attacks/flashCombo.png",
+            ActionState.FLASHCOMBO, 0, new float[]{16.2f, 3.5f}));
+
+        animationsList.add(new AnimationData(animPathJson + "/attackJson/anim_charging.json", animPathPng + "/attacks/charging.png",
+            ActionState.CHARGING, 0, new float[]{-15f, -33.5f}));
+
+        animationsList.add(new AnimationData(animPathJson + "/attackJson/anim_blast.json", animPathPng + "/attacks/blast.png",
+            ActionState.BLAST, 0, new float[]{-15f, -33.5f}));
+
+
+        for (AnimationData data : animationsList) {
+            Animation<TextureRegion> animation = AnimationLoader.createAnimation(
+                data.getPathJson(), duration, new Texture(Gdx.files.internal(data.getPathPNG()))
             );
+
+            animationsMap.put(data.getActionState(), animation);
+            animationsOffSets.put(data.getActionState(), data.getOffsets());
         }
     }
 

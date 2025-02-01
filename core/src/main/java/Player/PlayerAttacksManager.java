@@ -8,7 +8,7 @@ public class PlayerAttacksManager {
     private final PlayerController playerController;
     private final Rectangle hitBox;
 
-    private ActionState[] comboMoves = {ActionState.ATTACK1, ActionState.ATTACK2, ActionState.ATTACK3, ActionState.ATTACK4};
+    private ActionState[] comboMoves = {ActionState.ATTACK3, ActionState.ATTACK4, ActionState.ATTACK7};
     private int currentComboIndex = 0;
     private boolean comboInProgress = false;
 
@@ -22,11 +22,12 @@ public class PlayerAttacksManager {
         if (animPlayer.getIndexOfCurrentAnimation() >= 7 && playerController.isComboMove) {
             comboInProgress = true;
 
-            currentComboIndex++;
             if (currentComboIndex >= comboMoves.length) {
                 currentComboIndex = 0;
             }
             animPlayer.changeState(comboMoves[currentComboIndex]);
+
+            currentComboIndex++;
         }
         else if (!playerController.isComboMove && comboInProgress) {
             comboInProgress = false;
