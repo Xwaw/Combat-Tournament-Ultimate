@@ -5,7 +5,7 @@ import com.badlogic.gdx.math.Vector2;
 
 public class PlayerController {
     private final EntityPlayer player;
-    private final PlayerAttacksManager playerAttacks;
+    private final SequenceCombosLoader playerAttacks;
 
     public boolean isStartJump = false;
     public boolean isMoving = false;
@@ -13,13 +13,18 @@ public class PlayerController {
     public boolean isJumping = false;
     public boolean isDodge = false;
 
+    public boolean isLeft = false;
+    public boolean isRight = false;
+    public boolean isUp = false;
+    public boolean isDown = false;
+
     public boolean isComboMove = false;
     public boolean isSpecialUsed = false;
     public boolean isSpecial = false;
 
     public PlayerController(EntityPlayer player) {
         this.player = player;
-        this.playerAttacks = new PlayerAttacksManager(player, this,player.getHitbox());
+        this.playerAttacks = new SequenceCombosLoader(); //not usable yet
     }
     public void standPlayer(){
         if(player.isOnGround() && !isJumping && !isMoving && !isDucking && !isDodge && !isComboMove){
@@ -120,6 +125,6 @@ public class PlayerController {
         }
     }
     public void doPlayerAttacking(){
-        playerAttacks.setStateCombo();
+        playerAttacks.setAttackSequence();
     }
 }

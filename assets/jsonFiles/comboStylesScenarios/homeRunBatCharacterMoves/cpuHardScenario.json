@@ -1,0 +1,102 @@
+{
+  "JUMP": {
+    "type": "startCombo",
+    "transitions": {
+      "A": "ATTACK6",
+      "DOWN": "ATTACK5",
+      "LEFT": "ATTACK19",
+      "RIGHT": "ATTACK19",
+      "UP": "ATTACK21"
+    }
+  },
+  "STAND": {
+    "type": "startCombo",
+    "transitions": {
+      "A": "ATTACK5",
+      "DOWN": "ATTACK5",
+      "LEFT": "ATTACK19",
+      "RIGHT": "ATTACK19",
+      "UP": "ATTACK21"
+    }
+  },
+  "ATTACK5": {
+    "type": "input",
+    "transitions": {
+        "DOWN": "ATTACK6",
+        "UP": "ATTACK17"
+    }
+  },
+  "ATTACK6": {
+    "type": "input",
+    "transitions": {
+        "A": "ATTACK7"
+    }
+  },
+  "ATTACK7": {
+    "type": "input",
+    "transitions": {
+        "DOWN": "ATTACK11",
+        "UP": "ATTACK11",
+        "LEFT": "ATTACK20",
+        "RIGHT": "ATTACK20"
+    }
+  },
+  "ATTACK11": {
+    "type": "input",
+    "transitions": {
+      "DEFAULT": "END",
+      "JUMP": "END"
+    }
+  },
+  "ATTACK12": {
+    "type": "auto",
+    "transitions": {
+      "DEFAULT": "END"
+    }
+  },
+  "ATTACK13": {
+    "type": "auto",
+    "transitions": {
+      "DEFAULT": "ATTACK16"
+    }
+  },
+  "ATTACK16": {
+    "type": "input",
+    "transitions": {
+      "A": "ATTACK12",
+      "UP": "ATTACK12",
+      "DOWN": "ATTACK6"
+    }
+  },
+  "ATTACK17": {
+    "type": "input",
+    "transitions": {
+      "A": "ATTACK18"
+    }
+  },
+  "ATTACK18": {
+    "type": "auto",
+    "transitions": {
+      "DEFAULT": "END"
+    }
+  },
+  "ATTACK19": {
+    "type": "input",
+    "transitions": {
+      "A": "ATTACK13"
+    }
+  },
+  "ATTACK20": {
+    "type": "auto",
+    "transitions": {
+      "DEFAULT": "END"
+    }
+  },
+  "ATTACK21": {
+    "type": "input",
+    "transitions": {
+      "UP": "ATTACK17",
+      "DOWN": "ATTACK6"
+    }
+  }
+}

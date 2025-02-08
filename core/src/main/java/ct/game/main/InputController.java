@@ -36,6 +36,17 @@ public class InputController implements InputProcessor {
         inputPlayer.isComboMove = false;
         inputPlayer.isDodge = player.isCurrentAnimDodge();
 
+        inputPlayer.isLeft = false;
+        inputPlayer.isRight = false;
+        inputPlayer.isUp = false;
+        inputPlayer.isDown = false;
+
+        if (getActionKey(ActionInputs.KEY_UP)) {
+            inputPlayer.isUp = true;
+            inputPlayer.isLeft = false;
+            inputPlayer.isRight = false;
+            inputPlayer.isDown = false;
+        }
         if (getActionKey(ActionInputs.KEY_ATTACK) && !inputPlayer.isJumping && !inputPlayer.isStartJump && !inputPlayer.isDodge){
             inputPlayer.isComboMove = true;
             inputPlayer.doPlayerAttacking();
@@ -45,6 +56,11 @@ public class InputController implements InputProcessor {
             if(player.isOnGround()) {
                 inputPlayer.isDucking = true;
             }
+
+            inputPlayer.isDown = true;
+            inputPlayer.isLeft = false;
+            inputPlayer.isRight = false;
+            inputPlayer.isUp = false;
         }
         if (getActionKey(ActionInputs.KEY_DODGE) && !inputPlayer.isDodge && !inputPlayer.isJumping && !inputPlayer.isStartJump && !inputPlayer.isDucking && !inputPlayer.isComboMove) {
             if(getActionKey(ActionInputs.KEY_RIGHT)){
@@ -59,12 +75,19 @@ public class InputController implements InputProcessor {
             inputPlayer.doPlayerMoveRight();
             inputPlayer.isMoving = true;
 
+            inputPlayer.isRight = true;
+            inputPlayer.isLeft = false;
+            inputPlayer.isUp = false;
+            inputPlayer.isDown = false;
         }
         if(getActionKey(ActionInputs.KEY_LEFT) && !inputPlayer.isJumping && !inputPlayer.isDucking && !inputPlayer.isDodge && !inputPlayer.isComboMove) {
             inputPlayer.doPlayerMoveLeft();
             inputPlayer.isMoving = true;
-        }
-        if (getActionKey(ActionInputs.KEY_UP)) {
+
+            inputPlayer.isLeft = true;
+            inputPlayer.isRight = false;
+            inputPlayer.isUp = false;
+            inputPlayer.isDown = false;
 
         }
         if (getActionKey(ActionInputs.KEY_JUMP) && !inputPlayer.isDodge && !inputPlayer.isDucking && !inputPlayer.isComboMove) {

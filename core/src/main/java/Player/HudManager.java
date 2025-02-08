@@ -122,9 +122,13 @@ public class  HudManager implements Screen {
                 "isStartJumping: " + inputHUD.isStartJump + "\n" +
                 "isDodge: " + inputHUD.isDodge + "\n" +
                 "isComboMove: " + inputHUD.isComboMove + "\n" +
+                "isRight: " + inputHUD.isRight + "\n" +
+                "isLeft: " + inputHUD.isLeft+ "\n" +
+                "isUp: " + inputHUD.isUp + "\n" +
+                "isDown: " + inputHUD.isDown + "\n" +
                 "isSpecialUsed: " + "\n" +
                 "isSpecial: "
-            , 1120, 165
+            , 1120, 215
             );
     }
 
