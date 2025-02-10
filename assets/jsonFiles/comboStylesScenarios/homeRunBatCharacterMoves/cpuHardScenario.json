@@ -29,7 +29,7 @@
   "ATTACK6": {
     "type": "input",
     "transitions": {
-        "A": "ATTACK7"
+        "DEFAULT": "ATTACK7"
     }
   },
   "ATTACK7": {
@@ -42,25 +42,24 @@
     }
   },
   "ATTACK11": {
-    "type": "input",
+    "type": "auto",
     "transitions": {
-      "DEFAULT": "END",
-      "JUMP": "END"
+      "DEFAULT": "STAND"
     }
   },
   "ATTACK12": {
     "type": "auto",
     "transitions": {
-      "DEFAULT": "END"
+      "DEFAULT": "STAND"
     }
   },
   "ATTACK13": {
     "type": "auto",
     "transitions": {
-      "DEFAULT": "ATTACK16"
+      "DEFAULT": "ATTACK14"
     }
   },
-  "ATTACK16": {
+  "ATTACK14": {
     "type": "input",
     "transitions": {
       "A": "ATTACK12",
@@ -68,34 +67,34 @@
       "DOWN": "ATTACK6"
     }
   },
-  "ATTACK17": {
+  "ATTACK16": {
     "type": "input",
     "transitions": {
-      "A": "ATTACK18"
+      "DEFAULT": "ATTACK17"
     }
   },
-  "ATTACK18": {
+  "ATTACK17": {
     "type": "auto",
     "transitions": {
-      "DEFAULT": "END"
+      "DEFAULT": "STAND"
     }
   },
   "ATTACK19": {
     "type": "input",
     "transitions": {
-      "A": "ATTACK13"
+      "DEFAULT": "ATTACK13"
     }
   },
   "ATTACK20": {
     "type": "auto",
     "transitions": {
-      "DEFAULT": "END"
+      "DEFAULT": "STAND"
     }
   },
   "ATTACK21": {
     "type": "input",
     "transitions": {
-      "UP": "ATTACK17",
+      "UP": "ATTACK16",
       "DOWN": "ATTACK6"
     }
   }

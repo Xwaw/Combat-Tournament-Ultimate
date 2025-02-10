@@ -17,17 +17,18 @@ public class PlayerController {
     public boolean isRight = false;
     public boolean isUp = false;
     public boolean isDown = false;
+    public boolean isA = false;
 
-    public boolean isComboMove = false;
-    public boolean isSpecialUsed = false;
-    public boolean isSpecial = false;
+    public boolean isComboMove;
 
     public PlayerController(EntityPlayer player) {
         this.player = player;
-        this.playerAttacks = new SequenceCombosLoader(); //not usable yet
+        this.playerAttacks = new SequenceCombosLoader(player);
+
+        this.isComboMove = playerAttacks.isComboMove();
     }
     public void standPlayer(){
-        if(player.isOnGround() && !isJumping && !isMoving && !isDucking && !isDodge && !isComboMove){
+        if(player.isOnGround() && !isJumping && !isMoving && !isDucking && !isDodge && !isA && !isComboMove){
             player.changeState(ActionState.STAND);
         }
     }
@@ -45,7 +46,7 @@ public class PlayerController {
         movePlayerX(player.speed * -1);
         if (player.isOnGround() && !isJumping && !isDodge) {
             player.flipEntityHorizontally(true);
-            if(player.isOnGround()){
+            if(player.isOnGround() && !isComboMove){
                 player.changeState(ActionState.RUN);
             }
         }
@@ -54,7 +55,7 @@ public class PlayerController {
         movePlayerX(player.speed);
         if (player.isOnGround() && !isJumping && !isDodge) {
             player.flipEntityHorizontally(false);
-            if(player.isOnGround()){
+            if(player.isOnGround() && !isComboMove){
                 player.changeState(ActionState.RUN);
             }
         }
@@ -124,7 +125,27 @@ public class PlayerController {
             player.setRollDodgeLeft();
         }
     }
+    public String getInputWhenAttacking(){
+        if(isLeft){
+            return "LEFT";
+        }else if(isRight){
+            return "RIGHT";
+        }else if(isUp){
+            return "UP";
+        }else if(isDown){
+            return "DOWN";
+        }else if(isA) {
+            return "A";
+        }
+        return "DEFAULT";
+    }
+    public void checkIfPlayerHoldA(){
+        if(isComboMove && player.isAnimationFinished()){
+            isComboMove = false;
+            player.changeState(ActionState.STAND);
+        }
+    }
     public void doPlayerAttacking(){
-        playerAttacks.setAttackSequence();
+        playerAttacks.setAttackSequence(getInputWhenAttacking());
     }
 }

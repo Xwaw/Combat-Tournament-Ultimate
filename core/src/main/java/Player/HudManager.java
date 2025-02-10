@@ -126,9 +126,10 @@ public class  HudManager implements Screen {
                 "isLeft: " + inputHUD.isLeft+ "\n" +
                 "isUp: " + inputHUD.isUp + "\n" +
                 "isDown: " + inputHUD.isDown + "\n" +
-                "isSpecialUsed: " + "\n" +
+                "isSpecialUsed: "  + "\n" +
+                "isA: " + inputHUD.isA + "\n" +
                 "isSpecial: "
-            , 1120, 215
+            , 1120, 230
             );
     }
 

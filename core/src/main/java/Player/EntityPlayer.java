@@ -133,7 +133,7 @@ public class EntityPlayer {
     }
     public boolean isPlayerAttackingMove(){
         String nameAttack = currentState.name();
-        return nameAttack.startsWith("Attack");
+        return nameAttack.startsWith("ATTACK");
     }
 
     public void setRollDodgeRight(){
