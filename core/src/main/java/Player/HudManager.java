@@ -8,7 +8,6 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
@@ -20,7 +19,7 @@ public class  HudManager implements Screen {
     private final Camera cameraHUD;
     private final Viewport viewport;
 
-    private final EntityPlayer playerHUD;
+    private final EntityGraphicsManager playerHUD;
     private final PlayerController inputHUD;
 
     private final SpriteBatch batch;
@@ -35,7 +34,7 @@ public class  HudManager implements Screen {
 
     private final int maxHP = 100, maxSP = 100;
 
-    public HudManager(EntityPlayer playerHUD) {
+    public HudManager(EntityGraphicsManager playerHUD) {
         this.playerHUD = playerHUD;
         this.inputHUD = playerHUD.getPlayerController();
 

@@ -29,6 +29,7 @@ public class PhysicsManager {
         return world.createBody(bodyDef);
     }
 
+    // !
     public Body createBoxBodyForObject(Vector2 position, float[] hitBoxDimensions, float friction, String nameOfObject){
         Body body = createSimpleBody(position.scl(1 / PPM), true);
 
@@ -64,6 +65,8 @@ public class PhysicsManager {
 
         Fixture fixture = body.createFixture(fixtureDef);
         fixture.setUserData("Player");
+
+        System.out.println(body.getMass());
 
         shape.dispose();
 

@@ -6,14 +6,12 @@ import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.utils.JsonReader;
 import com.badlogic.gdx.utils.JsonValue;
 
-import javax.swing.*;
-import javax.swing.text.html.parser.Entity;
 import java.util.HashMap;
 import java.util.Map;
 
 public class SequenceCombosLoader {
     private final String jsonFilePath = "jsonFiles/comboStylesScenarios/homeRunBatCharacterMoves/cpuHardScenario.json";
-    private final EntityPlayer player;
+    private final EntityGraphicsManager player;
 
     private Map<ActionState, HashMap<String, ActionState>> transitions = new HashMap<>();
 
@@ -23,7 +21,7 @@ public class SequenceCombosLoader {
     private boolean isSpecial = false;
     private boolean isComboMove;
 
-    public SequenceCombosLoader(EntityPlayer player) {
+    public SequenceCombosLoader(EntityGraphicsManager player) {
         parseJsonIntoComboSequence(jsonFilePath);
         this.player = player;
         this.isComboMove = player.isPlayerAttackingMove();

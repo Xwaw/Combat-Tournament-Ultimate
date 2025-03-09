@@ -1,11 +1,12 @@
 package ct.game.main;
 
 import MapGame.Maps.MAP_TestLevel;
-import Player.EntityPlayer;
+import Player.Entity;
+import Player.EntityGraphicsManager;
+import Player.PlayerController;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.*;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.viewport.*;
 
@@ -20,9 +21,8 @@ public class MainScreenCamera implements Screen {
     private final Viewport viewport;
     // Graphics
     private final SpriteBatch batch;
-    // Player
-    public static EntityPlayer mainPlayer;
-    public static EntityPlayer bot;
+
+    public final Entity mainPlayer;
 
     private final MAP_TestLevel mapTEST;
 
@@ -35,7 +35,7 @@ public class MainScreenCamera implements Screen {
         camera.setOffsetsOfCamera(0, 5);
         camera.setCameraDamping(0.1f);
 
-        mainPlayer = new EntityPlayer(100, 0, new Vector2(0, -240));
+        mainPlayer = new Entity(100, 100, new Vector2);
 
         batch = new SpriteBatch();
 
@@ -47,7 +47,8 @@ public class MainScreenCamera implements Screen {
         refreshScreen();
         camera.follow(mainPlayer.getBodyPositions());
 
-        mainPlayer.updatePlayerComponents(deltaTime);
+        mainPlayer.update(deltaTime);
+
         GameMain.getPhysicsManager().renderHitboxObjects(camera.getCamera());
 
         batch.begin();
@@ -97,7 +98,7 @@ public class MainScreenCamera implements Screen {
         batch.setProjectionMatrix(camera.getCamera().combined);
     }
 
-    public EntityPlayer getEntityPlayer() {
+    public EntityGraphicsManager getEntityPlayer() {
         return mainPlayer;
     }
 }

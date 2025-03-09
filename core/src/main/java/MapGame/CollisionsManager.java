@@ -1,6 +1,5 @@
 package MapGame;
 
-import Player.EntityPlayer;
 import com.badlogic.gdx.physics.box2d.*;
 
 public class CollisionsManager implements ContactListener {

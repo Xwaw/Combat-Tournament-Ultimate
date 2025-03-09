@@ -1,7 +1,6 @@
 package ct.game.main;
 
-import Animations.ActionState;
-import Player.EntityPlayer;
+import Player.EntityGraphicsManager;
 import Player.PlayerController;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
@@ -9,11 +8,11 @@ import com.badlogic.gdx.InputProcessor;
 import java.util.HashMap;
 
 public class InputController implements InputProcessor {
-    private final EntityPlayer player;
+    private final EntityGraphicsManager player;
     private final PlayerController inputPlayer;
     private HashMap<ActionInputs, Boolean> actions;
 
-    public InputController(EntityPlayer player){
+    public InputController(EntityGraphicsManager player){
         this.player = player;
         this.inputPlayer = player.getPlayerController();
 
@@ -148,11 +147,17 @@ public class InputController implements InputProcessor {
     public boolean keyUp(int keycode) {
         switch (keycode){
             case Input.Keys.LEFT:
+                if(!player.isOnGround()){
+                    inputPlayer.stopPlayer();
+                }
                 inputPlayer.isLeft = false;
 
                 setActionKey(ActionInputs.KEY_LEFT, false);
                 break;
             case Input.Keys.RIGHT:
+                if(!player.isOnGround()){
+                    inputPlayer.stopPlayer();
+                }
                 inputPlayer.isRight = false;
 
                 setActionKey(ActionInputs.KEY_RIGHT, false);

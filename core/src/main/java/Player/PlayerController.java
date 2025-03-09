@@ -3,9 +3,11 @@ package Player;
 import Animations.ActionState;
 import com.badlogic.gdx.math.Vector2;
 
-public class PlayerController {
-    private final EntityPlayer player;
+public class PlayerController{
+    private final EntityGraphicsManager player;
     private final SequenceCombosLoader playerAttacks;
+
+    public boolean isSpecialReady = false;
 
     public boolean isStartJump = false;
     public boolean isMoving = false;
@@ -21,7 +23,7 @@ public class PlayerController {
 
     public boolean isComboMove;
 
-    public PlayerController(EntityPlayer player) {
+    public PlayerController() {
         this.player = player;
         this.playerAttacks = new SequenceCombosLoader(player);
 
